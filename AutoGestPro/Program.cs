@@ -6,6 +6,7 @@ namespace AutoGestPro
 {
     class Program
     {
+        
         static void Main(string[] args)
         {
             // Crear la lista de usuarios
@@ -54,24 +55,94 @@ namespace AutoGestPro
             Console.WriteLine("\n ------------------------------------");
             ListaVehiculos listaVehiculos = new ListaVehiculos();
 
-            // Insertar vehículos
-            listaVehiculos.Insertar(1, "Toyota", "Corolla", "ABC123");
-            listaVehiculos.Insertar(2, "Ford", "Focus", "XYZ456");
+            
+            listaVehiculos.Insertar(1, 23, "Toyota", "Corolla", "ABC123");
+            listaVehiculos.Insertar(2, 40, "Ford", "Focus", "XYZ456");
 
-            // Mostrar lista de vehículos
+            
             Console.WriteLine("Vehículos registrados:");
             listaVehiculos.Mostrar();
 
-            // Mostrar lista en reversa
+            
             Console.WriteLine("\nVehículos registrados (en reversa):");
             listaVehiculos.MostrarReversa();
 
-            // Eliminar un vehículo
+            
             listaVehiculos.Eliminar(1);
 
-            // Mostrar lista de vehículos después de eliminar
+            
             Console.WriteLine("\nVehículos después de eliminar el ID 1:");
             listaVehiculos.Mostrar();
+
+
+ 
+            Console.WriteLine("\n ------------------------------------"); 
+ 
+            ListaRepuestos lista = new ListaRepuestos();
+            
+            lista.Insertar(1, "Filtro de aceite", "Filtro para motor 1.6L", 15.99);
+            lista.Insertar(2, "Bujía", "Bujía de iridio para alto rendimiento", 9.50);
+            lista.Insertar(3, "Pastillas de freno", "Pastillas cerámicas delanteras", 45.75);
+            
+            Console.WriteLine("Lista de repuestos:");
+            lista.Mostrar();
+            
+            Console.WriteLine("\nEliminando el repuesto con ID 2...");
+            lista.Eliminar(2);
+            
+            Console.WriteLine("\nLista después de la eliminación:");
+            lista.Mostrar();
+
+            Console.WriteLine("\n ------------------------------------"); 
+            ColaServicios cola = new ColaServicios();
+
+            cola.Encolar(2, 21, 20, "respuesto", 20);
+            cola.Encolar(5, 25, 3, "respuesto2", 60);
+            cola.Encolar(52, 45, 52, "respuesto3", 50);
+            cola.Encolar(23, 32, 234, "respuesto4", 230);
+
+            Console.WriteLine("\n cola de Servicios");
+
+            Console.WriteLine("\n encolar");
+            cola.Mostrar();
+            
+            Console.WriteLine("\n desencolar1");
+            cola.Desencolar();
+            cola.Mostrar();
+            
+            Console.WriteLine("\n desencolar2");
+            cola.Desencolar();
+            cola.Mostrar();
+            
+            Console.WriteLine("\n desencolar3");
+            cola.Desencolar();
+            cola.Mostrar();
+
+            Console.WriteLine("\n desencolar4");
+            cola.Desencolar();
+            cola.Mostrar();
+
+            Console.WriteLine("\n ------------------------------------"); 
+            Console.WriteLine("\n pila de Facturas");
+
+            PilaFacturas pila = new PilaFacturas();
+
+            pila.Apilar(1, 100);
+            pila.Apilar(2, 200);
+            pila.Apilar(3, 300);
+            pila.Apilar(4, 400);
+
+            pila.Mostrar();
+
+            Console.WriteLine("\n desapilar1");
+            pila.Desapilar();
+            pila.Mostrar();
+
+            Console.WriteLine("\n desapilar2");
+            pila.Desapilar();
+            pila.Mostrar();
+            
+           
             
         }
     }

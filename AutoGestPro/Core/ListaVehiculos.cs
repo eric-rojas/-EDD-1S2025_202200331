@@ -10,21 +10,25 @@ namespace AutoGestPro.Core
     public unsafe struct NodoVehiculo // creamos estructura unsafe del nodo vehiculo
     {
         public int Id;
-        public fixed char Marca[50]; // fixed hace que tengamos una memoria estipuada, en este caso tenemos 50 caracteres
+
+        public int ID_Usuario;
+        public fixed char Marca[50]; // fixed hace que tengamos una memoria estipulada, en este caso tenemos 50 caracteres
+        
         public fixed char Modelo[50];
         public fixed char Placa[20];
         public NodoVehiculo* Next; // como es una estructura de listaDoblementeEnlazada, creamos punteros para adelante (next)y para atras (prev)
         public NodoVehiculo* Prev;
 
-        public NodoVehiculo(int id, string marca, string modelo, string placa) 
+        public NodoVehiculo(int id, int idUsuario, string marca, string modelo, string placa) 
         // creamos nuestro constructor  de nodo en la cual le decimos que datos va a recibir (entre parentesis) 
         {
             // aqui definimos nuestras variables de id y definimos q nustros punteros esten apuntando a nada al iniciar
             Id = id;
+            ID_Usuario = idUsuario;
             Next = null;
             Prev = null;
 
-            /* Bueno si soy sincero no le entendia mucho a esto... mas que todo porq el aux lo uso pues investigue que onda... pero aqui va la explicación
+            /* Bueno si soy sincero no le entendia mucho a esto... mas que todo porq el aux lo uso, pues investigue que onda... pero aqui va la explicación
             De cadenas a arreglos de caracteres:
             en palabras simples, tenemos cadenas de palabras tales como la marca del carro, modelo y placa. bueno estas son palabras y tienen caracteres, les
             asignamos un limite de caracteres [50][50][20] y pues lo que hacemos en el "fixed" es pasar estos caracteres a un arreglo de ellos. es como pasarlos
@@ -55,7 +59,7 @@ namespace AutoGestPro.Core
         {
             fixed (char* m = Marca, mo = Modelo, p = Placa)
             {
-                return $"ID: {Id}, Marca: {new string(m)}, Modelo: {new string(mo)}, Placa: {new string(p)}";
+                return $"ID: {Id}, ID_Usuario: {ID_Usuario}, Marca: {new string(m)}, Modelo: {new string(mo)}, Placa: {new string(p)}";
             }
         }
     }
@@ -68,24 +72,37 @@ namespace AutoGestPro.Core
 
         public ListaVehiculos()
         {
-            head = null; //los definimos como nulos para el inicio del desmadre!!!!!
+            head = null; //los definimos como nulos para el inicio del desmadre!
             tail = null;
         }
 
-        public void Insertar(int id, string marca, string modelo, string placa) // bueno esta funcion es para insertar lo que le pasemos entre ()
+        public void Insertar(int id, int idUsuario, string marca, string modelo, string placa) // bueno esta funcion es para insertar lo que le pasemos entre ()
         {
-            NodoVehiculo* nuevoNodo = (NodoVehiculo*)NativeMemory.Alloc((nuint)sizeof(NodoVehiculo)); // bueno aqui hay algo interesante. TEnemos el NativeMemory.Alloc((nuint) que esto lo puso el aux pero pues tiene su ciencia para manejar bien los unsafe
-            *nuevoNodo = new NodoVehiculo(id, marca, modelo, placa);
+            NodoVehiculo* nuevoNodo = (NodoVehiculo*)NativeMemory.Alloc((nuint)sizeof(NodoVehiculo)); // bueno aqui hay algo interesante. TEnemos el NativeMemory.Alloc((nuint) que esto lo puso el aux pero pues tiene su ciencia para manejar bien los unsafe            
+            //con unsafe se asigna memoria de forma manual, NativeMemory.Alloc reserva memoria del tamaño de un NodoVehiculo. El resultado se convierte a un puntero de tipo NodoVehiculo
+
+            *nuevoNodo = new NodoVehiculo(id, idUsuario, marca, modelo, placa); // cramos nuea instancia de NodoVehiculo en nuevoNodo y el "*" quiere decir q le asiganamos ese valor al espacio de memoria al que apunta nuevoNodo
 
             if (head == null)
             {
-                head = tail = nuevoNodo;
+                head = tail = nuevoNodo; // si (la cabeza esta nula) no hay nada entonces el nuevoNodo va a ser cabeza y cola... osea el primer dato
             }
-            else
+            else // si esta llena entonces: 
             {
-                tail->Next = nuevoNodo;
-                nuevoNodo->Prev = tail;
-                tail = nuevoNodo;
+                tail->Next = nuevoNodo; // el apuntador Next del ultimo nodo (tail en este momento) va a apuntar al nuevoNodo
+                nuevoNodo->Prev = tail; // el apuntador Previo del nuevoNodo apuntará al ultimo nodo (tail en este momento)
+                tail = nuevoNodo; // y el nuevoNodo se convertira en tail porque ahora es el ultimo nodo
+
+                /*
+                osea un poco de demostracion 
+                lista normal: nodo1 -><- nodo2 -><- nodo3 -><- nodo 4
+
+                lista: nodo1 -><- nodo2 -><- nodo3 -><- nodo 4 (ultimo nodo "tail")                     en este momento queremos meter a "nuevoNodo"
+                lista: nodo1 -><- nodo2 -><- nodo3 -><- nodo 4 (ultimo nodo "tail") ->                  el next de tail empieza a apuntar a nuevoNodo
+                lista: nodo1 -><- nodo2 -><- nodo3 -><- nodo 4 (ultimo nodo "tail") -> <-               el prev de nuevoNodo empieza a apuntar a tail
+                lista: nodo1 -><- nodo2 -><- nodo3 -><- nodo 4  -> <- nuevoNodo (ultimo nodo "tail")    ahora nuevoNodo se convierte en tail
+                */
+
             }
         }
 
