@@ -3,6 +3,27 @@ using System.Runtime.InteropServices;
 
 namespace AutoGestPro.Core
 {
+    public class Repuesto
+    {
+        public int ID { get; set; }
+        public string RepuestoNombre { get; set; }
+        public string Detalles { get; set; }
+        public double Costo { get; set; }
+
+        public Repuesto(int id, string repuesto, string detalles, double costo)
+        {
+            ID = id;
+            RepuestoNombre = repuesto;
+            Detalles = detalles;
+            Costo = costo;
+        }
+
+        public override string ToString()
+        {
+            return $"ID: {ID}, Repuesto: {RepuestoNombre}, Detalles: {Detalles}, Costo: {Costo:C}";
+        }
+    }
+    
     public unsafe struct NodoRepuesto // creamos estructura unsafe
     {
         public int ID;
@@ -60,17 +81,15 @@ namespace AutoGestPro.Core
             }
             else
             {
-                NodoRepuesto* temp = head; // Si ya hay algo en la lista, necesitamos un nodo temporal para no perder la referencia
+                NodoRepuesto* temp = head;
+                // Recorrer hasta llegar al último nodo (el que apunta a head)
+                while (temp->Next != head)
                 {
-                    temp = temp->Next; // Nos movemos al siguiente nodo usando el temporal
+                    temp = temp->Next;
                 }
-                temp->Next = nuevoNodo;// Conectamos el último nodo con el nuevo
-                nuevoNodo->Next = head;
-
-
-
-
-
+                // Ahora temp es el último nodo
+                temp->Next = nuevoNodo;    // El último apunta al nuevo
+                nuevoNodo->Next = head;    // El nuevo apunta al primero (head)
             }
         }
 

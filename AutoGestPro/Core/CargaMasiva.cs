@@ -264,18 +264,20 @@ using AutoGestPro.Core;
 
 namespace AutoGestPro.Core
 {
+    /*
     public class CargaMasiva : Window
-    {
-        private readonly ListaUsuarios _listaUsuarios;
-        private ListaVehiculos listaVehiculos;
-        private ListaRepuestos listaRepuestos;
 
-        public CargaMasiva(ListaUsuarios listaUsuarios) : base("Carga Masiva")
+    {
+        private readonly ListaUsuarios _listaUsuarios; // Cambiar el tipo de la lista
+        private readonly ListaVehiculos _listaVehiculos;
+        private readonly ListaRepuestos _listaRepuestos; 
+
+        public CargaMasiva(ListaUsuarios listaUsuarios, ListaVehiculos listaVehiculos, ListaRepuestos listaRepuestos) : base("Carga Masiva") // Cambiar el constructor para recibir las listas
         {
             // Inicializar las listas
-            _listaUsuarios = listaUsuarios; 
-            listaVehiculos = new ListaVehiculos();
-            listaRepuestos = new ListaRepuestos();
+            _listaUsuarios = listaUsuarios; // Usamos la lista pasada por parámetro
+            _listaVehiculos = listaVehiculos;
+            _listaRepuestos = listaRepuestos;
 
             // Configurar la ventana
             SetDefaultSize(400, 150);
@@ -293,6 +295,10 @@ namespace AutoGestPro.Core
             Button btnCargarArchivo = new Button("Cargar Archivo JSON");
             btnCargarArchivo.Clicked += OnCargarArchivoClicked;
             vbox.PackStart(btnCargarArchivo, false, false, 0);
+
+            // Botón para cargar archivo JSON de vehículos
+            // boton para cargar archivo JSON de repuestos
+            
 
             Add(vbox);
         }
@@ -381,4 +387,220 @@ namespace AutoGestPro.Core
             }
         }
     }
+    */
+
+    public class CargaMasiva : Window
+    {
+        private readonly ListaUsuarios _listaUsuarios;
+        private readonly ListaVehiculos _listaVehiculos;
+        private readonly ListaRepuestos _listaRepuestos;
+
+        public CargaMasiva(ListaUsuarios listaUsuarios, ListaVehiculos listaVehiculos, ListaRepuestos listaRepuestos) : base("Carga Masiva")
+        {
+            _listaUsuarios = listaUsuarios;
+            _listaVehiculos = listaVehiculos;
+            _listaRepuestos = listaRepuestos;
+
+            SetDefaultSize(400, 200);
+            SetPosition(WindowPosition.Center);
+
+            VBox vbox = new VBox();
+            vbox.Spacing = 10;
+
+            // Título
+            Label labelTitulo = new Label("Seleccione el tipo de datos a cargar:");
+            vbox.PackStart(labelTitulo, false, false, 5);
+
+            // Botones para cada tipo de carga
+            Button btnUsuarios = new Button("Cargar Usuarios (JSON)");
+            btnUsuarios.Clicked += (s, e) => OnCargarArchivoClicked(TipoCarga.Usuarios);
+            vbox.PackStart(btnUsuarios, false, false, 0);
+
+            Button btnVehiculos = new Button("Cargar Vehículos (JSON)");
+            btnVehiculos.Clicked += (s, e) => OnCargarArchivoClicked(TipoCarga.Vehiculos);
+            vbox.PackStart(btnVehiculos, false, false, 0);
+
+            Button btnRepuestos = new Button("Cargar Repuestos (JSON)");
+            btnRepuestos.Clicked += (s, e) => OnCargarArchivoClicked(TipoCarga.Repuestos);
+            vbox.PackStart(btnRepuestos, false, false, 0);
+
+            Add(vbox);
+        }
+
+        // Enum para identificar el tipo de carga
+        private enum TipoCarga
+        {
+            Usuarios,
+            Vehiculos,
+            Repuestos
+        }
+
+        private void OnCargarArchivoClicked(TipoCarga tipo)
+        {
+            FileChooserDialog fileChooser = new FileChooserDialog(
+                $"Seleccione el archivo JSON de {tipo}",
+                this,
+                FileChooserAction.Open,
+                "Cancelar", ResponseType.Cancel,
+                "Abrir", ResponseType.Accept);
+
+            FileFilter filter = new FileFilter();
+            filter.Name = "Archivos JSON";
+            filter.AddPattern("*.json");
+            fileChooser.AddFilter(filter);
+
+            if (fileChooser.Run() == (int)ResponseType.Accept)
+            {
+                string filePath = fileChooser.Filename;
+                switch (tipo)
+                {
+                    case TipoCarga.Usuarios:
+                        CargarUsuarios(filePath);
+                        break;
+                    case TipoCarga.Vehiculos:
+                        CargarVehiculos(filePath);
+                        break;
+                    case TipoCarga.Repuestos:
+                        CargarRepuestos(filePath);
+                        break;
+                }
+            }
+
+            fileChooser.Destroy();
+        }
+
+        private void CargarUsuarios(string filePath)
+        {
+            try
+            {
+                Console.WriteLine("\n=== Iniciando carga de USUARIOS ===");
+                string json = File.ReadAllText(filePath);
+                
+                var usuarios = JsonConvert.DeserializeObject<List<Usuario>>(json);
+                ValidarJSONUsuarios(usuarios);
+
+                if (usuarios != null && usuarios.Count > 0)
+                {
+                    Console.WriteLine($"✓ JSON deserializado exitosamente - {usuarios.Count} usuarios encontrados");
+                    foreach (var usuario in usuarios)
+                    {
+                        _listaUsuarios.Insertar(usuario);
+                        Console.WriteLine($"→ {usuario}");
+                    }
+                    MostrarMensajeExito($"Se cargaron {usuarios.Count} usuarios correctamente");
+                }
+            }
+            catch (Exception e)
+            {
+                MostrarError($"Error al cargar usuarios: {e.Message}");
+            }
+        }
+
+       
+
+        private void CargarVehiculos(string filePath)
+        {
+            try
+            {
+                Console.WriteLine("\n=== Iniciando carga de VEHÍCULOS ===");
+                string json = File.ReadAllText(filePath);
+                
+                var vehiculos = JsonConvert.DeserializeObject<List<Vehiculo>>(json);
+                ValidarJSONVehiculos(vehiculos);
+
+                if (vehiculos != null && vehiculos.Count > 0)
+                {
+                    Console.WriteLine($"✓ JSON deserializado exitosamente - {vehiculos.Count} vehículos encontrados");
+                    foreach (var vehiculo in vehiculos)
+                    {
+                        _listaVehiculos.Insertar(vehiculo.ID, vehiculo.ID_Usuario, vehiculo.Marca, vehiculo.Modelo, vehiculo.Placa);
+                        Console.WriteLine($"→ {vehiculo}");
+                    }
+                    MostrarMensajeExito($"Se cargaron {vehiculos.Count} vehículos correctamente");
+                }
+            }
+            catch (Exception e)
+            {
+                MostrarError($"Error al cargar vehículos: {e.Message}");
+            }
+        }
+
+        private void CargarRepuestos(string filePath)
+        {
+            try
+            {
+                Console.WriteLine("\n=== Iniciando carga de REPUESTOS ===");
+                string json = File.ReadAllText(filePath);
+                
+                var repuestos = JsonConvert.DeserializeObject<List<Repuesto>>(json);
+                ValidarJSONRepuestos(repuestos);
+
+                if (repuestos != null && repuestos.Count > 0)
+                {
+                    Console.WriteLine($"✓ JSON deserializado exitosamente - {repuestos.Count} repuestos encontrados");
+                    foreach (var repuesto in repuestos)
+                    {
+                        _listaRepuestos.Insertar(repuesto.ID, repuesto.RepuestoNombre, repuesto.Detalles, repuesto.Costo);
+                        Console.WriteLine($"→ {repuesto}");
+                    }
+                    MostrarMensajeExito($"Se cargaron {repuestos.Count} repuestos correctamente");
+                }
+            }
+            catch (Exception e)
+            {
+                MostrarError($"Error al cargar repuestos: {e.Message}");
+            }
+        }
+
+        // Métodos de validación
+        private void ValidarJSONUsuarios(List<Usuario> usuarios)
+        {
+            if (usuarios == null) throw new Exception("El archivo no contiene un formato válido de usuarios");
+            foreach (var usuario in usuarios)
+            {
+                if (string.IsNullOrEmpty(usuario.Nombres)) throw new Exception($"Usuario con ID {usuario.ID} no tiene nombre");
+                if (string.IsNullOrEmpty(usuario.Correo)) throw new Exception($"Usuario con ID {usuario.ID} no tiene correo");
+                // Más validaciones específicas
+            }
+        }
+
+        private void ValidarJSONVehiculos(List<Vehiculo> vehiculos)
+        {
+            if (vehiculos == null) throw new Exception("El archivo no contiene un formato válido de vehículos");
+            foreach (var vehiculo in vehiculos)
+            {
+                if (string.IsNullOrEmpty(vehiculo.Placa)) throw new Exception($"Vehículo con ID {vehiculo.ID} no tiene placa");
+                if (vehiculo.ID_Usuario <= 0) throw new Exception($"Vehículo con ID {vehiculo.ID} tiene un ID de usuario inválido");
+                // Más validaciones específicas
+            }
+        }
+
+        private void ValidarJSONRepuestos(List<Repuesto> repuestos)
+        {
+            if (repuestos == null) throw new Exception("El archivo no contiene un formato válido de repuestos");
+            foreach (var repuesto in repuestos)
+            {
+                if (string.IsNullOrEmpty(repuesto.RepuestoNombre)) throw new Exception($"Repuesto con ID {repuesto.ID} no tiene nombre");
+                if (repuesto.Costo <= 0) throw new Exception($"Repuesto con ID {repuesto.ID} tiene un costo inválido");
+                // Más validaciones específicas
+            }
+        }
+
+        private void MostrarMensajeExito(string mensaje)
+        {
+            MessageDialog dialog = new MessageDialog(this, DialogFlags.Modal, MessageType.Info, ButtonsType.Ok, mensaje);
+            dialog.Run();
+            dialog.Destroy();
+        }
+
+        private void MostrarError(string mensaje)
+        {
+            Console.WriteLine($"\n❌ Error: {mensaje}");
+            MessageDialog dialog = new MessageDialog(this, DialogFlags.Modal, MessageType.Error, ButtonsType.Ok, mensaje);
+            dialog.Run();
+            dialog.Destroy();
+        }
+    }
+
+    
 }

@@ -1,0 +1,73 @@
+[ 
+    {
+        "ID": 1,
+        "ID_Usuario": 101,
+        "Marca": "Toyota",
+        "Modelo": "Corolla",
+        "Placa": "ABC123"
+    },
+    {
+        "ID": 2,
+        "ID_Usuario": 102,
+        "Marca": "Honda",
+        "Modelo": "Civic",
+        "Placa": "XYZ789"
+    },
+    {
+        "ID": 3,
+        "ID_Usuario": 103,
+        "Marca": "Ford",
+        "Modelo": "Focus",
+        "Placa": "LMN456"
+    },
+    {
+        "ID": 4,
+        "ID_Usuario": 104,
+        "Marca": "Chevrolet",
+        "Modelo": "Malibu",
+        "Placa": "DEF321"
+    },
+    {
+        "ID": 5,
+        "ID_Usuario": 105,
+        "Marca": "Nissan",
+        "Modelo": "Sentra",
+        "Placa": "GHI654"
+    },
+    {
+        "ID": 6,
+        "ID_Usuario": 106,
+        "Marca": "Volkswagen",
+        "Modelo": "Jetta",
+        "Placa": "JKL987"
+    },
+    {
+        "ID": 7,
+        "ID_Usuario": 107,
+        "Marca": "Hyundai",
+        "Modelo": "Elantra",
+        "Placa": "MNO321"
+    },
+    {
+        "ID": 8,
+        "ID_Usuario": 108,
+        "Marca": "Kia",
+        "Modelo": "Optima",
+        "Placa": "PQR654"
+    },
+    {
+        "ID": 9,
+        "ID_Usuario": 109,
+        "Marca": "Mazda",
+        "Modelo": "3",
+        "Placa": "STU987"
+    },
+    {
+        "ID": 10,
+        "ID_Usuario": 110,
+        "Marca": "Subaru",
+        "Modelo": "Impreza",
+        "Placa": "VWX321"
+    }
+
+]

@@ -1,0 +1,62 @@
+[
+    {
+        "ID": 1,
+        "Repuesto": "Filtro de aceite",
+        "Detalles": "Filtro de aceite para motor de 4 cilindros",
+        "Costo": 15.99
+    },
+    {
+        "ID": 2,
+        "Repuesto": "Bujía",
+        "Detalles": "Bujía de alto rendimiento",
+        "Costo": 8.50
+    },
+    {
+        "ID": 3,
+        "Repuesto": "Pastillas de freno",
+        "Detalles": "Juego de pastillas de freno delanteras",
+        "Costo": 45.00
+    },
+    {
+        "ID": 4,
+        "Repuesto": "Filtro de aire",
+        "Detalles": "Filtro de aire para motor de 6 cilindros",
+        "Costo": 20.00
+    },
+    {
+        "ID": 5,
+        "Repuesto": "Batería",
+        "Detalles": "Batería de 12V 60Ah",
+        "Costo": 120.00
+    },
+    {
+        "ID": 6,
+        "Repuesto": "Amortiguador",
+        "Detalles": "Amortiguador trasero",
+        "Costo": 75.00
+    },
+    {
+        "ID": 7,
+        "Repuesto": "Correa de distribución",
+        "Detalles": "Correa de distribución para motor de 4 cilindros",
+        "Costo": 35.00
+    },
+    {
+        "ID": 8,
+        "Repuesto": "Radiador",
+        "Detalles": "Radiador de aluminio",
+        "Costo": 150.00
+    },
+    {
+        "ID": 9,
+        "Repuesto": "Alternador",
+        "Detalles": "Alternador de 12V 90A",
+        "Costo": 200.00
+    },
+    {
+        "ID": 10,
+        "Repuesto": "Bomba de agua",
+        "Detalles": "Bomba de agua para sistema de enfriamiento",
+        "Costo": 60.00
+    }
+]

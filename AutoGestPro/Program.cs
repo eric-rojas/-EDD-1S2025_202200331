@@ -150,10 +150,10 @@ namespace AutoGestPro
 }
 */
 
-// Program.cs
 using System;
 using Gtk;
 using AutoGestPro.Core;
+using AutoGestPro.UI;
 
 namespace AutoGestPro
 {
@@ -162,22 +162,55 @@ namespace AutoGestPro
         [STAThread]
         public static void Main(string[] args)
         {
-            Application.Init();
+            try
+            {
+                Application.Init();
 
-            // Crear una única instancia de ListaUsuarios
-            ListaUsuarios listaUsuarios = new ListaUsuarios();
-            
-            // Datos de prueba
-            listaUsuarios.Insertar(new Usuario(1, "Juan", "Pérez", "juan@test.com", "123456"));
-            listaUsuarios.Insertar(new Usuario(2, "María", "García", "maria@test.com", "654321"));
+                // Crear las instancias de las listas
+                var listaUsuarios = new ListaUsuarios();
+                var listaVehiculos = new ListaVehiculos();
+                var listaRepuestos = new ListaRepuestos();
 
-            // Pasar la lista al constructor del menú
-            Menu1 menu = new Menu1(listaUsuarios);
-            menu.DeleteEvent += delegate { Application.Quit(); };
-            menu.ShowAll();
+                // Datos de prueba
+                listaUsuarios.Insertar(new Usuario(1, "Juan", "Pérez", "juan@test.com", "123456"));
+                listaUsuarios.Insertar(new Usuario(2, "María", "García", "maria@test.com", "654321"));
 
-            Application.Run();
+                // Crear ventana de inicio de sesión
+                var inicioWindow = new Inicio();
+                
+                // Configurar el evento de cierre de la ventana de inicio
+                inicioWindow.DeleteEvent += (o, args) => 
+                {
+                    Application.Quit();
+                    args.RetVal = true;
+                };
+
+                // Configurar el evento de login exitoso
+                inicioWindow.LoginExitoso += () =>
+                {
+                    Console.WriteLine("Login exitoso"); // Para debug
+                    inicioWindow.Hide();
+
+                    var menu = new Menu1(listaUsuarios, listaVehiculos, listaRepuestos);
+                    menu.DeleteEvent += (o, args) =>
+                    {
+                        Application.Quit();
+                        args.RetVal = true;
+                    };
+                    menu.ShowAll();
+                };
+
+                // Mostrar la ventana de inicio
+                inicioWindow.ShowAll();
+                Console.WriteLine("Iniciando aplicación..."); // Para debug
+                
+                Application.Run();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en la aplicación: {ex.Message}");
+                Console.WriteLine(ex.StackTrace);
+            }
         }
     }
 }
-
