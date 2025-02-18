@@ -1,4 +1,5 @@
-﻿using Gtk;
+﻿/*
+using Gtk;
 using System;
 using AutoGestPro.Core; 
 
@@ -147,3 +148,36 @@ namespace AutoGestPro
         }
     }
 }
+*/
+
+// Program.cs
+using System;
+using Gtk;
+using AutoGestPro.Core;
+
+namespace AutoGestPro
+{
+    class Program
+    {
+        [STAThread]
+        public static void Main(string[] args)
+        {
+            Application.Init();
+
+            // Crear una única instancia de ListaUsuarios
+            ListaUsuarios listaUsuarios = new ListaUsuarios();
+            
+            // Datos de prueba
+            listaUsuarios.Insertar(new Usuario(1, "Juan", "Pérez", "juan@test.com", "123456"));
+            listaUsuarios.Insertar(new Usuario(2, "María", "García", "maria@test.com", "654321"));
+
+            // Pasar la lista al constructor del menú
+            Menu1 menu = new Menu1(listaUsuarios);
+            menu.DeleteEvent += delegate { Application.Quit(); };
+            menu.ShowAll();
+
+            Application.Run();
+        }
+    }
+}
+

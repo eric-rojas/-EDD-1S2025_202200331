@@ -1,18 +1,59 @@
 
-	
-[ 
-	{ 
-		"ID": 1, 
-		"ID_Usuario": 1, 
-		"Marca": "Toyota", 
-		"Modelo": "Corolla", 
-		"Placa": "ABC123" 
-	}, 
-	{ 
-		"ID": 2, 
-		"ID_Usuario": 2, 
-		"Marca": "Ford", 
-		"Modelo": "Focus", 
-		"Placa": "XYZ456" 
-	} 
+[
+	{
+	  "ID": 3,
+	  "Nombres": "Carlos",
+	  "Apellidos": "López",
+	  "Correo": "carlos@test.com",
+	  "Contraseña": "password123"
+	},
+	{
+	  "ID": 4,
+	  "Nombres": "Ana",
+	  "Apellidos": "Martínez",
+	  "Correo": "ana@test.com",
+	  "Contraseña": "password456"
+	},
+	{
+	  "ID": 5,
+	  "Nombres": "Juan",
+	  "Apellidos": "Pérez",
+	  "Correo": "anan@test.com",
+	  "Contraseña": "password789"
+	},
+	{
+	  "ID": 6,
+	  "Nombres": "María",
+	  "Apellidos": "Gómez",
+	  "Correo": "fernanda@test.com",
+	  "Contraseña": "password101112"
+	},
+	{
+		"ID": 7,
+		"Nombres": "Luis",
+		"Apellidos": "Ramírez",
+		"Correo": "luis@test.com",
+		"Contraseña": "password131415"
+	},
+	{
+		"ID": 8,
+		"Nombres": "Elena",
+		"Apellidos": "Torres",
+		"Correo": "elena@test.com",
+		"Contraseña": "password161718"
+	},
+	{
+		"ID": 9,
+		"Nombres": "Miguel",
+		"Apellidos": "Sánchez",
+		"Correo": "miguel@test.com",
+		"Contraseña": "password192021"
+	},
+	{
+		"ID": 10,
+		"Nombres": "Laura",
+		"Apellidos": "Hernández",
+		"Correo": "laura@test.com",
+		"Contraseña": "password222324"
+	}
 ]
