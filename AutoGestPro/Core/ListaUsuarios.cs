@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 
 namespace AutoGestPro.Core /* madres esto es importante, estaba haciendo pruebas basicas en consola y no me reconocía este archivo porque le faltaba el 
 namespace y no jalaba nada, me decia q no habia nada en Core. entonces es importante decirle que el archivo pertenece a que carpetas y en el main poner una
@@ -147,5 +148,75 @@ Bueno ahora sigan con la lectura :)
                 actual = actual.Siguiente;
             }
         }
+
+        /*
+        public void GenerarDOT(string ruta)
+        {
+
+            using (StreamWriter writer = new StreamWriter(ruta))
+            {
+                writer.WriteLine("digraph G {");
+                writer.WriteLine("rankdir=LR;");
+                Nodo actual = cabeza;
+                while (actual != null)
+                {
+                    if (actual.Siguiente != null)
+                    {
+                        writer.WriteLine($"    \"{actual.Usuario.ID}\" -> \"{actual.Siguiente.Usuario.ID}\";");
+                    }
+                    else
+                    {
+                        writer.WriteLine($"    \"{actual.Usuario.ID}\";");
+                    }
+                    actual = actual.Siguiente;
+                }
+                writer.WriteLine("}");
+            }
+        }
+        */
+
+        
+        public string GenerarGraphviz()
+        {
+            if (cabeza == null)
+            {
+                return "digraph G {\n    node [shape=record];\n    NULL [label = \"{NULL}\"];\n}\n";
+            }
+
+            var graphviz = "digraph G {\n";
+            graphviz += "    node [shape=record];\n";
+            graphviz += "    rankdir=LR;\n";
+            graphviz += "    subgraph cluster_0 {\n";
+            graphviz += "        label = \"Lista Simple de Usuarios\";\n";
+
+            Nodo actual = cabeza;
+            int index = 0;
+            while (actual != null)
+            {
+                graphviz += $"        n{index} [label = \"{{<data> ID: {actual.Usuario.ID} \\n" +
+                        $"Nombres: {actual.Usuario.Nombres} \\n" +
+                        $"Apellidos: {actual.Usuario.Apellidos} \\n" +
+                        $"Correo: {actual.Usuario.Correo} \\n" +
+                        $"Contraseña: {actual.Usuario.Contraseña} \\n" +
+                        $"Siguiente: }}\"];\n";
+                actual = actual.Siguiente;
+                index++;
+            }
+
+            actual = cabeza;
+            for (int i = 0; actual != null && actual.Siguiente != null; i++)
+            {
+                graphviz += $"        n{i} -> n{i + 1};\n";
+                actual = actual.Siguiente;
+            }
+
+            graphviz += "    }\n";
+            graphviz += "}\n";
+            return graphviz;
+        }
+
+
+
+
     }
 }

@@ -149,7 +149,7 @@ namespace AutoGestPro.UI
 
     private void OnLoginClicked(object sender, EventArgs e)
     {
-        if (txtCorreo.Text == "root@gmail.com" && txtPassword.Text == "root123")
+        if (txtCorreo.Text == "r" && txtPassword.Text == "1")
         {
             LoginExitoso?.Invoke(); // Disparar el evento de login exitoso
         }

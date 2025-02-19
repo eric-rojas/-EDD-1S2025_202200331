@@ -1,6 +1,7 @@
 using Gtk;
 using System;
 using AutoGestPro.Core;
+using AutoGestPro.Utils;
 using AutoGestPro.UI; // Add this line to import the UsuariosView class
 
 namespace AutoGestPro
@@ -58,6 +59,11 @@ namespace AutoGestPro
             Btn_CancelarFactura.Clicked += GoMostrarLista; 
             vbox.PackStart(Btn_CancelarFactura, false, false, 0);
 
+            // Generacion de Reportes
+            Button Btn_GenerarReportes = new Button("Generar Reportes");
+            Btn_GenerarReportes.Clicked += GoReportes;
+            vbox.PackStart(Btn_GenerarReportes, false, false, 0);
+
             Add(vbox);
         }
 
@@ -93,5 +99,52 @@ namespace AutoGestPro
             Ingreso ingreso = new Ingreso(_listaUsuarios, _listaRepuestos, _listaVehiculos);
             ingreso.ShowAll();
         }
+
+        string dotFile = "usuarios.dot";
+        string imgFile = "usuarios.png";
+        private void GoReportes(object? sender, EventArgs e)
+        {
+            Application.Init(); // Asegurar que GTK está iniciado
+
+            try
+            {
+                // Generar reporte de usuarios
+                string contenidoDot = _listaUsuarios.GenerarGraphviz();
+                GraphvizExporter.GenerarGrafo("usuarios", contenidoDot);
+
+                Gtk.Application.Invoke(delegate
+                {
+                    using (var successDialog = new MessageDialog(
+                        this,
+                        DialogFlags.Modal,
+                        MessageType.Info,
+                        ButtonsType.Ok,
+                        "Reportes generados exitosamente en la carpeta Reports"))
+                    {
+                        successDialog.Run();
+                        successDialog.Hide(); // Ocultar en lugar de destruir directamente
+                        successDialog.Dispose();
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                Gtk.Application.Invoke(delegate
+                {
+                    using (var errorDialog = new MessageDialog(
+                        this,
+                        DialogFlags.Modal,
+                        MessageType.Error,
+                        ButtonsType.Ok,
+                        $"Error al generar reportes: {ex.Message}"))
+                    {
+                        errorDialog.Run();
+                        errorDialog.Hide();
+                        errorDialog.Dispose();
+                    }
+                });
+            }
+        }
+
     }
 }

@@ -171,9 +171,7 @@ namespace AutoGestPro
                 var listaVehiculos = new ListaVehiculos();
                 var listaRepuestos = new ListaRepuestos();
 
-                // Datos de prueba
-                listaUsuarios.Insertar(new Usuario(1, "Juan", "Pérez", "juan@test.com", "123456"));
-                listaUsuarios.Insertar(new Usuario(2, "María", "García", "maria@test.com", "654321"));
+                
 
                 // Crear ventana de inicio de sesión
                 var inicioWindow = new Inicio();
