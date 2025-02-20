@@ -1,0 +1,8 @@
+digraph G {
+    node [shape=record];
+    rankdir=LR;
+    subgraph cluster_0 {
+        label = "Lista Simple de Usuarios";
+        n0 [label = "{<data> ID: 1 \nNombres: qwe \nApellidos: qwe \nCorreo: qwe \nContraseña: qwe \nSiguiente: }"];
+    }
+}

@@ -1,8 +1,9 @@
+// filepath: /home/rojas/Documentos/Universidad/1er S 2025/EDD/-EDD-1S2025_202200331/AutoGestPro/UI/Menu1.cs
 using Gtk;
 using System;
 using AutoGestPro.Core;
 using AutoGestPro.Utils;
-using AutoGestPro.UI; // Add this line to import the UsuariosView class
+using AutoGestPro.UI;
 
 namespace AutoGestPro
 {
@@ -21,50 +22,46 @@ namespace AutoGestPro
             SetDefaultSize(400, 300);
             SetPosition(WindowPosition.Center);
 
-            // Crear un contenedor para los elementos
             VBox vbox = new VBox();
             vbox.Spacing = 5;
 
-            // Label
             Label label = new Label("Menú Principal");
             vbox.PackStart(label, false, false, 0);
 
-            // Cargar Archivo
             Button Btn_CargaMasiva = new Button("Carga Masiva");
             Btn_CargaMasiva.Clicked += GoCargaMasiva;
             vbox.PackStart(Btn_CargaMasiva, false, false, 0);
 
-            // Mostrar Lista
             Button Btn_MostrarLista = new Button("Mostrar Lista");
             Btn_MostrarLista.Clicked += GoMostrarLista;
             vbox.PackStart(Btn_MostrarLista, false, false, 0);
 
-            // Mostrar Ingreso Manual
             Button Btn_IngresoManual = new Button("Ingreso Manual");
             Btn_IngresoManual.Clicked += GoIngresoManual;
             vbox.PackStart(Btn_IngresoManual, false, false, 0);
 
-            // Mostrar Gestion de Usuarios
             Button Btn_GestionUsuarios = new Button("Gestión de Usuarios");
             Btn_GestionUsuarios.Clicked += GoGestionUsuarios;
             vbox.PackStart(Btn_GestionUsuarios, false, false, 0);
 
-            // Mostrar Generar Servicio
             Button Btn_GenerarServicio = new Button("Generar Servicio");
             Btn_GenerarServicio.Clicked += GoMostrarLista;
             vbox.PackStart(Btn_GenerarServicio, false, false, 0);
 
-            // Cancelar Factura
             Button Btn_CancelarFactura = new Button("Cancelar Factura");
-            Btn_CancelarFactura.Clicked += GoMostrarLista; 
+            Btn_CancelarFactura.Clicked += GoMostrarLista;
             vbox.PackStart(Btn_CancelarFactura, false, false, 0);
 
-            // Generacion de Reportes
             Button Btn_GenerarReportes = new Button("Generar Reportes");
             Btn_GenerarReportes.Clicked += GoReportes;
             vbox.PackStart(Btn_GenerarReportes, false, false, 0);
 
+            
+
+
+
             Add(vbox);
+            ShowAll();
         }
 
         private void GoCargaMasiva(object? sender, EventArgs e)
@@ -90,7 +87,7 @@ namespace AutoGestPro
 
         private void GoGestionUsuarios(object? sender, EventArgs e)
         {
-            UsuariosView usuariosView = new UsuariosView(_listaUsuarios); 
+            UsuariosView usuariosView = new UsuariosView(_listaUsuarios);
             usuariosView.ShowAll();
         }
 
@@ -100,51 +97,39 @@ namespace AutoGestPro
             ingreso.ShowAll();
         }
 
-        string dotFile = "usuarios.dot";
-        string imgFile = "usuarios.png";
         private void GoReportes(object? sender, EventArgs e)
         {
-            Application.Init(); // Asegurar que GTK está iniciado
+            string dotFileUsuarios = "usuarios.dot";
+            string dotfileRepuestos = "repuestos.dot";
+            string dotfileVehiculos = "vehiculos.dot";
+            string imgFileUsuarios = "usuarios.png";
 
-            try
-            {
-                // Generar reporte de usuarios
-                string contenidoDot = _listaUsuarios.GenerarGraphviz();
-                GraphvizExporter.GenerarGrafo("usuarios", contenidoDot);
+            // Generar el archivo DOT para usuarios
+            string contenidoDotUsuarios = _listaUsuarios.GenerarGraphviz();
+            GraphvizExporter.GenerarArchivoDot(dotFileUsuarios, contenidoDotUsuarios);
 
-                Gtk.Application.Invoke(delegate
-                {
-                    using (var successDialog = new MessageDialog(
-                        this,
-                        DialogFlags.Modal,
-                        MessageType.Info,
-                        ButtonsType.Ok,
-                        "Reportes generados exitosamente en la carpeta Reports"))
-                    {
-                        successDialog.Run();
-                        successDialog.Hide(); // Ocultar en lugar de destruir directamente
-                        successDialog.Dispose();
-                    }
-                });
-            }
-            catch (Exception ex)
-            {
-                Gtk.Application.Invoke(delegate
-                {
-                    using (var errorDialog = new MessageDialog(
-                        this,
-                        DialogFlags.Modal,
-                        MessageType.Error,
-                        ButtonsType.Ok,
-                        $"Error al generar reportes: {ex.Message}"))
-                    {
-                        errorDialog.Run();
-                        errorDialog.Hide();
-                        errorDialog.Dispose();
-                    }
-                });
-            }
+            //Generar el archivo Dot para Repuestos
+            string contenidoDotRepuestos = _listaRepuestos.GenerarGraphviz();
+            GraphvizExporter.GenerarArchivoDot(dotfileRepuestos, contenidoDotRepuestos);
+
+            //Generar el archivo Dot para Vehiculos
+            string contenidoDotVehiculos = _listaVehiculos.GenerarGraphviz();
+            GraphvizExporter.GenerarArchivoDot(dotfileVehiculos, contenidoDotVehiculos);
+        
+            // Convertir el archivo DOT a PNG para usuarios
+            GraphvizExporter.ConvertirDotAPng(dotFileUsuarios);
+
+            // Convertir el archivo DOT a PNG para repuestos
+            GraphvizExporter.ConvertirDotAPng(dotfileRepuestos);
+
+            // Convertir el archivo DOT a PNG para vehiculos
+            GraphvizExporter.ConvertirDotAPng(dotfileVehiculos);
+
+
+
+
         }
-
+      
+        
     }
 }

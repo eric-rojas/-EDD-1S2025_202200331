@@ -12,6 +12,7 @@ digraph G {
         n6 [label = "{<data> ID: 7 \nNombres: Pedro Pablo \nApellidos: Rodriguez Torres \nCorreo: pedro.pablo@usac.com \nContraseña:  \nSiguiente: }"];
         n7 [label = "{<data> ID: 8 \nNombres: Laura Isabel \nApellidos: Sanchez Morales \nCorreo: laura.isabel@usac.com \nContraseña:  \nSiguiente: }"];
         n8 [label = "{<data> ID: 9 \nNombres: Rafael Alejandro \nApellidos: Ramirez Diaz \nCorreo: rafael.alejandro@usac.com \nContraseña:  \nSiguiente: }"];
+        n9 [label = "{<data> ID: 10 \nNombres: Isabel Cristina \nApellidos: Diaz Lopez \nCorreo: isabel.cristina@usac.com \nContraseña:  \nSiguiente: }"];
         n0 -> n1;
         n1 -> n2;
         n2 -> n3;
@@ -20,5 +21,6 @@ digraph G {
         n5 -> n6;
         n6 -> n7;
         n7 -> n8;
+        n8 -> n9;
     }
 }

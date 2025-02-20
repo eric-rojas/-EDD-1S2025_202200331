@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "aFJlNizVfyI=",
+  "dgSpecHash": "aZ3N+JoQYNc=",
   "success": true,
   "projectFilePath": "/home/rojas/Documentos/Universidad/1er S 2025/EDD/-EDD-1S2025_202200331/AutoGestPro/Proyecto.csproj",
   "expectedPackageFiles": [
@@ -12,7 +12,7 @@
     "/home/rojas/.nuget/packages/gtksharp/3.24.24.95/gtksharp.3.24.24.95.nupkg.sha512",
     "/home/rojas/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
     "/home/rojas/.nuget/packages/pangosharp/3.24.24.95/pangosharp.3.24.24.95.nupkg.sha512",
-    "/home/rojas/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.1/microsoft.aspnetcore.app.ref.9.0.1.nupkg.sha512"
+    "/home/rojas/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.2/microsoft.aspnetcore.app.ref.9.0.2.nupkg.sha512"
   ],
   "logs": []
 }

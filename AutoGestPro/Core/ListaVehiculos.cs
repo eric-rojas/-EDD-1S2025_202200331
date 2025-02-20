@@ -1,5 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
+
 
 /* bueno segun el enunciado este sistema de vehiculos se tiene que manejar con una estructura "unsafe code" esto es para manejar mejor los punteros con direcciones
 de memoria exactas. 
@@ -182,6 +184,55 @@ namespace AutoGestPro.Core
                 NativeMemory.Free(temp);
             }
         }
+
+
+        public unsafe string GenerarGraphviz()
+        {
+            if (head == null)
+            {
+                return "digraph G {\n    node [shape=record];\n    NULL [label = \"{NULL}\"];\n}\n";
+            }
+
+            StringBuilder dot = new StringBuilder();
+            dot.AppendLine("digraph G {");
+            dot.AppendLine("    rankdir=LR;");
+            dot.AppendLine("    node [shape=record];");
+            dot.AppendLine("    subgraph cluster_0 {");
+            dot.AppendLine("        label = \"Lista Doblemente Enlazada de Vehículos\";");
+            dot.AppendLine("        style=filled;");
+            dot.AppendLine("        color=lightgrey;");
+
+            // Crear los nodos
+            NodoVehiculo* actual = head;
+            while (actual != null)
+            {
+                dot.AppendLine($"        node{actual->Id} [label=\"{{" +
+                    $"ID: {actual->Id} | " +
+                    $"ID Usuario: {actual->ID_Usuario} | " +
+                    $"Marca: {new string(actual->Marca).TrimEnd('\0')} | " +
+                    $"Modelo: {new string(actual->Modelo).TrimEnd('\0')} | " +
+                    $"Placa: {new string(actual->Placa).TrimEnd('\0')}" +
+                    $"}}\"];");
+                actual = actual->Next;
+            }
+
+            // Crear las conexiones bidireccionales
+            actual = head;
+            while (actual->Next != null)
+            {
+                dot.AppendLine($"        node{actual->Id} -> node{actual->Next->Id} [dir=both, color=\"blue:red\"];");
+                actual = actual->Next;
+            }
+
+            dot.AppendLine("    }");
+            dot.AppendLine("}");
+            return dot.ToString();
+        }
+
+
+
+
+
     }
 
 

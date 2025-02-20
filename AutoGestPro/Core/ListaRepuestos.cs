@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace AutoGestPro.Core
 {
@@ -160,6 +161,36 @@ namespace AutoGestPro.Core
                 Marshal.FreeHGlobal((IntPtr)temp);
                 temp = next;
             } while (temp != head);
+            head = null;
         }
+
+        public string GenerarGraphviz()
+        {
+            if (head == null) return "digraph G {\nrankdir=LR;\nnode [shape=record];\n}";
+
+            StringBuilder dot = new StringBuilder();
+            dot.AppendLine("digraph G {");
+            dot.AppendLine("rankdir=LR;");
+            dot.AppendLine("node [shape=record];");
+
+            NodoRepuesto* temp = head;
+            do
+            {
+                dot.AppendLine($"node{temp->ID} [label=\"{{ID: {temp->ID} | Repuesto: {new string(temp->Repuesto, 0, 50).TrimEnd('\0')} | Detalles: {new string(temp->Detalles, 0, 100).TrimEnd('\0')} | Costo: {temp->Costo:C}}}\"];");
+
+                temp = temp->Next;
+            } while (temp != head);
+
+            temp = head;
+            do
+            {
+                dot.AppendLine($"node{temp->ID} -> node{temp->Next->ID};");
+                temp = temp->Next;
+            } while (temp != head);
+
+            dot.AppendLine("}");
+            return dot.ToString();
+        }
+
     }
 }
