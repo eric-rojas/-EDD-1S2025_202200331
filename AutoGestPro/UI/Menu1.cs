@@ -13,11 +13,17 @@ namespace AutoGestPro
         private readonly ListaVehiculos _listaVehiculos;
         private readonly ListaRepuestos _listaRepuestos;
 
-        public Menu1(ListaUsuarios listaUsuarios, ListaVehiculos listaVehiculos, ListaRepuestos listaRepuestos) : base("AutoGestPro - Menú Principal")
+        private readonly ColaServicios _colaServicios;
+
+        private readonly PilaFacturas _pilaFacturas;
+
+        public Menu1(ListaUsuarios listaUsuarios, ListaVehiculos listaVehiculos, ListaRepuestos listaRepuestos, ColaServicios colaServicios, PilaFacturas pilaFacturas) : base("AutoGestPro - Menú Principal")
         {
             _listaUsuarios = listaUsuarios;
             _listaVehiculos = listaVehiculos;
             _listaRepuestos = listaRepuestos;
+            _colaServicios = colaServicios;
+            _pilaFacturas = pilaFacturas;
 
             SetDefaultSize(400, 300);
             SetPosition(WindowPosition.Center);
@@ -102,7 +108,9 @@ namespace AutoGestPro
             string dotFileUsuarios = "usuarios.dot";
             string dotfileRepuestos = "repuestos.dot";
             string dotfileVehiculos = "vehiculos.dot";
-            string imgFileUsuarios = "usuarios.png";
+            string dotFileColaServicios = "colaServicios.dot";
+            string dotFilePilaFacturas = "pilaFacturas.dot";
+            
 
             // Generar el archivo DOT para usuarios
             string contenidoDotUsuarios = _listaUsuarios.GenerarGraphviz();
@@ -115,6 +123,15 @@ namespace AutoGestPro
             //Generar el archivo Dot para Vehiculos
             string contenidoDotVehiculos = _listaVehiculos.GenerarGraphviz();
             GraphvizExporter.GenerarArchivoDot(dotfileVehiculos, contenidoDotVehiculos);
+
+            // Generar el archivo Dot para Cola de Servicios
+            string contenidoDotColaServicios = _colaServicios.GenerarGraphviz();
+            GraphvizExporter.GenerarArchivoDot(dotFileColaServicios, contenidoDotColaServicios);
+
+            // Generar el archivo Dot para Pila de Facturas
+            string contenidoDotPilaFacturas = _pilaFacturas.GenerarGraphviz();
+            GraphvizExporter.GenerarArchivoDot(dotFilePilaFacturas, contenidoDotPilaFacturas);
+
         
             // Convertir el archivo DOT a PNG para usuarios
             GraphvizExporter.ConvertirDotAPng(dotFileUsuarios);
@@ -124,6 +141,12 @@ namespace AutoGestPro
 
             // Convertir el archivo DOT a PNG para vehiculos
             GraphvizExporter.ConvertirDotAPng(dotfileVehiculos);
+
+            // Convertir el archivo DOT a PNG para cola de servicios
+            GraphvizExporter.ConvertirDotAPng(dotFileColaServicios);
+
+            // Convertir el archivo DOT a PNG para pila de facturas
+            GraphvizExporter.ConvertirDotAPng(dotFilePilaFacturas);
 
 
 

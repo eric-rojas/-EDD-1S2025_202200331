@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace AutoGestPro.Core
 {
@@ -102,5 +103,56 @@ namespace AutoGestPro.Core
                 Marshal.FreeHGlobal((IntPtr)temp);
             }
         }
+
+
+        public unsafe string GenerarGraphviz()
+        {
+            if (frente == null)
+            {
+                return "digraph G {\n    node [shape=record];\n    NULL [label = \"{NULL}\"];\n}\n";
+            }
+
+            StringBuilder dot = new StringBuilder();
+            dot.AppendLine("digraph G {");
+            dot.AppendLine("    rankdir=LR;");
+            dot.AppendLine("    node [shape=record];");
+            dot.AppendLine("    subgraph cluster_0 {");
+            dot.AppendLine("        label = \"Cola de Servicios\";");
+            dot.AppendLine("        style=filled;");
+            dot.AppendLine("        color=lightblue;");
+
+            // Crear los nodos
+            NodoServicio* actual = frente;
+            while (actual != null)
+            {
+                dot.AppendLine($"        node{actual->ID} [label=\"{{" +
+                    $"ID: {actual->ID} | " +
+                    $"ID: {actual->Id_Repuesto} | " +
+                    $"ID: {actual->Id_Vehiculo} | " +
+                    $"Servicio: {new string(actual->Detalles).TrimEnd('\0')} | " +
+                    $"Costo: {actual->Costo:C}" +
+                    $"}}\"];");
+                actual = actual->Next;
+            }
+
+            // Crear las conexiones unidireccionales (FIFO)
+            actual = frente;
+            while (actual->Next != null)
+            {
+                dot.AppendLine($"        node{actual->ID} -> node{actual->Next->ID} [color=blue];");
+                actual = actual->Next;
+            }
+
+            dot.AppendLine("    }");
+            dot.AppendLine("}");
+            return dot.ToString();
+        }
+
+
+
+
+
+
+
     }
 }

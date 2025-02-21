@@ -170,6 +170,11 @@ namespace AutoGestPro
                 var listaUsuarios = new ListaUsuarios();
                 var listaVehiculos = new ListaVehiculos();
                 var listaRepuestos = new ListaRepuestos();
+                var cola = new ColaServicios();
+                var pila = new PilaFacturas();
+
+
+                
 
                 
 
@@ -189,7 +194,7 @@ namespace AutoGestPro
                     Console.WriteLine("Login exitoso"); // Para debug
                     inicioWindow.Hide();
 
-                    var menu = new Menu1(listaUsuarios, listaVehiculos, listaRepuestos);
+                    var menu = new Menu1(listaUsuarios, listaVehiculos, listaRepuestos, cola, pila);
                     menu.DeleteEvent += (o, args) =>
                     {
                         Application.Quit();

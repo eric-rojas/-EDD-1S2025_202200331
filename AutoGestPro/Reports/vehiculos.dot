@@ -1,38 +1,4 @@
 digraph G {
-    rankdir=LR;
     node [shape=record];
-    subgraph cluster_0 {
-        label = "Lista Doblemente Enlazada de Vehículos";
-        style=filled;
-        color=lightgrey;
-        node1 [label="{ID: 1 | ID Usuario: 1 | Marca: Honda Civic | Modelo: 2005 | Placa: XZJ7H9K}"];
-        node2 [label="{ID: 2 | ID Usuario: 2 | Marca: Toyota Corolla | Modelo: 2010 | Placa: JKS8T5A}"];
-        node3 [label="{ID: 3 | ID Usuario: 2 | Marca: Ford Focus | Modelo: 2008 | Placa: YT2XG9M}"];
-        node4 [label="{ID: 4 | ID Usuario: 3 | Marca: Nissan Altima | Modelo: 2012 | Placa: FTE6V3R}"];
-        node5 [label="{ID: 5 | ID Usuario: 3 | Marca: Chevrolet Aveo | Modelo: 2007 | Placa: BZX5D2L}"];
-        node6 [label="{ID: 6 | ID Usuario: 3 | Marca: Hyundai Elantra | Modelo: 2015 | Placa: QWE3P0F}"];
-        node7 [label="{ID: 7 | ID Usuario: 4 | Marca: Mazda 3 | Modelo: 2011 | Placa: MSD9H8A}"];
-        node8 [label="{ID: 8 | ID Usuario: 5 | Marca: Kia Rio | Modelo: 2014 | Placa: RT5Y4O2}"];
-        node9 [label="{ID: 9 | ID Usuario: 5 | Marca: Honda Accord | Modelo: 2009 | Placa: VBR9P1S}"];
-        node10 [label="{ID: 10 | ID Usuario: 6 | Marca: Subaru Impreza | Modelo: 2016 | Placa: XZJ3M5P}"];
-        node11 [label="{ID: 11 | ID Usuario: 6 | Marca: BMW X3 | Modelo: 2013 | Placa: BNM8D7Q}"];
-        node12 [label="{ID: 12 | ID Usuario: 7 | Marca: Volkswagen Jetta | Modelo: 2012 | Placa: JXK3L9D}"];
-        node13 [label="{ID: 13 | ID Usuario: 8 | Marca: Toyota Camry | Modelo: 2014 | Placa: OIJ6R4F}"];
-        node14 [label="{ID: 14 | ID Usuario: 9 | Marca: Chevrolet Spark | Modelo: 2011 | Placa: XTR9E1Q}"];
-        node15 [label="{ID: 15 | ID Usuario: 10 | Marca: Mazda CX-5 | Modelo: 2017 | Placa: VWL3P0D}"];
-        node1 -> node2 [dir=both, color="blue:red"];
-        node2 -> node3 [dir=both, color="blue:red"];
-        node3 -> node4 [dir=both, color="blue:red"];
-        node4 -> node5 [dir=both, color="blue:red"];
-        node5 -> node6 [dir=both, color="blue:red"];
-        node6 -> node7 [dir=both, color="blue:red"];
-        node7 -> node8 [dir=both, color="blue:red"];
-        node8 -> node9 [dir=both, color="blue:red"];
-        node9 -> node10 [dir=both, color="blue:red"];
-        node10 -> node11 [dir=both, color="blue:red"];
-        node11 -> node12 [dir=both, color="blue:red"];
-        node12 -> node13 [dir=both, color="blue:red"];
-        node13 -> node14 [dir=both, color="blue:red"];
-        node14 -> node15 [dir=both, color="blue:red"];
-    }
+    NULL [label = "{NULL}"];
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Text;  
 
 namespace AutoGestPro.Core
 {
@@ -78,5 +79,52 @@ namespace AutoGestPro.Core
                 Marshal.FreeHGlobal((IntPtr)temp);
             }
         }
+
+
+        public unsafe string GenerarGraphviz()
+        {
+            if (top == null)
+            {
+                return "digraph G {\n    node [shape=record];\n    NULL [label = \"{NULL}\"];\n}\n";
+            }
+
+            StringBuilder dot = new StringBuilder();
+            dot.AppendLine("digraph G {");
+            dot.AppendLine("    rankdir=TB;"); // Orientación de arriba hacia abajo
+            dot.AppendLine("    node [shape=record];");
+            dot.AppendLine("    subgraph cluster_0 {");
+            dot.AppendLine("        label = \"Pila de Facturas\";");
+            dot.AppendLine("        style=filled;");
+            dot.AppendLine("        color=lightgrey;");
+
+            // Crear los nodos
+            NodoFactura* actual = top;
+            while (actual != null)
+            {
+                dot.AppendLine($"        node{actual->ID} [label=\"{{" +
+                    $"ID: {actual->ID} | " +
+                    $"ID_Orden: {actual->ID_Orden} | " +
+                    $"Total: {actual->Total:C}" +
+                    $"}}\"];");
+                actual = actual->Next;
+            }
+
+            // Crear las conexiones entre nodos (de arriba hacia abajo)
+            actual = top;
+            while (actual->Next != null)
+            {
+                dot.AppendLine($"        node{actual->ID} -> node{actual->Next->ID} [dir=back, color=\"blue\"];");
+                actual = actual->Next;
+            }
+
+            dot.AppendLine("    }");
+            dot.AppendLine("}");
+            return dot.ToString();
+        }
+
+
+
+
+
     }
 }

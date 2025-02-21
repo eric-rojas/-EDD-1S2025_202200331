@@ -1,0 +1,14 @@
+digraph G {
+    rankdir=TB;
+    node [shape=record];
+    subgraph cluster_0 {
+        label = "Pila de Facturas";
+        style=filled;
+        color=lightgrey;
+        node3 [label="{ID: 3 | ID_Orden: 3 | Total: $300.00}"];
+        node2 [label="{ID: 2 | ID_Orden: 2 | Total: $200.00}"];
+        node1 [label="{ID: 1 | ID_Orden: 1 | Total: $100.00}"];
+        node3 -> node2 [dir=back, color="blue"];
+        node2 -> node1 [dir=back, color="blue"];
+    }
+}
