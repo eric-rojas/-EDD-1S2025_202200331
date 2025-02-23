@@ -164,6 +164,27 @@ namespace AutoGestPro.Core
             }
         }
 
+        public Vehiculo? Buscar(int id)
+        {
+            NodoVehiculo* actual = head;
+            while (actual != null)
+            {
+                if (actual->Id == id)
+                {
+                    return new Vehiculo(
+                        actual->Id,
+                        actual->ID_Usuario,
+                        new string(actual->Marca).TrimEnd('\0'),
+                        new string(actual->Modelo).TrimEnd('\0'),
+                        new string(actual->Placa).TrimEnd('\0')
+                    );
+                }
+                actual = actual->Next;
+            }
+            return null;
+        }
+
+
         public void MostrarReversa()
         {
             NodoVehiculo* actual = tail;

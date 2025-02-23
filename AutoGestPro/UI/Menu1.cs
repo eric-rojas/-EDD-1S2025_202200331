@@ -16,14 +16,16 @@ namespace AutoGestPro
         private readonly ColaServicios _colaServicios;
 
         private readonly PilaFacturas _pilaFacturas;
+        private readonly GeneradorServicio _generadorServicio;
 
-        public Menu1(ListaUsuarios listaUsuarios, ListaVehiculos listaVehiculos, ListaRepuestos listaRepuestos, ColaServicios colaServicios, PilaFacturas pilaFacturas) : base("AutoGestPro - Menú Principal")
+        public Menu1(ListaUsuarios listaUsuarios, ListaVehiculos listaVehiculos, ListaRepuestos listaRepuestos, ColaServicios colaServicios, PilaFacturas pilaFacturas, GeneradorServicio generadorServicio) : base("AutoGestPro - Menú Principal")
         {
             _listaUsuarios = listaUsuarios;
             _listaVehiculos = listaVehiculos;
             _listaRepuestos = listaRepuestos;
             _colaServicios = colaServicios;
             _pilaFacturas = pilaFacturas;
+            _generadorServicio = generadorServicio;
 
             SetDefaultSize(400, 300);
             SetPosition(WindowPosition.Center);
@@ -51,11 +53,11 @@ namespace AutoGestPro
             vbox.PackStart(Btn_GestionUsuarios, false, false, 0);
 
             Button Btn_GenerarServicio = new Button("Generar Servicio");
-            Btn_GenerarServicio.Clicked += GoMostrarLista;
+            Btn_GenerarServicio.Clicked += GoGenerarServicio;
             vbox.PackStart(Btn_GenerarServicio, false, false, 0);
 
             Button Btn_CancelarFactura = new Button("Cancelar Factura");
-            Btn_CancelarFactura.Clicked += GoMostrarLista;
+            Btn_CancelarFactura.Clicked += GoCancelarFactura;
             vbox.PackStart(Btn_CancelarFactura, false, false, 0);
 
             Button Btn_GenerarReportes = new Button("Generar Reportes");
@@ -151,6 +153,26 @@ namespace AutoGestPro
 
 
 
+        }
+
+        private void GoGenerarServicio(object? sender, EventArgs e)
+        {
+            ServiciosView serviciosView = new ServiciosView(_listaRepuestos, _listaVehiculos, _colaServicios, _pilaFacturas);
+            serviciosView.ShowAll();
+        }
+
+        /*
+        private void GoCancelarFactura(object? sender, EventArgs e)
+        {
+            CancelarFacturaView cancelarView = new CancelarFacturaView(_pilaFacturas);
+            cancelarView.ShowAll();
+        }
+        */
+
+        private void GoCancelarFactura(object? sender, EventArgs e)
+        {
+            var cancelarView = new CancelarFacturaView(_pilaFacturas);
+            cancelarView.ShowAll();
         }
       
         

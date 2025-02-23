@@ -114,32 +114,32 @@ namespace AutoGestPro.Core
 
             StringBuilder dot = new StringBuilder();
             dot.AppendLine("digraph G {");
-            dot.AppendLine("    rankdir=LR;");
+            dot.AppendLine("    rankdir=LR;"); // Left to Right
             dot.AppendLine("    node [shape=record];");
             dot.AppendLine("    subgraph cluster_0 {");
             dot.AppendLine("        label = \"Cola de Servicios\";");
             dot.AppendLine("        style=filled;");
             dot.AppendLine("        color=lightblue;");
 
-            // Crear los nodos
+            // Crear los nodos con formato vertical
             NodoServicio* actual = frente;
             while (actual != null)
             {
                 dot.AppendLine($"        node{actual->ID} [label=\"{{" +
-                    $"ID: {actual->ID} | " +
-                    $"ID: {actual->Id_Repuesto} | " +
-                    $"ID: {actual->Id_Vehiculo} | " +
-                    $"Servicio: {new string(actual->Detalles).TrimEnd('\0')} | " +
-                    $"Costo: {actual->Costo:C}" +
+                    $"{{ID: {actual->ID}}}|" +
+                    $"{{ID Repuesto: {actual->Id_Repuesto}}}|" +
+                    $"{{ID Vehículo: {actual->Id_Vehiculo}}}|" +
+                    $"{{Servicio: {new string(actual->Detalles).TrimEnd('\0')}}}|" +
+                    $"{{Costo: {actual->Costo:C}}}" +
                     $"}}\"];");
                 actual = actual->Next;
             }
 
-            // Crear las conexiones unidireccionales (FIFO)
+            // Crear las conexiones con curvas
             actual = frente;
             while (actual->Next != null)
             {
-                dot.AppendLine($"        node{actual->ID} -> node{actual->Next->ID} [color=blue];");
+                dot.AppendLine($"        node{actual->ID} -> node{actual->Next->ID} [color=blue, constraint=true];");
                 actual = actual->Next;
             }
 

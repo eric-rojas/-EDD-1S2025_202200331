@@ -149,6 +149,30 @@ namespace AutoGestPro.Core
             } while (temp != head);
         }
 
+
+        public Repuesto? Buscar(int id)
+        {
+            if (head == null) return null;
+
+            NodoRepuesto* actual = head;
+            do
+            {
+                if (actual->ID == id)
+                {
+                    return new Repuesto(
+                        actual->ID,
+                        new string(actual->Repuesto).TrimEnd('\0'),
+                        new string(actual->Detalles).TrimEnd('\0'),
+                        actual->Costo
+                    );
+                }
+                actual = actual->Next;
+            } while (actual != head);
+
+            return null;
+        }
+
+
         // esto es un metodo para liberar la memoria, lo usa el aux asi q lo usamos
         ~ListaRepuestos()
         {

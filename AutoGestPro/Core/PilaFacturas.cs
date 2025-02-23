@@ -70,6 +70,31 @@ namespace AutoGestPro.Core
             }
         }
 
+
+        public unsafe string GetInfoTope()
+        {
+            if (top == null)
+            {
+                return "No hay facturas";
+            }
+            
+            return top->ToString();
+        }
+
+
+        public bool MostrarTope()
+        {
+            if (top == null)
+            {
+                Console.WriteLine("No hay facturas en la pila.");
+                return false;
+            }
+
+            Console.WriteLine("Factura en el tope de la pila:");
+            Console.WriteLine(top->ToString());
+            return true;
+        }
+
         ~PilaFacturas()
         {
             while (top != null)

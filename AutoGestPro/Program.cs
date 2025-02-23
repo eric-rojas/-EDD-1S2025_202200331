@@ -154,7 +154,6 @@ using System;
 using Gtk;
 using AutoGestPro.Core;
 using AutoGestPro.UI;
-
 namespace AutoGestPro
 {
     class Program
@@ -162,21 +161,27 @@ namespace AutoGestPro
         [STAThread]
         public static void Main(string[] args)
         {
+            MatrizBitacora matrizBitacora = null;
             try
             {
                 Application.Init();
 
-                // Crear las instancias de las listas
+                // Crear las instancias de las estructuras de datos
                 var listaUsuarios = new ListaUsuarios();
                 var listaVehiculos = new ListaVehiculos();
                 var listaRepuestos = new ListaRepuestos();
-                var cola = new ColaServicios();
-                var pila = new PilaFacturas();
+                var colaServicios = new ColaServicios();
+                var pilaFacturas = new PilaFacturas();
+                matrizBitacora = new MatrizBitacora();
 
-
-                
-
-                
+                // Crear el generador de servicios
+                var generadorServicio = new GeneradorServicio(
+                    listaVehiculos,
+                    listaRepuestos,
+                    colaServicios,
+                    pilaFacturas,
+                    matrizBitacora
+                );
 
                 // Crear ventana de inicio de sesión
                 var inicioWindow = new Inicio();
@@ -184,6 +189,7 @@ namespace AutoGestPro
                 // Configurar el evento de cierre de la ventana de inicio
                 inicioWindow.DeleteEvent += (o, args) => 
                 {
+                    matrizBitacora?.Dispose(); // Liberar recursos antes de cerrar
                     Application.Quit();
                     args.RetVal = true;
                 };
@@ -191,21 +197,29 @@ namespace AutoGestPro
                 // Configurar el evento de login exitoso
                 inicioWindow.LoginExitoso += () =>
                 {
-                    Console.WriteLine("Login exitoso"); // Para debug
+                    Console.WriteLine("Login exitoso");
                     inicioWindow.Hide();
 
-                    var menu = new Menu1(listaUsuarios, listaVehiculos, listaRepuestos, cola, pila);
+                    var menu = new Menu1(
+                        listaUsuarios, 
+                        listaVehiculos, 
+                        listaRepuestos, 
+                        colaServicios, 
+                        pilaFacturas,
+                        generadorServicio
+                    );
+                    
                     menu.DeleteEvent += (o, args) =>
                     {
+                        matrizBitacora?.Dispose(); // Liberar recursos antes de cerrar
                         Application.Quit();
                         args.RetVal = true;
                     };
                     menu.ShowAll();
                 };
 
-                // Mostrar la ventana de inicio
                 inicioWindow.ShowAll();
-                Console.WriteLine("Iniciando aplicación..."); // Para debug
+                Console.WriteLine("Iniciando aplicación...");
                 
                 Application.Run();
             }
@@ -213,6 +227,10 @@ namespace AutoGestPro
             {
                 Console.WriteLine($"Error en la aplicación: {ex.Message}");
                 Console.WriteLine(ex.StackTrace);
+            }
+            finally
+            {
+                matrizBitacora?.Dispose(); // Asegurar que los recursos se liberen incluso si hay una excepción
             }
         }
     }
