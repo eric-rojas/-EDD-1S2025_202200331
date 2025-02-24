@@ -34,7 +34,7 @@ AutoGestPro es un sistema de gestión para talleres mecánicos que permite regis
 ### 4. Generación de Servicios
 - Crear un servicio asignando un vehículo y repuestos.
 - Si un repuesto o vehículo no existe, se mostrará un error.
-![servicios](GENERACIONSERVICIO.png)
+![servicios](GENERARSERVICIO.png)
 
 ### 5. Generación de Facturas
 - Al crear un servicio, se genera automáticamente una factura.
