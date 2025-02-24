@@ -151,6 +151,113 @@ namespace AutoGestPro.Core
 
 
 
+        public void Top5VehiculosMasServicios()
+        {
+            if (frente == null)
+            {
+                Console.WriteLine("La cola está vacía.");
+                return;
+            }
+
+            // Diccionario para contar las ocurrencias de cada Id_Vehiculo
+            Dictionary<int, int> vehiculosCount = new Dictionary<int, int>();
+
+            NodoServicio* actual = frente;
+            while (actual != null)
+            {
+                if (vehiculosCount.ContainsKey(actual->Id_Vehiculo))
+                {
+                    vehiculosCount[actual->Id_Vehiculo]++;
+                }
+                else
+                {
+                    vehiculosCount.Add(actual->Id_Vehiculo, 1);
+                }
+                actual = actual->Next;
+            }
+
+            // Ordenar el diccionario por la cantidad de servicios
+            var top5 = vehiculosCount.OrderByDescending(v => v.Value)
+                                    .Take(5)
+                                    .ToList();
+
+            Console.WriteLine("Top 5 Vehículos con más servicios:");
+            foreach (var vehiculo in top5)
+            {
+                Console.WriteLine($"Id_Vehiculo: {vehiculo.Key}, Servicios: {vehiculo.Value}");
+            }
+        }
+
+
+        public unsafe string GenerarGraphvizTop5Vehiculos()
+        {
+            if (frente == null)
+            {
+                return "digraph G {\n    node [shape=record];\n    NULL [label = \"{NULL}\"];\n}\n";
+            }
+
+            // Diccionario para contar las ocurrencias de cada Id_Vehiculo
+            Dictionary<int, int> vehiculosCount = new Dictionary<int, int>();
+
+            NodoServicio* actual = frente;
+            while (actual != null)
+            {
+                if (vehiculosCount.ContainsKey(actual->Id_Vehiculo))
+                {
+                    vehiculosCount[actual->Id_Vehiculo]++;
+                }
+                else
+                {
+                    vehiculosCount.Add(actual->Id_Vehiculo, 1);
+                }
+                actual = actual->Next;
+            }
+
+            // Ordenar el diccionario por la cantidad de servicios
+            var top5 = vehiculosCount.OrderByDescending(v => v.Value)
+                                    .Take(5)
+                                    .ToList();
+
+            StringBuilder dot = new StringBuilder();
+            dot.AppendLine("digraph G {");
+            dot.AppendLine("    rankdir=LR;"); // Left to Right
+            dot.AppendLine("    node [shape=record];");
+            dot.AppendLine("    subgraph cluster_0 {");
+            dot.AppendLine("        label = \"Top 5 Vehículos con más servicios\";");
+            dot.AppendLine("        style=filled;");
+            dot.AppendLine("        color=lightblue;");
+
+            // Crear los nodos para los Top 5 vehículos con formato
+            int i = 1;
+            foreach (var vehiculo in top5)
+            {
+                dot.AppendLine($"        node{i} [label=\"{{" +
+                            $"{{Id_Vehiculo: {vehiculo.Key}}}|" +
+                            $"{{Servicios: {vehiculo.Value}}}" +
+                            $"}}\"];");
+                i++;
+            }
+
+            // Conectar los nodos de forma secuencial
+            for (int j = 1; j < i; j++)
+            {
+                if (j < i - 1)
+                {
+                    dot.AppendLine($"        node{j} -> node{j + 1} [color=blue, constraint=true];");
+                }
+            }
+
+            dot.AppendLine("    }");
+            dot.AppendLine("}");
+
+            return dot.ToString();
+        }
+
+
+
+
+
+
 
 
 

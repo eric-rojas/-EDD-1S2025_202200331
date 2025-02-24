@@ -112,8 +112,31 @@ namespace AutoGestPro.Utils
         // Método de conveniencia que genera tanto el DOT como el PNG
         public static void GenerarGrafo(string nombre, string contenido)
         {
-            GenerarArchivoDot(nombre, contenido);
-            ConvertirDotAPng(nombre);
+            try
+            {
+                Console.WriteLine($"=== Generando gráfico para: {nombre} ===");
+                
+                // Generar el archivo DOT
+                GenerarArchivoDot(nombre, contenido);
+                
+                // Intentar convertir a PNG
+                ConvertirDotAPng(nombre);
+                
+                // Verificar que ambos archivos existan
+                string carpeta = Path.Combine(Directory.GetCurrentDirectory(), "Reports");
+                string rutaDot = Path.Combine(carpeta, $"{nombre}.dot");
+                string rutaPng = Path.Combine(carpeta, $"{nombre}.png");
+                
+                Console.WriteLine($"Verificando archivos generados:");
+                Console.WriteLine($"DOT: {(File.Exists(rutaDot) ? "Existe" : "No existe")}");
+                Console.WriteLine($"PNG: {(File.Exists(rutaPng) ? "Existe" : "No existe")}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en GenerarGrafo: {ex.Message}");
+                Console.WriteLine(ex.StackTrace);
+                throw;
+            }
         }
     }
 }

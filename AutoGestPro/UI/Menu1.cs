@@ -18,7 +18,9 @@ namespace AutoGestPro
         private readonly PilaFacturas _pilaFacturas;
         private readonly GeneradorServicio _generadorServicio;
 
-        public Menu1(ListaUsuarios listaUsuarios, ListaVehiculos listaVehiculos, ListaRepuestos listaRepuestos, ColaServicios colaServicios, PilaFacturas pilaFacturas, GeneradorServicio generadorServicio) : base("AutoGestPro - Menú Principal")
+        private readonly MatrizBitacora _matrizBitacora; 
+
+        public Menu1(ListaUsuarios listaUsuarios, ListaVehiculos listaVehiculos, ListaRepuestos listaRepuestos, ColaServicios colaServicios, PilaFacturas pilaFacturas, GeneradorServicio generadorServicio, MatrizBitacora matrizBitacora) : base("AutoGestPro - Menú Principal")
         {
             _listaUsuarios = listaUsuarios;
             _listaVehiculos = listaVehiculos;
@@ -26,6 +28,7 @@ namespace AutoGestPro
             _colaServicios = colaServicios;
             _pilaFacturas = pilaFacturas;
             _generadorServicio = generadorServicio;
+            _matrizBitacora = matrizBitacora;
 
             SetDefaultSize(400, 300);
             SetPosition(WindowPosition.Center);
@@ -63,6 +66,8 @@ namespace AutoGestPro
             Button Btn_GenerarReportes = new Button("Generar Reportes");
             Btn_GenerarReportes.Clicked += GoReportes;
             vbox.PackStart(Btn_GenerarReportes, false, false, 0);
+
+            
 
             
 
@@ -105,6 +110,8 @@ namespace AutoGestPro
             ingreso.ShowAll();
         }
 
+        
+
         private void GoReportes(object? sender, EventArgs e)
         {
             string dotFileUsuarios = "usuarios.dot";
@@ -112,6 +119,8 @@ namespace AutoGestPro
             string dotfileVehiculos = "vehiculos.dot";
             string dotFileColaServicios = "colaServicios.dot";
             string dotFilePilaFacturas = "pilaFacturas.dot";
+            string dotFileMatrizBitacora = "matrizBitacora.dot";
+            string dotfileTop5 = "top5.dot";
             
 
             // Generar el archivo DOT para usuarios
@@ -134,6 +143,14 @@ namespace AutoGestPro
             string contenidoDotPilaFacturas = _pilaFacturas.GenerarGraphviz();
             GraphvizExporter.GenerarArchivoDot(dotFilePilaFacturas, contenidoDotPilaFacturas);
 
+            // Generar el archivo Dot para Matriz de Bitacora
+            string contenidoDotMatrizBitacora = _matrizBitacora.GenerarGraphviz();
+            GraphvizExporter.GenerarArchivoDot(dotFileMatrizBitacora, contenidoDotMatrizBitacora);
+
+            // Generar el archivo Dot para Top 5
+            string contenidoDotTop5 = _colaServicios.GenerarGraphvizTop5Vehiculos();
+            GraphvizExporter.GenerarArchivoDot(dotfileTop5, contenidoDotTop5);
+
         
             // Convertir el archivo DOT a PNG para usuarios
             GraphvizExporter.ConvertirDotAPng(dotFileUsuarios);
@@ -150,11 +167,90 @@ namespace AutoGestPro
             // Convertir el archivo DOT a PNG para pila de facturas
             GraphvizExporter.ConvertirDotAPng(dotFilePilaFacturas);
 
+            // Convertir el archivo DOT a PNG para pila de facturas
+            GraphvizExporter.ConvertirDotAPng(dotFilePilaFacturas);
+
+            // Convertir el archivo DOT a PNG para matriz de bitacora
+            GraphvizExporter.ConvertirDotAPng(dotFileMatrizBitacora);
+
+            // Convertir el archivo DOT a PNG para top 5
+            GraphvizExporter.ConvertirDotAPng(dotfileTop5);
+            
+
 
 
 
         }
+        /*
+        private void GoReportes(object? sender, EventArgs e)
+        {
+            string dotFileUsuarios = "usuarios.dot";
+            string dotfileRepuestos = "repuestos.dot";
+            string dotfileVehiculos = "vehiculos.dot";
+            string dotFileColaServicios = "colaServicios.dot";
+            string dotFilePilaFacturas = "pilaFacturas.dot";
+            string dotFileMatrizBitacora = "matriz_bitacora.dot";
+            
+            try
+            {
+                // Generar el archivo DOT para usuarios
+                string contenidoDotUsuarios = _listaUsuarios.GenerarGraphviz();
+                GraphvizExporter.GenerarArchivoDot(dotFileUsuarios, contenidoDotUsuarios);
 
+                // Generar el archivo Dot para Repuestos
+                string contenidoDotRepuestos = _listaRepuestos.GenerarGraphviz();
+                GraphvizExporter.GenerarArchivoDot(dotfileRepuestos, contenidoDotRepuestos);
+
+                // Generar el archivo Dot para Vehiculos
+                string contenidoDotVehiculos = _listaVehiculos.GenerarGraphviz();
+                GraphvizExporter.GenerarArchivoDot(dotfileVehiculos, contenidoDotVehiculos);
+
+                // Generar el archivo Dot para Cola de Servicios
+                string contenidoDotColaServicios = _colaServicios.GenerarGraphviz();
+                GraphvizExporter.GenerarArchivoDot(dotFileColaServicios, contenidoDotColaServicios);
+
+                // Generar el archivo Dot para Pila de Facturas
+                string contenidoDotPilaFacturas = _pilaFacturas.GenerarGraphviz();
+                GraphvizExporter.GenerarArchivoDot(dotFilePilaFacturas, contenidoDotPilaFacturas);
+
+                
+
+                // Convertir todos los archivos DOT a PNG
+                GraphvizExporter.ConvertirDotAPng(dotFileUsuarios);
+                GraphvizExporter.ConvertirDotAPng(dotfileRepuestos);
+                GraphvizExporter.ConvertirDotAPng(dotfileVehiculos);
+                GraphvizExporter.ConvertirDotAPng(dotFileColaServicios);
+                GraphvizExporter.ConvertirDotAPng(dotFilePilaFacturas);
+                
+                // Generar el archivo Dot para Matriz de Bitacora
+                Console.WriteLine("Intentando generar Graphviz para la matriz de bitácora...");
+                string contenidoDotMatrizBitacora = _matrizBitacora.GenerarGraphviz();
+                Console.WriteLine($"Contenido DOT generado: {contenidoDotMatrizBitacora.Substring(0, Math.Min(100, contenidoDotMatrizBitacora.Length))}...");
+                
+                // Generar siempre el archivo, incluso si está vacía
+                GraphvizExporter.GenerarArchivoDot(dotFileMatrizBitacora, contenidoDotMatrizBitacora);
+                Console.WriteLine("Archivo DOT de matriz generado");
+                
+                // Intentar convertir a PNG sin importar si está vacía
+                GraphvizExporter.ConvertirDotAPng(dotFileMatrizBitacora);
+                Console.WriteLine("Conversión a PNG de matriz completada");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error específico en la generación de la matriz: {ex.Message}");
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine($"Error al generar reportes: {ex.Message}");
+                MessageDialog errorDialog = new MessageDialog(
+                    this,
+                    DialogFlags.Modal,
+                    MessageType.Error,
+                    ButtonsType.Ok,
+                    $"Error al generar reportes: {ex.Message}");
+                errorDialog.Run();
+                errorDialog.Destroy();
+            }
+        }
+        */
         private void GoGenerarServicio(object? sender, EventArgs e)
         {
             ServiciosView serviciosView = new ServiciosView(_listaRepuestos, _listaVehiculos, _colaServicios, _pilaFacturas);
@@ -174,7 +270,8 @@ namespace AutoGestPro
             var cancelarView = new CancelarFacturaView(_pilaFacturas);
             cancelarView.ShowAll();
         }
-      
+
+
         
     }
 }

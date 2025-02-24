@@ -154,16 +154,21 @@ using System;
 using Gtk;
 using AutoGestPro.Core;
 using AutoGestPro.UI;
+using AutoGestPro.Utils;
 namespace AutoGestPro
 {
+            
     class Program
     {
         [STAThread]
+
+        
         public static void Main(string[] args)
         {
             MatrizBitacora matrizBitacora = null;
             try
             {
+
                 Application.Init();
 
                 // Crear las instancias de las estructuras de datos
@@ -173,6 +178,39 @@ namespace AutoGestPro
                 var colaServicios = new ColaServicios();
                 var pilaFacturas = new PilaFacturas();
                 matrizBitacora = new MatrizBitacora();
+
+                /*
+                // Insertar algunos datos de prueba
+                matrizBitacora.InsertarRelacion(1, 1, "Cambio de aceite");
+                matrizBitacora.InsertarRelacion(1, 2, "Revisión general");
+                matrizBitacora.InsertarRelacion(2, 1, "Cambio de filtro");
+                matrizBitacora.InsertarRelacion(3, 2, "Alineación");
+                matrizBitacora.InsertarRelacion(3, 3, "Balanceo");
+                matrizBitacora.InsertarRelacion(2, 3, "Cambio de llantas");
+                matrizBitacora.InsertarRelacion(4, 1, "Reparación de frenos");
+                matrizBitacora.InsertarRelacion(4, 2, "Cambio de batería");
+                matrizBitacora.InsertarRelacion(5, 1, "Revisión de suspensión");
+                matrizBitacora.InsertarRelacion(5, 3, "Cambio de bujías");
+                matrizBitacora.InsertarRelacion(6, 2, "Revisión de transmisión");
+                matrizBitacora.InsertarRelacion(6, 3, "Cambio de aceite de motor");
+                matrizBitacora.InsertarRelacion(7, 1, "Revisión de sistema eléctrico");
+                matrizBitacora.InsertarRelacion(7, 2, "Cambio de correa de distribución");
+                matrizBitacora.InsertarRelacion(8, 3, "Revisión de sistema de escape");
+                
+
+                // Mostrar la matriz en consola para verificar los datos
+                Console.WriteLine("=== Mostrando matriz en consola ===");
+                matrizBitacora.MostrarBitacora();
+
+                // Generar el archivo DOT
+                string dotContent = matrizBitacora.GenerarGraphviz();
+                Console.WriteLine("\n=== Contenido DOT generado ===");
+                Console.WriteLine(dotContent);
+
+                // Generar el archivo usando GraphvizExporter
+                GraphvizExporter.GenerarGrafo("test_matriz", dotContent);
+                */
+                
 
                 // Crear el generador de servicios
                 var generadorServicio = new GeneradorServicio(
@@ -206,7 +244,8 @@ namespace AutoGestPro
                         listaRepuestos, 
                         colaServicios, 
                         pilaFacturas,
-                        generadorServicio
+                        generadorServicio,
+                        matrizBitacora
                     );
                     
                     menu.DeleteEvent += (o, args) =>
@@ -234,4 +273,46 @@ namespace AutoGestPro
             }
         }
     }
+    
+
+
+    /*
+    public class Program
+        {
+            public static void Main()
+            {
+                using (var matriz = new MatrizBitacora())
+                {
+                    // Insertar algunos datos de prueba
+                    matriz.InsertarRelacion(1, 1, "Cambio de aceite");
+                    matriz.InsertarRelacion(1, 2, "Revisión general");
+                    matriz.InsertarRelacion(2, 1, "Cambio de filtro");
+                    matriz.InsertarRelacion(3, 2, "Alineación");
+                    matriz.InsertarRelacion(3, 3, "Balanceo");
+                    matriz.InsertarRelacion(2, 3, "Cambio de llantas");
+                    matriz.InsertarRelacion(4, 1, "Reparación de frenos");
+                    matriz.InsertarRelacion(4, 2, "Cambio de batería");
+                    matriz.InsertarRelacion(5, 1, "Revisión de suspensión");
+                    matriz.InsertarRelacion(5, 3, "Cambio de bujías");
+                    matriz.InsertarRelacion(6, 2, "Revisión de transmisión");
+                    matriz.InsertarRelacion(6, 3, "Cambio de aceite de motor");
+                    matriz.InsertarRelacion(7, 1, "Revisión de sistema eléctrico");
+                    matriz.InsertarRelacion(7, 2, "Cambio de correa de distribución");
+                    matriz.InsertarRelacion(8, 3, "Revisión de sistema de escape");
+
+                    // Mostrar la matriz en consola para verificar los datos
+                    Console.WriteLine("=== Mostrando matriz en consola ===");
+                    matriz.MostrarBitacora();
+
+                    // Generar el archivo DOT
+                    string dotContent = matriz.GenerarGraphviz();
+                    Console.WriteLine("\n=== Contenido DOT generado ===");
+                    Console.WriteLine(dotContent);
+
+                    // Generar el archivo usando GraphvizExporter
+                    GraphvizExporter.GenerarGrafo("test_matriz", dotContent);
+                }
+            }
+        }*/
+      
 }

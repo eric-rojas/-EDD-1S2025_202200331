@@ -228,6 +228,8 @@ namespace AutoGestPro.Core
         
         public void InsertarRelacion(int idRepuesto, int idVehiculo, string detalles)
         {
+            Console.WriteLine($"Insertando relación: R{idRepuesto} - V{idVehiculo}: {detalles}");
+
             // Crear nuevo nodo
             NodoBitacora* nuevo = (NodoBitacora*)Marshal.AllocHGlobal(sizeof(NodoBitacora));
             *nuevo = new NodoBitacora(idRepuesto, idVehiculo, detalles);
@@ -239,10 +241,20 @@ namespace AutoGestPro.Core
             NodoEncabezado* encabezadoFila = filas->BuscarEncabezado(idRepuesto);
             NodoEncabezado* encabezadoColumna = columnas->BuscarEncabezado(idVehiculo);
 
+            if (encabezadoFila == null || encabezadoColumna == null)
+            {
+                Console.WriteLine("Error: No se pudieron crear los encabezados");
+                Marshal.FreeHGlobal((IntPtr)nuevo);
+                return;
+            }
+
+            Console.WriteLine("Encabezados creados correctamente");
+
             // Insertar en fila
             if (encabezadoFila->Acceso == null)
             {
                 encabezadoFila->Acceso = nuevo;
+                Console.WriteLine("Nodo insertado como primer acceso de fila");
             }
             else
             {
@@ -271,6 +283,7 @@ namespace AutoGestPro.Core
             if (encabezadoColumna->Acceso == null)
             {
                 encabezadoColumna->Acceso = nuevo;
+                Console.WriteLine("Nodo insertado como primer acceso de columna");
             }
             else
             {
@@ -294,6 +307,7 @@ namespace AutoGestPro.Core
                     nuevo->Abajo = temp;
                 }
             }
+            Console.WriteLine("Relación insertada correctamente");
         }
 
         public void MostrarBitacora()
@@ -337,6 +351,151 @@ namespace AutoGestPro.Core
             }
         }
 
+        
+        public unsafe string GenerarGraphviz()
+        {
+            try
+            {
+                StringBuilder dot = new StringBuilder();
+                dot.AppendLine("digraph G {");
+                dot.AppendLine("  rankdir=TB;");
+                dot.AppendLine("  nodesep=0.5;");
+                dot.AppendLine("  ranksep=0.5;");
+                dot.AppendLine("  node [shape=box, fontsize=10, width=1.5, height=0.5, fixedsize=true];");
+
+                // Verificar si la matriz está inicializada correctamente
+                if (filas == null || columnas == null)
+                {
+                    dot.AppendLine("  matriz [label=\"Error: Matriz no inicializada\"];");
+                    dot.AppendLine("}");
+                    return dot.ToString();
+                }
+
+                // Nodo matriz principal
+                dot.AppendLine("  matriz [label=\"MATRIZ\", style=filled, fillcolor=gray];");
+
+                // Si no hay datos, mostrar matriz vacía
+                if (filas->Primero == null || columnas->Primero == null)
+                {
+                    dot.AppendLine("  empty [label=\"Matriz vacía\"];");
+                    dot.AppendLine("  matriz -> empty;");
+                    dot.AppendLine("}");
+                    return dot.ToString();
+                }
+
+                // Encabezados de columnas (vehículos)
+                NodoEncabezado* columnaActual = columnas->Primero;
+                if (columnaActual != null)
+                {
+                    while (columnaActual != null)
+                    {
+                        dot.AppendLine($"  columna{columnaActual->Id} [label=\"V{columnaActual->Id}\", style=filled, fillcolor=lightgreen];");
+                        columnaActual = columnaActual->Siguiente;
+                    }
+                }
+
+                // Encabezados de filas (repuestos)
+                NodoEncabezado* filaActual = filas->Primero;
+                if (filaActual != null)
+                {
+                    while (filaActual != null)
+                    {
+                        dot.AppendLine($"  fila{filaActual->Id} [label=\"R{filaActual->Id}\", style=filled, fillcolor=lightblue];");
+                        filaActual = filaActual->Siguiente;
+                    }
+                }
+
+                // Primer rango: MATRIZ y encabezados de columnas
+                dot.AppendLine("  { rank=same; matriz;");
+                columnaActual = columnas->Primero;
+                while (columnaActual != null)
+                {
+                    dot.AppendLine($"    columna{columnaActual->Id};");
+                    columnaActual = columnaActual->Siguiente;
+                }
+                dot.AppendLine("  }");
+
+                // Conexiones básicas
+                if (columnas->Primero != null)
+                {
+                    dot.AppendLine($"  matriz -> columna{columnas->Primero->Id} [dir=both];");
+                }
+                if (filas->Primero != null)
+                {
+                    dot.AppendLine($"  matriz -> fila{filas->Primero->Id} [dir=both];");
+                }
+
+                // Conectar encabezados de columnas
+                columnaActual = columnas->Primero;
+                while (columnaActual != null && columnaActual->Siguiente != null)
+                {
+                    dot.AppendLine($"  columna{columnaActual->Id} -> columna{columnaActual->Siguiente->Id} [dir=both];");
+                    columnaActual = columnaActual->Siguiente;
+                }
+
+                // Conectar filas y nodos internos
+                filaActual = filas->Primero;
+                while (filaActual != null)
+                {
+                    if (filaActual->Siguiente != null)
+                    {
+                        dot.AppendLine($"  fila{filaActual->Id} -> fila{filaActual->Siguiente->Id} [dir=both];");
+                    }
+
+                    // Nodos internos
+                    NodoBitacora* nodoActual = filaActual->Acceso;
+                    if (nodoActual != null)
+                    {
+                        // Subgrafo para nodos de esta fila
+                        dot.AppendLine($"  {{ rank=same; fila{filaActual->Id};");
+                        while (nodoActual != null)
+                        {
+                            string detalle = new string(nodoActual->Detalles).TrimEnd('\0');
+                            dot.AppendLine($"    nodo{nodoActual->IdRepuesto}_{nodoActual->IdVehiculo} [label=\"{detalle}\", style=filled, fillcolor=lightyellow];");
+                            nodoActual = nodoActual->Derecha;
+                        }
+                        dot.AppendLine("  }");
+
+                        // Conexiones de nodos
+                        nodoActual = filaActual->Acceso;
+                        while (nodoActual != null)
+                        {
+                            // Conexión con encabezado de fila
+                            if (nodoActual == filaActual->Acceso)
+                            {
+                                dot.AppendLine($"  fila{filaActual->Id} -> nodo{nodoActual->IdRepuesto}_{nodoActual->IdVehiculo} [dir=both];");
+                            }
+
+                            // Conexiones horizontales
+                            if (nodoActual->Derecha != null)
+                            {
+                                dot.AppendLine($"  nodo{nodoActual->IdRepuesto}_{nodoActual->IdVehiculo} -> nodo{nodoActual->IdRepuesto}_{nodoActual->Derecha->IdVehiculo} [dir=both];");
+                            }
+
+                            // Conexiones verticales
+                            if (nodoActual->Abajo != null)
+                            {
+                                dot.AppendLine($"  nodo{nodoActual->IdRepuesto}_{nodoActual->IdVehiculo} -> nodo{nodoActual->Abajo->IdRepuesto}_{nodoActual->IdVehiculo} [dir=both];");
+                            }
+
+                            nodoActual = nodoActual->Derecha;
+                        }
+                    }
+
+                    filaActual = filaActual->Siguiente;
+                }
+
+                dot.AppendLine("}");
+                return dot.ToString();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en GenerarGraphviz: {ex.Message}");
+                Console.WriteLine(ex.StackTrace);
+                return "digraph G { node [label=\"Error al generar gráfico\"]; }";
+            }
+        }
+        
         ~MatrizBitacora()
         {
             Dispose(false);
