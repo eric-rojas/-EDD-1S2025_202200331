@@ -1,0 +1,9 @@
+digraph G {
+  rankdir=TB;
+  nodesep=0.5;
+  ranksep=0.5;
+  node [shape=box, fontsize=10, width=1.5, height=0.5, fixedsize=true];
+  matriz [label="MATRIZ", style=filled, fillcolor=gray];
+  empty [label="Matriz vacía"];
+  matriz -> empty;
+}
