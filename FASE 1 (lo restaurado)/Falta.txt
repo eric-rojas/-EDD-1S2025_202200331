@@ -1,0 +1,5 @@
+ - Falta crear una validación en el ingreso de los vehiculos apra que si no se encuentra el usuario, pues no jale el vehiculo
+ - Falta la muestra de los top 5 mas antiguos... que hay que ver si jala como strings y cambiarlos a int y hacer el calculo
+ - Falta la matriz que jale con datos en tiempo real, pero no se si al final va a jalar o ya nel
+
+

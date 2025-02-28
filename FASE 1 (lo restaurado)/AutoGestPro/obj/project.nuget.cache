@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1zuyVl0aEws=",
+  "dgSpecHash": "6m3N4k6gnis=",
   "success": true,
-  "projectFilePath": "/home/rojas/Descargas/-EDD-1S2025_202200331-nueva/AutoGestPro/Proyecto.csproj",
+  "projectFilePath": "/home/rojas/Documentos/Universidad/1er S 2025/EDD/-EDD-1S2025_202200331/FASE 1 (lo restaurado)/AutoGestPro/Proyecto.csproj",
   "expectedPackageFiles": [
     "/home/rojas/.nuget/packages/atksharp/3.24.24.95/atksharp.3.24.24.95.nupkg.sha512",
     "/home/rojas/.nuget/packages/cairosharp/3.24.24.95/cairosharp.3.24.24.95.nupkg.sha512",

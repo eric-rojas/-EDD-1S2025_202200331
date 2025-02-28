@@ -18,7 +18,9 @@ namespace AutoGestPro
         private readonly PilaFacturas _pilaFacturas;
         private readonly GeneradorServicio _generadorServicio;
 
-        private readonly MatrizBitacora _matrizBitacora; 
+        //private readonly MatrizBitacora _matrizBitacora; 
+
+        private MatrizBitacora _bitacora = new MatrizBitacora();
 
         public Menu1(ListaUsuarios listaUsuarios, ListaVehiculos listaVehiculos, ListaRepuestos listaRepuestos, ColaServicios colaServicios, PilaFacturas pilaFacturas, GeneradorServicio generadorServicio, MatrizBitacora matrizBitacora) : base("AutoGestPro - Menú Principal")
         {
@@ -28,7 +30,7 @@ namespace AutoGestPro
             _colaServicios = colaServicios;
             _pilaFacturas = pilaFacturas;
             _generadorServicio = generadorServicio;
-            _matrizBitacora = matrizBitacora;
+            _bitacora = matrizBitacora;
 
             SetDefaultSize(400, 300);
             SetPosition(WindowPosition.Center);
@@ -144,8 +146,13 @@ namespace AutoGestPro
             GraphvizExporter.GenerarArchivoDot(dotFilePilaFacturas, contenidoDotPilaFacturas);
 
             // Generar el archivo Dot para Matriz de Bitacora
-            string contenidoDotMatrizBitacora = _matrizBitacora.GenerarGraphviz();
+            //string contenidoDotMatrizBitacora = _matrizBitacora.GenerarGraphviz();
+            //GraphvizExporter.GenerarArchivoDot(dotFileMatrizBitacora, contenidoDotMatrizBitacora);
+
+            // Generar el archivo Dot para Matriz de Bitacora
+            string contenidoDotMatrizBitacora = _bitacora.GenerarGraphviz(); // Usar la misma instancia
             GraphvizExporter.GenerarArchivoDot(dotFileMatrizBitacora, contenidoDotMatrizBitacora);
+
 
             // Generar el archivo Dot para Top 5
             string contenidoDotTop5 = _colaServicios.GenerarGraphvizTop5Vehiculos();
@@ -253,7 +260,7 @@ namespace AutoGestPro
         */
         private void GoGenerarServicio(object? sender, EventArgs e)
         {
-            ServiciosView serviciosView = new ServiciosView(_listaRepuestos, _listaVehiculos, _colaServicios, _pilaFacturas);
+            ServiciosView serviciosView = new ServiciosView(_listaRepuestos, _listaVehiculos, _colaServicios, _pilaFacturas, _bitacora);
             serviciosView.ShowAll();
         }
 

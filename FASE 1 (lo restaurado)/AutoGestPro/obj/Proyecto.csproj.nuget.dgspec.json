@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/rojas/Descargas/-EDD-1S2025_202200331-nueva/AutoGestPro/Proyecto.csproj": {}
+    "/home/rojas/Documentos/Universidad/1er S 2025/EDD/-EDD-1S2025_202200331/FASE 1 (lo restaurado)/AutoGestPro/Proyecto.csproj": {}
   },
   "projects": {
-    "/home/rojas/Descargas/-EDD-1S2025_202200331-nueva/AutoGestPro/Proyecto.csproj": {
+    "/home/rojas/Documentos/Universidad/1er S 2025/EDD/-EDD-1S2025_202200331/FASE 1 (lo restaurado)/AutoGestPro/Proyecto.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/rojas/Descargas/-EDD-1S2025_202200331-nueva/AutoGestPro/Proyecto.csproj",
+        "projectUniqueName": "/home/rojas/Documentos/Universidad/1er S 2025/EDD/-EDD-1S2025_202200331/FASE 1 (lo restaurado)/AutoGestPro/Proyecto.csproj",
         "projectName": "Proyecto",
-        "projectPath": "/home/rojas/Descargas/-EDD-1S2025_202200331-nueva/AutoGestPro/Proyecto.csproj",
+        "projectPath": "/home/rojas/Documentos/Universidad/1er S 2025/EDD/-EDD-1S2025_202200331/FASE 1 (lo restaurado)/AutoGestPro/Proyecto.csproj",
         "packagesPath": "/home/rojas/.nuget/packages/",
-        "outputPath": "/home/rojas/Descargas/-EDD-1S2025_202200331-nueva/AutoGestPro/obj/",
+        "outputPath": "/home/rojas/Documentos/Universidad/1er S 2025/EDD/-EDD-1S2025_202200331/FASE 1 (lo restaurado)/AutoGestPro/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/rojas/.nuget/NuGet/NuGet.Config"

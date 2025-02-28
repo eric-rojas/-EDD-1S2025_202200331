@@ -1,4 +1,12 @@
 digraph G {
+    rankdir=LR;
     node [shape=record];
-    NULL [label = "{NULL}"];
+    subgraph cluster_0 {
+        label = "Cola de Servicios";
+        style=filled;
+        color=lightblue;
+        node1 [label="{{ID: 1}|{ID Repuesto: 1}|{ID Vehículo: 1}|{Servicio: 1}|{Costo: $1.00}}"];
+        node1 [label="{{ID: 1}|{ID Repuesto: 2}|{ID Vehículo: 1}|{Servicio: 1}|{Costo: $1.00}}"];
+        node1 -> node1 [color=blue, constraint=true];
+    }
 }

@@ -20,24 +20,24 @@ namespace AutoGestPro.UI
             private PilaFacturas _facturas;
             private GeneradorServicio _generadorServicio;
 
+            private MatrizBitacora _bitacora; 
+
             public ServiciosView(
                 ListaRepuestos repuestos,
                 ListaVehiculos vehiculos,
                 ColaServicios servicios,
-                PilaFacturas facturas) : base("Crear Servicio")
+                PilaFacturas facturas,
+                MatrizBitacora bitacora) : base("Crear Servicio") 
+                
             {
                 _repuestos = repuestos;
                 _vehiculos = vehiculos;
                 _servicios = servicios;
                 _facturas = facturas;
+                _bitacora = bitacora;
 
                 // Crear el generador de servicios
-                _generadorServicio = new GeneradorServicio(
-                    vehiculos, 
-                    repuestos, 
-                    servicios, 
-                    facturas, 
-                    new MatrizBitacora()); // Creamos una nueva instancia de MatrizBitacora
+                _generadorServicio = new GeneradorServicio(vehiculos, repuestos, servicios, facturas, _bitacora);
 
                 InitializeComponents();
             }
@@ -134,7 +134,21 @@ namespace AutoGestPro.UI
                 if (resultado)
                 {
                     ShowSuccess("Servicio generado exitosamente");
+
+                    // Imprimir DOT generado solo si hay contenido
+                    string dotGraph = _bitacora.GenerarGraphviz();
+                    if (!string.IsNullOrEmpty(dotGraph))
+                    {
+                        Console.WriteLine("\n=== DOT generado ===");
+                        Console.WriteLine(dotGraph);
+                    }
+                    else
+                    {
+                        Console.WriteLine("No se generó ningún contenido en la matriz de bitácora.");
+                    }
+
                     LimpiarCampos();
+
                 }
                 else
                 {

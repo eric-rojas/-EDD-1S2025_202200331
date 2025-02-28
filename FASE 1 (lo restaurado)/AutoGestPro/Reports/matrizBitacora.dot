@@ -4,6 +4,15 @@ digraph G {
   ranksep=0.5;
   node [shape=box, fontsize=10, width=1.5, height=0.5, fixedsize=true];
   matriz [label="MATRIZ", style=filled, fillcolor=gray];
-  empty [label="Matriz vacía"];
-  matriz -> empty;
+  columna1 [label="V1", style=filled, fillcolor=lightgreen];
+  fila2 [label="R2", style=filled, fillcolor=lightblue];
+  { rank=same; matriz;
+    columna1;
+  }
+  matriz -> columna1 [dir=both];
+  matriz -> fila2 [dir=both];
+  { rank=same; fila2;
+    nodo2_1 [label="1", style=filled, fillcolor=lightyellow];
+  }
+  fila2 -> nodo2_1 [dir=both];
 }

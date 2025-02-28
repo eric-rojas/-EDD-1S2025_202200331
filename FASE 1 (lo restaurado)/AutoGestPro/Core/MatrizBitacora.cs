@@ -111,6 +111,7 @@ namespace AutoGestPro.Core
         }
     }
 
+
     public unsafe class MatrizBitacora : IDisposable
 {
     private ListaEncabezado* filas;
