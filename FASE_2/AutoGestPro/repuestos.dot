@@ -1,0 +1,34 @@
+digraph G {
+rankdir=LR;
+node [shape=record];
+node1 [label="{ID: 1 | Repuesto: Filtro de aceite | Detalles: Filtra impurezas del aceite del motor. | Costo: $25.50}"];
+node2 [label="{ID: 2 | Repuesto: Bujías | Detalles: Componente esencial para encender la mezcla de aire y combustible. | Costo: $15.75}"];
+node3 [label="{ID: 3 | Repuesto: Frenos delanteros | Detalles: Piezas para frenar el vehículo en la parte delantera. | Costo: $60.00}"];
+node4 [label="{ID: 4 | Repuesto: Pastillas de freno traseras | Detalles: Piezas para frenar el vehículo en la parte trasera. | Costo: $45.30}"];
+node5 [label="{ID: 5 | Repuesto: Amortiguadores | Detalles: Componente de suspensión para absorber impactos. | Costo: $95.20}"];
+node6 [label="{ID: 6 | Repuesto: Aceite de motor | Detalles: Lubricante para el motor del vehículo. | Costo: $18.60}"];
+node7 [label="{ID: 7 | Repuesto: Filtro de aire | Detalles: Filtra el aire que entra al motor para mejorar la combustión. | Costo: $22.10}"];
+node8 [label="{ID: 8 | Repuesto: Correa de distribución | Detalles: Componente que sincroniza el motor. | Costo: $80.00}"];
+node9 [label="{ID: 9 | Repuesto: Radiador | Detalles: Sistema para mantener el motor a temperatura adecuada. | Costo: $150.00}"];
+node10 [label="{ID: 10 | Repuesto: Batería | Detalles: Fuente de energía para el vehículo. | Costo: $100.50}"];
+node11 [label="{ID: 11 | Repuesto: Cables de encendido | Detalles: Conducen energía desde la batería a las bujías. | Costo: $30.40}"];
+node12 [label="{ID: 12 | Repuesto: Espejos laterales | Detalles: Espejos para una mejor visibilidad en el vehículo. | Costo: $50.00}"];
+node13 [label="{ID: 13 | Repuesto: Manguera de radiador | Detalles: Transporta el líquido refrigerante en el sistema de enfriamiento. | Costo: $20.80}"];
+node14 [label="{ID: 14 | Repuesto: Suspensión trasera | Detalles: Sistema que absorbe impactos en la parte trasera del vehículo. | Costo: $120.00}"];
+node15 [label="{ID: 15 | Repuesto: Bombas de freno | Detalles: Componente que genera presión para accionar los frenos. | Costo: $75.00}"];
+node1 -> node2;
+node2 -> node3;
+node3 -> node4;
+node4 -> node5;
+node5 -> node6;
+node6 -> node7;
+node7 -> node8;
+node8 -> node9;
+node9 -> node10;
+node10 -> node11;
+node11 -> node12;
+node12 -> node13;
+node13 -> node14;
+node14 -> node15;
+node15 -> node1;
+}

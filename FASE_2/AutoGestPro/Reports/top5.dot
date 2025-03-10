@@ -1,0 +1,12 @@
+digraph G {
+    rankdir=LR;
+    node [shape=record];
+    subgraph cluster_0 {
+        label = "Top 5 Vehículos con más servicios";
+        style=filled;
+        color=lightblue;
+        node1 [label="{{Id_Vehiculo: 1}|{Servicios: 1}}"];
+        node2 [label="{{Id_Vehiculo: 2}|{Servicios: 1}}"];
+        node1 -> node2 [color=blue, constraint=true];
+    }
+}
