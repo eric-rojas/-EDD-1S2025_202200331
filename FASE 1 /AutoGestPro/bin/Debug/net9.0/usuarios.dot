@@ -1,0 +1,22 @@
+digraph G {
+  rankdir=LR;
+  "1" [shape=box, label="ID: 1\nCarlos Alberto Gomez Martinez\nCorreo: carlos.alberto@usac.com\nContraseña: "];
+  "1" -> "2";
+  "2" [shape=box, label="ID: 2\nAna Lucia Martinez Lopez\nCorreo: ana.lucia@usac.com\nContraseña: "];
+  "2" -> "3";
+  "3" [shape=box, label="ID: 3\nLuis Enrique Perez Ramirez\nCorreo: luis.enrique@usac.com\nContraseña: "];
+  "3" -> "4";
+  "4" [shape=box, label="ID: 4\nMarta Isabel Lopez Perez\nCorreo: marta.isabel@usac.com\nContraseña: "];
+  "4" -> "5";
+  "5" [shape=box, label="ID: 5\nJuan Carlos Hernandez Lopez\nCorreo: juan.carlos@usac.com\nContraseña: "];
+  "5" -> "6";
+  "6" [shape=box, label="ID: 6\nMaria Fernanda Garcia Lopez\nCorreo: maria.fernanda@usac.com\nContraseña: "];
+  "6" -> "7";
+  "7" [shape=box, label="ID: 7\nPedro Pablo Rodriguez Torres\nCorreo: pedro.pablo@usac.com\nContraseña: "];
+  "7" -> "8";
+  "8" [shape=box, label="ID: 8\nLaura Isabel Sanchez Morales\nCorreo: laura.isabel@usac.com\nContraseña: "];
+  "8" -> "9";
+  "9" [shape=box, label="ID: 9\nRafael Alejandro Ramirez Diaz\nCorreo: rafael.alejandro@usac.com\nContraseña: "];
+  "9" -> "12";
+  "12" [shape=box, label="ID: 12\nwe we\nCorreo: wr@gmail.com\nContraseña: 1234"];
+}

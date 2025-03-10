@@ -1,0 +1,27 @@
+digraph G {
+  rankdir=TB;
+  nodesep=0.5;
+  ranksep=0.5;
+  node [shape=box, fontsize=10, width=1.5, height=0.5, fixedsize=true];
+  matriz [label="MATRIZ", style=filled, fillcolor=gray];
+  columna1 [label="V1", style=filled, fillcolor=lightgreen];
+  columna2 [label="V2", style=filled, fillcolor=lightgreen];
+  fila1 [label="R1", style=filled, fillcolor=lightblue];
+  fila2 [label="R2", style=filled, fillcolor=lightblue];
+  { rank=same; matriz;
+    columna1;
+    columna2;
+  }
+  matriz -> columna1 [dir=both];
+  matriz -> fila1 [dir=both];
+  columna1 -> columna2 [dir=both];
+  fila1 -> fila2 [dir=both];
+  { rank=same; fila1;
+    nodo1_1 [label="1", style=filled, fillcolor=lightyellow];
+  }
+  fila1 -> nodo1_1 [dir=both];
+  { rank=same; fila2;
+    nodo2_2 [label="2", style=filled, fillcolor=lightyellow];
+  }
+  fila2 -> nodo2_2 [dir=both];
+}
