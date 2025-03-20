@@ -1,260 +1,3 @@
-
-
-/*
-public class CargaMasiva : Window
-{
-    private ListaUsuarios listaUsuarios;
-    private ListaVehiculos listaVehiculos;
-    private ListaRepuestos listaRepuestos;
-
-    public CargaMasiva(ListaUsuarios usuarios, ListaVehiculos vehiculos, ListaRepuestos repuestos) : base("Carga Masiva")
-    {
-        this.listaUsuarios = usuarios;
-        this.listaVehiculos = vehiculos;
-        this.listaRepuestos = repuestos;
-
-        SetDefaultSize(400, 150);
-        SetPosition(WindowPosition.Center);
-
-        // Crear un contenedor para los elementos
-        VBox vbox = new VBox(false, 5);
-
-        // Label
-        Label label = new Label("Seleccione un archivo JSON para cargar:");
-        vbox.PackStart(label, false, false, 0);
-
-        // Botón para cargar archivo JSON
-        Button btnCargarArchivo = new Button("Cargar Archivo JSON");
-        btnCargarArchivo.Clicked += OnCargarArchivoClicked;
-        vbox.PackStart(btnCargarArchivo, false, false, 0);
-
-        Add(vbox);
-    }
-
-    private void OnCargarArchivoClicked(object sender, EventArgs e)
-    {
-        FileChooserDialog fileChooser = new FileChooserDialog(
-            "Seleccione un archivo JSON",
-            this,
-            FileChooserAction.Open,
-            "Cancelar", ResponseType.Cancel,
-            "Abrir", ResponseType.Accept);
-
-        FileFilter filter = new FileFilter();
-        filter.Name = "Archivos JSON";
-        filter.AddPattern("*.json");
-        fileChooser.AddFilter(filter);
-
-        if (fileChooser.Run() == (int)ResponseType.Accept)
-        {
-            string filePath = fileChooser.Filename;
-            CargarJSON(filePath);
-        }
-
-        fileChooser.Destroy();
-    }
-
-    private void CargarJSON(string filePath)
-    {
-        try
-        {
-            string jsonContent = File.ReadAllText(filePath);
-
-            if (jsonContent.Contains("Placa"))
-            {
-                var vehiculos = JsonConvert.DeserializeObject<LocalVehiculo[]>(jsonContent);
-                foreach (var vehiculo in vehiculos)
-                {
-                    listaVehiculos.Insertar(
-                        vehiculo.ID, 
-                        vehiculo.ID_Usuario,
-                        vehiculo.Marca,
-                        vehiculo.Modelo,
-                        vehiculo.Placa
-                    );
-                }
-            }
-            else if (jsonContent.Contains("Correo"))
-            {
-                var usuarios = JsonConvert.DeserializeObject<LocalUsuario[]>(jsonContent);
-                foreach (var usuario in usuarios)
-                {
-                    var usuarioObj = new Ussuario(
-                        usuario.ID,
-                        usuario.Nombres,
-                        usuario.Apellidos,
-                        usuario.Correo,
-                        usuario.Contraseña
-                    );
-                    listaUsuarios.Insertar(usuarioObj);
-                }
-            }
-            else if (jsonContent.Contains("Repuesto"))
-            {
-                var repuestos = JsonConvert.DeserializeObject<LocalRepuesto[]>(jsonContent);
-                foreach (var repuesto in repuestos)
-                {
-                    listaRepuestos.Insertar(
-                        repuesto.ID,
-                        repuesto.Repuesto,
-                        repuesto.Detalles,
-                        repuesto.Costo
-                    );
-                }
-            }
-
-            MessageDialog successDialog = new MessageDialog(
-                this,
-                DialogFlags.Modal,
-                MessageType.Info,
-                ButtonsType.Ok,
-                "Archivo JSON cargado correctamente."
-            );
-            successDialog.Run();
-            successDialog.Destroy();
-        }
-        catch (Exception ex)
-        {
-            MessageDialog errorDialog = new MessageDialog(
-                this,
-                DialogFlags.Modal,
-                MessageType.Error,
-                ButtonsType.Ok,
-                $"Error al cargar el archivo JSON: {ex.Message}"
-            );
-            errorDialog.Run();
-            errorDialog.Destroy();
-        }
-    }
-
-    // Clases para deserializar el JSON
-    public class LocalVehiculo
-    {
-        public int ID { get; set; }
-        public int ID_Usuario { get; set; }
-        public string Marca { get; set; }
-        public string Modelo { get; set; }
-        public string Placa { get; set; }
-    }
-
-    public class LocalUsuario
-    {
-        public int ID { get; set; }
-        public string Nombres { get; set; }
-        public string Apellidos { get; set; }
-        public string Correo { get; set; }
-        public string Contraseña { get; set; }
-    }
-
-    public class LocalRepuesto
-    {
-        public int ID { get; set; }
-        public string Repuesto { get; set; }
-        public string Detalles { get; set; }
-        public double Costo { get; set; }
-    }
-}
-
-using Gtk;
-using System;
-using System.IO;
-using Newtonsoft.Json;
-using AutoGestPro.Core;
-
-
-
-namespace AutoGestPro.Core
-public class CargaMasiva : Window
-{
-
-    private ListaUsuarios listaUsuarios;
-    private ListaVehiculos listaVehiculos;
-    private ListaRepuestos listaRepuestos;
-    public CargaMasiva() : base("Carga Masiva")
-    {
-        SetDefaultSize(400, 150);
-        SetPosition(WindowPosition.Center);
-
-        // Crear un contenedor para los elementos
-        VBox vbox = new VBox(false, 5);
-
-        // Label
-        Label label = new Label("Seleccione un archivo JSON para cargar:");
-        vbox.PackStart(label, false, false, 0);
-
-        // Botón para cargar archivo JSON
-        Button btnCargarArchivo = new Button("Cargar Archivo JSON");
-        btnCargarArchivo.Clicked += OnCargarArchivoClicked;
-        vbox.PackStart(btnCargarArchivo, false, false, 0);
-
-        Add(vbox);
-    }
-
-    private void OnCargarArchivoClicked(object sender, EventArgs e)
-    {
-        // Crear un diálogo para seleccionar archivo
-        FileChooserDialog fileChooser = new FileChooserDialog(
-            "Seleccione un archivo JSON",
-            this,
-            FileChooserAction.Open,
-            "Cancelar", ResponseType.Cancel,
-            "Abrir", ResponseType.Accept);
-
-        // Filtrar solo archivos JSON
-        FileFilter filter = new FileFilter();
-        filter.Name = "Archivos JSON";
-        filter.AddPattern("*.json");
-        fileChooser.AddFilter(filter);
-
-        // Si el usuario selecciona un archivo
-        if (fileChooser.Run() == (int)ResponseType.Accept)
-        {
-            string filePath = fileChooser.Filename;
-            CargarJSON(filePath);
-        }
-
-        fileChooser.Destroy();
-    }
-
-    private void CargarJSON(string filePath)
-    {
-        try
-        {
-            // Leer el contenido del archivo JSON
-            string json = File.ReadAllText(filePath);
-
-            // Deserializar el JSON a una lista de nodos
-            var usuarios = JsonConvert.DeserializeObject<ListaUsuarios[]>(json);
-
-            // Mostrar los datos en consola (o procesarlos como necesites)
-            Console.WriteLine("Datos cargados correctamente:");
-            // Insertar los nodos en la lista global
-            foreach (var usuario in usuarios)
-            {
-                ListaUsuarios.Insertar(usuario.id, new string(usuario.Nombres), new string(usuario.Apellidos),
-                    new string(usuario.Correo), new string(usuario.Contrasenia));
-            }
-
-            
-        }
-        catch (Exception e)
-        {
-            // Mostrar mensaje de error si algo falla
-            MessageDialog errorDialog = new MessageDialog(
-                this,
-                DialogFlags.Modal,
-                MessageType.Error,
-                ButtonsType.Ok,
-                $"Error al cargar el archivo JSON: {e.Message}");
-            errorDialog.Run();
-            errorDialog.Destroy();
-        }
-    }
-
-}
-*/
-
-
 using Gtk;
 using System;
 using System.IO;
@@ -264,144 +7,19 @@ using AutoGestPro.Core;
 
 namespace AutoGestPro.Core
 {
-    /*
-    public class CargaMasiva : Window
-
-    {
-        private readonly ListaUsuarios _listaUsuarios; // Cambiar el tipo de la lista
-        private readonly ListaVehiculos _listaVehiculos;
-        private readonly ListaRepuestos _listaRepuestos; 
-
-        public CargaMasiva(ListaUsuarios listaUsuarios, ListaVehiculos listaVehiculos, ListaRepuestos listaRepuestos) : base("Carga Masiva") // Cambiar el constructor para recibir las listas
-        {
-            // Inicializar las listas
-            _listaUsuarios = listaUsuarios; // Usamos la lista pasada por parámetro
-            _listaVehiculos = listaVehiculos;
-            _listaRepuestos = listaRepuestos;
-
-            // Configurar la ventana
-            SetDefaultSize(400, 150);
-            SetPosition(WindowPosition.Center);
-
-            // Crear un contenedor para los elementos
-            VBox vbox = new VBox();
-            vbox.Spacing = 5;
-
-            // Label
-            Label label = new Label("Seleccione un archivo JSON para cargar:");
-            vbox.PackStart(label, false, false, 0);
-
-            // Botón para cargar archivo JSON
-            Button btnCargarArchivo = new Button("Cargar Archivo JSON");
-            btnCargarArchivo.Clicked += OnCargarArchivoClicked;
-            vbox.PackStart(btnCargarArchivo, false, false, 0);
-
-            // Botón para cargar archivo JSON de vehículos
-            // boton para cargar archivo JSON de repuestos
-            
-
-            Add(vbox);
-        }
-
-        private void OnCargarArchivoClicked(object? sender, EventArgs e)
-        {
-            // Crear un diálogo para seleccionar archivo
-            FileChooserDialog fileChooser = new FileChooserDialog(
-                "Seleccione un archivo JSON",
-                this,
-                FileChooserAction.Open,
-                "Cancelar", ResponseType.Cancel,
-                "Abrir", ResponseType.Accept);
-
-            // Filtrar solo archivos JSON
-            FileFilter filter = new FileFilter();
-            filter.Name = "Archivos JSON";
-            filter.AddPattern("*.json");
-            fileChooser.AddFilter(filter);
-
-            // Si el usuario selecciona un archivo
-            if (fileChooser.Run() == (int)ResponseType.Accept)
-            {
-                string filePath = fileChooser.Filename;
-                CargarJSON(filePath);
-            }
-
-            fileChooser.Destroy();
-        }
-
-        private void CargarJSON(string filePath)
-        {
-            try
-            {
-                Console.WriteLine("\n=== Iniciando carga de archivo JSON ===");
-                Console.WriteLine($"Archivo seleccionado: {filePath}");
-
-                string json = File.ReadAllText(filePath);
-                Console.WriteLine("✓ Archivo leído correctamente");
-
-                var usuarios = JsonConvert.DeserializeObject<List<Usuario>>(json);
-                
-                if (usuarios != null && usuarios.Count > 0)
-                {
-                    Console.WriteLine($"✓ JSON deserializado exitosamente - {usuarios.Count} usuarios encontrados");
-                    Console.WriteLine("\nUsuarios cargados:");
-                    
-                    foreach (var usuario in usuarios)
-                    {
-                       _listaUsuarios.Insertar(usuario);  // Usamos la lista pasada por parámetro
-                        Console.WriteLine($"→ {usuario}");
-                    }
-
-                    Console.WriteLine("\n✓ Todos los usuarios fueron insertados correctamente");
-                    Console.WriteLine("=== Carga completada ===\n");
-
-                    MessageDialog successDialog = new MessageDialog(
-                        this,
-                        DialogFlags.Modal,
-                        MessageType.Info,
-                        ButtonsType.Ok,
-                        $"Archivo JSON cargado exitosamente: {usuarios.Count} usuarios importados");
-                    successDialog.Run();
-                    successDialog.Destroy();
-                }
-                else
-                {
-                    Console.WriteLine("⚠ El archivo JSON está vacío o tiene un formato incorrecto");
-                    throw new Exception("No se encontraron usuarios en el archivo JSON");
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"\n❌ Error durante la carga del archivo:");
-                Console.WriteLine($"→ {e.Message}");
-                Console.WriteLine("=== Carga fallida ===\n");
-
-                MessageDialog errorDialog = new MessageDialog(
-                    this,
-                    DialogFlags.Modal,
-                    MessageType.Error,
-                    ButtonsType.Ok,
-                    $"Error al cargar el archivo JSON: {e.Message}");
-                errorDialog.Run();
-                errorDialog.Destroy();
-            }
-        }
-    }
-    */
-
     public class CargaMasiva : Window
     {
         private readonly ListaUsuarios _listaUsuarios;
         private readonly ListaVehiculos _listaVehiculos;
-        private readonly ListaRepuestos _listaRepuestos;
+        private readonly ArbolAVLRepuestos _arbolRepuestos;
 
-        public CargaMasiva(ListaUsuarios listaUsuarios, ListaVehiculos listaVehiculos, ListaRepuestos listaRepuestos) : base("Carga Masiva")
+        public CargaMasiva(ListaUsuarios listaUsuarios, ListaVehiculos listaVehiculos, ArbolAVLRepuestos arbolRepuestos) : base("Carga Masiva")
         {
             _listaUsuarios = listaUsuarios;
             _listaVehiculos = listaVehiculos;
-            _listaRepuestos = listaRepuestos;
+            _arbolRepuestos = arbolRepuestos;
 
-            SetDefaultSize(400, 200);
+            SetDefaultSize(400, 250);
             SetPosition(WindowPosition.Center);
 
             VBox vbox = new VBox();
@@ -424,7 +42,13 @@ namespace AutoGestPro.Core
             btnRepuestos.Clicked += (s, e) => OnCargarArchivoClicked(TipoCarga.Repuestos);
             vbox.PackStart(btnRepuestos, false, false, 0);
 
+            // Información adicional
+            Label labelInfo = new Label("La carga validará que los IDs sean únicos y que las relaciones entre entidades sean válidas.");
+            labelInfo.LineWrap = true;
+            vbox.PackStart(labelInfo, false, false, 10);
+
             Add(vbox);
+            ShowAll();
         }
 
         // Enum para identificar el tipo de carga
@@ -477,26 +101,37 @@ namespace AutoGestPro.Core
                 string json = File.ReadAllText(filePath);
                 
                 var usuarios = JsonConvert.DeserializeObject<List<Usuario>>(json);
+                if (usuarios == null || usuarios.Count == 0)
+                {
+                    throw new Exception("El archivo no contiene usuarios o el formato es inválido");
+                }
+
                 ValidarJSONUsuarios(usuarios);
 
-                if (usuarios != null && usuarios.Count > 0)
+                int contadorCargados = 0;
+                Console.WriteLine($"✓ JSON deserializado exitosamente - {usuarios.Count} usuarios encontrados");
+                
+                foreach (var usuario in usuarios)
                 {
-                    Console.WriteLine($"✓ JSON deserializado exitosamente - {usuarios.Count} usuarios encontrados");
-                    foreach (var usuario in usuarios)
+                    // Usando el método Insertar que ya incluye validaciones de ID y correo únicos
+                    if (_listaUsuarios.Insertar(usuario))
                     {
-                        _listaUsuarios.Insertar(usuario);
-                        Console.WriteLine($"→ {usuario}");
+                        contadorCargados++;
+                        Console.WriteLine($"→ Usuario cargado: {usuario}");
                     }
-                    MostrarMensajeExito($"Se cargaron {usuarios.Count} usuarios correctamente");
+                    else
+                    {
+                        Console.WriteLine($"✗ No se pudo cargar el usuario con ID: {usuario.ID}, posible duplicado");
+                    }
                 }
+                
+                MostrarMensajeExito($"Se cargaron {contadorCargados} usuarios correctamente de {usuarios.Count} en total");
             }
             catch (Exception e)
             {
                 MostrarError($"Error al cargar usuarios: {e.Message}");
             }
         }
-
-       
 
         private void CargarVehiculos(string filePath)
         {
@@ -506,18 +141,37 @@ namespace AutoGestPro.Core
                 string json = File.ReadAllText(filePath);
                 
                 var vehiculos = JsonConvert.DeserializeObject<List<Vehiculo>>(json);
+                if (vehiculos == null || vehiculos.Count == 0)
+                {
+                    throw new Exception("El archivo no contiene vehículos o el formato es inválido");
+                }
+
                 ValidarJSONVehiculos(vehiculos);
 
-                if (vehiculos != null && vehiculos.Count > 0)
+                int contadorCargados = 0;
+                Console.WriteLine($"✓ JSON deserializado exitosamente - {vehiculos.Count} vehículos encontrados");
+                
+                foreach (var vehiculo in vehiculos)
                 {
-                    Console.WriteLine($"✓ JSON deserializado exitosamente - {vehiculos.Count} vehículos encontrados");
-                    foreach (var vehiculo in vehiculos)
+                    // Validar que el usuario exista antes de insertar el vehículo
+                    if (_listaUsuarios.Buscar(vehiculo.ID_Usuario) == null)
                     {
-                        _listaVehiculos.Insertar(vehiculo.ID, vehiculo.ID_Usuario, vehiculo.Marca, vehiculo.Modelo, vehiculo.Placa);
-                        Console.WriteLine($"→ {vehiculo}");
+                        Console.WriteLine($"✗ No se pudo cargar el vehículo con ID: {vehiculo.ID}, el usuario con ID: {vehiculo.ID_Usuario} no existe");
+                        continue;
                     }
-                    MostrarMensajeExito($"Se cargaron {vehiculos.Count} vehículos correctamente");
+                    
+                    if (_listaVehiculos.Insertar(vehiculo))
+                    {
+                        contadorCargados++;
+                        Console.WriteLine($"→ Vehículo cargado: {vehiculo}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"✗ No se pudo cargar el vehículo con ID: {vehiculo.ID}, posible duplicado");
+                    }
                 }
+                
+                MostrarMensajeExito($"Se cargaron {contadorCargados} vehículos correctamente de {vehiculos.Count} en total");
             }
             catch (Exception e)
             {
@@ -533,18 +187,30 @@ namespace AutoGestPro.Core
                 string json = File.ReadAllText(filePath);
                 
                 var repuestos = JsonConvert.DeserializeObject<List<Repuesto>>(json);
+                if (repuestos == null || repuestos.Count == 0)
+                {
+                    throw new Exception("El archivo no contiene repuestos o el formato es inválido");
+                }
+
                 ValidarJSONRepuestos(repuestos);
 
-                if (repuestos != null && repuestos.Count > 0)
+                int contadorCargados = 0;
+                Console.WriteLine($"✓ JSON deserializado exitosamente - {repuestos.Count} repuestos encontrados");
+                
+                foreach (var repuesto in repuestos)
                 {
-                    Console.WriteLine($"✓ JSON deserializado exitosamente - {repuestos.Count} repuestos encontrados");
-                    foreach (var repuesto in repuestos)
+                    if (_arbolRepuestos.Insertar(repuesto))
                     {
-                        _listaRepuestos.Insertar(repuesto.ID, repuesto.RepuestoNombre, repuesto.Detalles, repuesto.Costo);
-                        Console.WriteLine($"→ {repuesto}");
+                        contadorCargados++;
+                        Console.WriteLine($"→ Repuesto cargado: {repuesto}");
                     }
-                    MostrarMensajeExito($"Se cargaron {repuestos.Count} repuestos correctamente");
+                    else
+                    {
+                        Console.WriteLine($"✗ No se pudo cargar el repuesto con ID: {repuesto.ID}, posible duplicado");
+                    }
                 }
+                
+                MostrarMensajeExito($"Se cargaron {contadorCargados} repuestos correctamente de {repuestos.Count} en total");
             }
             catch (Exception e)
             {
@@ -556,33 +222,75 @@ namespace AutoGestPro.Core
         private void ValidarJSONUsuarios(List<Usuario> usuarios)
         {
             if (usuarios == null) throw new Exception("El archivo no contiene un formato válido de usuarios");
+            
             foreach (var usuario in usuarios)
             {
-                if (string.IsNullOrEmpty(usuario.Nombres)) throw new Exception($"Usuario con ID {usuario.ID} no tiene nombre");
-                if (string.IsNullOrEmpty(usuario.Correo)) throw new Exception($"Usuario con ID {usuario.ID} no tiene correo");
-                // Más validaciones específicas
+                if (usuario.ID <= 0) 
+                    throw new Exception($"Usuario tiene ID inválido: {usuario.ID}. Debe ser un número positivo.");
+                
+                if (string.IsNullOrEmpty(usuario.Nombres)) 
+                    throw new Exception($"Usuario con ID {usuario.ID} no tiene nombres");
+                
+                if (string.IsNullOrEmpty(usuario.Apellidos)) 
+                    throw new Exception($"Usuario con ID {usuario.ID} no tiene apellidos");
+                
+                if (string.IsNullOrEmpty(usuario.Correo)) 
+                    throw new Exception($"Usuario con ID {usuario.ID} no tiene correo");
+                
+                if (usuario.Edad <= 0) 
+                    throw new Exception($"Usuario con ID {usuario.ID} tiene una edad inválida: {usuario.Edad}");
+                
+                if (string.IsNullOrEmpty(usuario.Contrasenia)) 
+                    throw new Exception($"Usuario con ID {usuario.ID} no tiene contraseña");
+                
+                // Validar formato de correo (básico)
+                if (!usuario.Correo.Contains("@") || !usuario.Correo.Contains(".")) 
+                    throw new Exception($"Usuario con ID {usuario.ID} tiene un formato de correo inválido: {usuario.Correo}");
             }
         }
 
         private void ValidarJSONVehiculos(List<Vehiculo> vehiculos)
         {
             if (vehiculos == null) throw new Exception("El archivo no contiene un formato válido de vehículos");
+            
             foreach (var vehiculo in vehiculos)
             {
-                if (string.IsNullOrEmpty(vehiculo.Placa)) throw new Exception($"Vehículo con ID {vehiculo.ID} no tiene placa");
-                if (vehiculo.ID_Usuario <= 0) throw new Exception($"Vehículo con ID {vehiculo.ID} tiene un ID de usuario inválido");
-                // Más validaciones específicas
+                if (vehiculo.ID <= 0) 
+                    throw new Exception($"Vehículo tiene ID inválido: {vehiculo.ID}. Debe ser un número positivo.");
+                
+                if (vehiculo.ID_Usuario <= 0) 
+                    throw new Exception($"Vehículo con ID {vehiculo.ID} tiene un ID de usuario inválido: {vehiculo.ID_Usuario}");
+                
+                if (string.IsNullOrEmpty(vehiculo.Marca)) 
+                    throw new Exception($"Vehículo con ID {vehiculo.ID} no tiene marca");
+                
+                if (string.IsNullOrEmpty(vehiculo.Modelo)) 
+                    throw new Exception($"Vehículo con ID {vehiculo.ID} no tiene modelo");
+                
+                if (string.IsNullOrEmpty(vehiculo.Placa)) 
+                    throw new Exception($"Vehículo con ID {vehiculo.ID} no tiene placa");
+                
+                
             }
         }
 
         private void ValidarJSONRepuestos(List<Repuesto> repuestos)
         {
             if (repuestos == null) throw new Exception("El archivo no contiene un formato válido de repuestos");
+            
             foreach (var repuesto in repuestos)
             {
-                if (string.IsNullOrEmpty(repuesto.RepuestoNombre)) throw new Exception($"Repuesto con ID {repuesto.ID} no tiene nombre");
-                if (repuesto.Costo <= 0) throw new Exception($"Repuesto con ID {repuesto.ID} tiene un costo inválido");
-                // Más validaciones específicas
+                if (repuesto.ID <= 0) 
+                    throw new Exception($"Repuesto tiene ID inválido: {repuesto.ID}. Debe ser un número positivo.");
+                
+                if (string.IsNullOrEmpty(repuesto.RepuestoNombre)) 
+                    throw new Exception($"Repuesto con ID {repuesto.ID} no tiene nombre");
+                
+                if (string.IsNullOrEmpty(repuesto.Detalles)) 
+                    throw new Exception($"Repuesto con ID {repuesto.ID} no tiene detalles");
+                
+                if (repuesto.Costo <= 0) 
+                    throw new Exception($"Repuesto con ID {repuesto.ID} tiene un costo inválido: {repuesto.Costo}. Debe ser mayor que cero.");
             }
         }
 
@@ -601,6 +309,4 @@ namespace AutoGestPro.Core
             dialog.Destroy();
         }
     }
-
-    
 }

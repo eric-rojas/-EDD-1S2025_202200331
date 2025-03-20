@@ -7,7 +7,7 @@ using AutoGestPro.UI;
 
 namespace AutoGestPro
 {
-    public class Menu1 : Window
+    public class Menu2 : Window
     {
         private readonly ListaUsuarios _listaUsuarios;
         private readonly ListaVehiculos _listaVehiculos;
@@ -18,7 +18,7 @@ namespace AutoGestPro
 
         
 
-        public Menu1(ListaUsuarios listaUsuarios, ListaVehiculos listaVehiculos,  GeneradorServicio generadorServicio, ArbolAVLRepuestos arbolAVLRepuestos, ArbolBinarioServicios arbolBinarioServicios, ArbolBFacturas arbolBFacturas) : base("AutoGestPro - Menú Principal")
+        public Menu2(ListaUsuarios listaUsuarios, ListaVehiculos listaVehiculos,  GeneradorServicio generadorServicio, ArbolAVLRepuestos arbolAVLRepuestos, ArbolBinarioServicios arbolBinarioServicios, ArbolBFacturas arbolBFacturas) : base("AutoGestPro - Menú Principal")
         {
             _listaUsuarios = listaUsuarios;
             _listaVehiculos = listaVehiculos;
@@ -63,7 +63,7 @@ namespace AutoGestPro
             Btn_ServiciosView.Clicked += GoServiciosView;
             vbox.PackStart(Btn_ServiciosView, false, false, 0);
 
-            Button Btn_GenerarReportes = new Button("Generar Reportes");
+            Button Btn_GenerarReportes = new Button("Diferenciasssssssss");
             Btn_GenerarReportes.Clicked += GoReportes;
             vbox.PackStart(Btn_GenerarReportes, false, false, 0);
 
@@ -71,7 +71,7 @@ namespace AutoGestPro
             Btn_Edicion.Clicked += GoEdicionView;
             vbox.PackStart(Btn_Edicion, false, false, 0);
 
-           
+         
 
 
             
@@ -174,6 +174,6 @@ namespace AutoGestPro
             info.Destroy();
         }  
 
-                          
+                  
     }
 }

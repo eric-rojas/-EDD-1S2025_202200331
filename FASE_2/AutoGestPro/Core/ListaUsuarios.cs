@@ -1,34 +1,32 @@
 using System;
 using System.IO;
 
-namespace AutoGestPro.Core /* madres esto es importante, estaba haciendo pruebas basicas en consola y no me reconocía este archivo porque le faltaba el 
-namespace y no jalaba nada, me decia q no habia nada en Core. entonces es importante decirle que el archivo pertenece a que carpetas y en el main poner una
-importacion algo asi: using AutoGestPro.Core; jajaj bueno algo q si ayuda el chatsito. 
-Bueno ahora sigan con la lectura :)
-*/
+namespace AutoGestPro.Core
 {
     // definición del usuario
     public class Usuario
     {   
-        // tenemos sus 5 diferentes caracteristicas
+        // Añadimos Edad a las características del usuario
         public int ID { get; set; }
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
         public string Correo { get; set; }
-        public string Contraseña { get; set; }
+        public int Edad { get; set; }  // Nueva propiedad Edad
+        public string Contrasenia { get; set; }  // Renombrado para mantener convención
 
-        public Usuario(int id, string nombres, string apellidos, string correo, string contraseña)
+        public Usuario(int id, string nombres, string apellidos, string correo, int edad, string contrasenia)
         {
             ID = id;
             Nombres = nombres;
             Apellidos = apellidos;
             Correo = correo;
-            Contraseña = contraseña;
+            Edad = edad;  // Inicializamos la nueva propiedad
+            Contrasenia = contrasenia;
         }
 
         public override string ToString()
         {
-            return $"ID: {ID}, Nombre: {Nombres} {Apellidos}, Correo: {Correo}";
+            return $"ID: {ID}, Nombre: {Nombres} {Apellidos}, Correo: {Correo}, Edad: {Edad}";
         }
     }
 
@@ -57,9 +55,48 @@ Bueno ahora sigan con la lectura :)
             cabeza = null;
         }
 
-        // Insertar un nuevo usuario al final de la lista
-        public void Insertar(Usuario usuario)
+        // Método para validar que el ID sea único
+        public bool ExisteID(int id)
         {
+            Nodo actual = cabeza;
+            while (actual != null)
+            {
+                if (actual.Usuario.ID == id)
+                    return true;
+                actual = actual.Siguiente;
+            }
+            return false;
+        }
+
+        // Método para validar que el correo sea único
+        public bool ExisteCorreo(string correo)
+        {
+            Nodo actual = cabeza;
+            while (actual != null)
+            {
+                if (actual.Usuario.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase))
+                    return true;
+                actual = actual.Siguiente;
+            }
+            return false;
+        }
+
+        // Insertar un nuevo usuario al final de la lista con validaciones
+        public bool Insertar(Usuario usuario)
+        {
+            // Validar que el ID y correo sean únicos
+            if (ExisteID(usuario.ID))
+            {
+                Console.WriteLine($"Error: Ya existe un usuario con el ID {usuario.ID}.");
+                return false;
+            }
+
+            if (ExisteCorreo(usuario.Correo))
+            {
+                Console.WriteLine($"Error: Ya existe un usuario con el correo {usuario.Correo}.");
+                return false;
+            }
+
             // creamos un nodo con el usuario proporcionado
             Nodo nuevoNodo = new Nodo(usuario);
             // si nuestra cabeza es nula incertamos en ella un nodo nuevo
@@ -77,69 +114,89 @@ Bueno ahora sigan con la lectura :)
                 }
                 actual.Siguiente = nuevoNodo;
             }
+            return true;
         }
 
-    // estos los estaremos buscando por el ID de los usuarios
         // Buscar un usuario por ID
         public Usuario Buscar(int id)
         {
-            // nuestro apuntador será la el nodo actual, Mientras este apuntador (actual = cabeza) no sea vacío entonces 
             Nodo actual = cabeza;
             while (actual != null)
             {
-                // si el actual es identico al id que proporcionamos entonces retornamos su valor
                 if (actual.Usuario.ID == id)
                     return actual.Usuario;
-                actual = actual.Siguiente; // si no es identico nos vamos al siguiente
+                actual = actual.Siguiente;
             }
             return null; // Si no se encuentra el usuario
         }
 
-        // Editar los datos de un usuario por ID
-        public bool Editar(int id, string nuevosNombres, string nuevosApellidos, string nuevoCorreo, string nuevaContraseña)
+        // Buscar un usuario por correo
+        public Usuario BuscarPorCorreo(string correo)
         {
-            Usuario usuario = Buscar(id); // creamos a usuario en base al id que obtenemos de la funcion Buscar
-            if (usuario != null) // si este usuario es diferente a null o vació entonces podemos ingresar un usuario.nombre este ultimo parte de la clase usuario antes creada
+            Nodo actual = cabeza;
+            while (actual != null)
             {
+                if (actual.Usuario.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase))
+                    return actual.Usuario;
+                actual = actual.Siguiente;
+            }
+            return null; // Si no se encuentra el usuario
+        }
+
+        // Editar los datos de un usuario por ID con validación de correo único
+        public bool Editar(int id, string nuevosNombres, string nuevosApellidos, string nuevoCorreo, int nuevaEdad, string nuevaContrasenia)
+        {
+            Usuario usuario = Buscar(id);
+            if (usuario != null)
+            {
+                // Verificar si el nuevo correo ya existe (exceptuando el propio usuario)
+                Nodo actual = cabeza;
+                while (actual != null)
+                {
+                    if (actual.Usuario.ID != id && 
+                        actual.Usuario.Correo.Equals(nuevoCorreo, StringComparison.OrdinalIgnoreCase))
+                    {
+                        Console.WriteLine($"Error: Ya existe otro usuario con el correo {nuevoCorreo}.");
+                        return false;
+                    }
+                    actual = actual.Siguiente;
+                }
+
                 usuario.Nombres = nuevosNombres;
                 usuario.Apellidos = nuevosApellidos;
                 usuario.Correo = nuevoCorreo;
-                usuario.Contraseña = nuevaContraseña;
+                usuario.Edad = nuevaEdad;
+                usuario.Contrasenia = nuevaContrasenia;
                 return true;
             }
-            return false; // Sino entonces no existe ese id
+            return false; // No existe ese id
         }
 
         // Eliminar un usuario por ID
         public bool Eliminar(int id)
         {
-            // si la lista esta vacia no eliminamos nada... salimos de esta función 
             if (cabeza == null) return false;
             
-            // Si es el primer nodo entonces movemos la cabeza al siguiente nodo y lo saltamos... asi es un nodo sin conección y no existe
-            // entonces si se desconecta ese nodo no se puede acceder a el, eso se toma como eliminado 
             if (cabeza.Usuario.ID == id) 
             {
                 cabeza = cabeza.Siguiente;
                 return true;
             }
 
-            // si el nodo no es el primero entonces lo buscamos
             Nodo actual = cabeza;
-            while (actual.Siguiente != null && actual.Siguiente.Usuario.ID != id) // mientras el acual.siguiente no sea nulo y el id no sea el mismo entonces...
+            while (actual.Siguiente != null && actual.Siguiente.Usuario.ID != id)
             {
-                actual = actual.Siguiente; //... entonces pasamos al siguiente.
-            } // asi hasta que lo encontremos y salimos del While
+                actual = actual.Siguiente;
+            }
 
             if (actual.Siguiente == null) return false; // No encontrado
 
-            // Si encontramos el nodo, lo "saltamos" asignando el nodo siguiente del nodo encontrado (actual.Siguiente.Siguiente) al nodo actual (actual.Siguiente). Esto desconecta el nodo con el ID que queremos eliminar.
-            actual.Siguiente = actual.Siguiente.Siguiente; // En palabras mas simples, si lo encontramos entonces este lo saltamos y vale keso ese id, se queda sin siguiente y  se queda solito y pobechito se muere xd
+            actual.Siguiente = actual.Siguiente.Siguiente;
             return true;
         }
 
         // Mostrar todos los usuarios
-        public void Mostrar() // pos aqui mostramos todo asi q no explication, gracias!!
+        public void Mostrar()
         {
             Nodo actual = cabeza;
             while (actual != null)
@@ -149,33 +206,7 @@ Bueno ahora sigan con la lectura :)
             }
         }
 
-        /*
-        public void GenerarDOT(string ruta)
-        {
-
-            using (StreamWriter writer = new StreamWriter(ruta))
-            {
-                writer.WriteLine("digraph G {");
-                writer.WriteLine("rankdir=LR;");
-                Nodo actual = cabeza;
-                while (actual != null)
-                {
-                    if (actual.Siguiente != null)
-                    {
-                        writer.WriteLine($"    \"{actual.Usuario.ID}\" -> \"{actual.Siguiente.Usuario.ID}\";");
-                    }
-                    else
-                    {
-                        writer.WriteLine($"    \"{actual.Usuario.ID}\";");
-                    }
-                    actual = actual.Siguiente;
-                }
-                writer.WriteLine("}");
-            }
-        }
-        */
-
-        
+        // Generar visualización Graphviz
         public string GenerarGraphviz()
         {
             if (cabeza == null)
@@ -197,7 +228,8 @@ Bueno ahora sigan con la lectura :)
                         $"Nombres: {actual.Usuario.Nombres} \\n" +
                         $"Apellidos: {actual.Usuario.Apellidos} \\n" +
                         $"Correo: {actual.Usuario.Correo} \\n" +
-                        $"Contraseña: {actual.Usuario.Contraseña} \\n" +
+                        $"Edad: {actual.Usuario.Edad} \\n" +
+                        $"Contrasenia: {actual.Usuario.Contrasenia} \\n" +
                         $"Siguiente: }}\"];\n";
                 actual = actual.Siguiente;
                 index++;
@@ -214,9 +246,5 @@ Bueno ahora sigan con la lectura :)
             graphviz += "}\n";
             return graphviz;
         }
-
-
-
-
     }
 }

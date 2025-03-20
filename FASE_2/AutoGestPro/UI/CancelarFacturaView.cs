@@ -1,7 +1,7 @@
-using Gtk;
+/*using Gtk;
 using System;
 using AutoGestPro.Core;
-/*
+
 namespace AutoGestPro.UI
 {
     public class CancelarFacturaView : Window
@@ -79,7 +79,7 @@ namespace AutoGestPro.UI
         }
     }
 }
-*/
+
 
 namespace AutoGestPro.UI
 {
@@ -193,4 +193,4 @@ namespace AutoGestPro.UI
             }
         }
     }
-}
+}*/

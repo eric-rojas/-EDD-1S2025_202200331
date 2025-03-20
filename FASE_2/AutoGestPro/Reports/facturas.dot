@@ -1,0 +1,4 @@
+digraph BTree {
+node [shape=record];
+21224086 [label="ID: 1, ID_Servicio: 1, Total: $27.00"];
+}

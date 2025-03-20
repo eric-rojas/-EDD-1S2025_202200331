@@ -1,0 +1,4 @@
+digraph ArbolServicios {
+node [shape=record];
+node1 [label="{ID: 1|ID_Rep: 1|ID_Veh: 2|Det: we|Costo: $27.00}"];
+}

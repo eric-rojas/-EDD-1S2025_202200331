@@ -1,15 +1,10 @@
 using System;
-using System.Runtime.InteropServices;
 using System.Text;
 
-
-/* bueno segun el enunciado este sistema de vehiculos se tiene que manejar con una estructura "unsafe code" esto es para manejar mejor los punteros con direcciones
-de memoria exactas. 
-en esta seccion implementaremos eso y pues haber si nos sale 
-*/
 namespace AutoGestPro.Core
 {
-        public class Vehiculo
+    // Definición de la clase Vehículo
+    public class Vehiculo
     {
         public int ID { get; set; }
         public int ID_Usuario { get; set; }
@@ -31,185 +26,234 @@ namespace AutoGestPro.Core
             return $"ID: {ID}, ID_Usuario: {ID_Usuario}, Marca: {Marca}, Modelo: {Modelo}, Placa: {Placa}";
         }
     }
-    public unsafe struct NodoVehiculo // creamos estructura unsafe del nodo vehiculo
+
+    // Clase Nodo para la lista doblemente enlazada
+    public class NodoVehiculo
     {
-        public int Id;
+        public Vehiculo Vehiculo { get; set; }
+        public NodoVehiculo Siguiente { get; set; }
+        public NodoVehiculo Anterior { get; set; }
 
-        public int ID_Usuario;
-        public fixed char Marca[50]; // fixed hace que tengamos una memoria estipulada, en este caso tenemos 50 caracteres
-        
-        public fixed char Modelo[50];
-        public fixed char Placa[20];
-        public NodoVehiculo* Next; // como es una estructura de listaDoblementeEnlazada, creamos punteros para adelante (next)y para atras (prev)
-        public NodoVehiculo* Prev;
-
-        public NodoVehiculo(int id, int idUsuario, string marca, string modelo, string placa) 
-        // creamos nuestro constructor  de nodo en la cual le decimos que datos va a recibir (entre parentesis) 
+        public NodoVehiculo(Vehiculo vehiculo)
         {
-            // aqui definimos nuestras variables de id y definimos q nustros punteros esten apuntando a nada al iniciar
-            Id = id;
-            ID_Usuario = idUsuario;
-            Next = null;
-            Prev = null;
-
-            /* Bueno si soy sincero no le entendia mucho a esto... mas que todo porq el aux lo uso, pues investigue que onda... pero aqui va la explicación
-            De cadenas a arreglos de caracteres:
-            en palabras simples, tenemos cadenas de palabras tales como la marca del carro, modelo y placa. bueno estas son palabras y tienen caracteres, les
-            asignamos un limite de caracteres [50][50][20] y pues lo que hacemos en el "fixed" es pasar estos caracteres a un arreglo de ellos. es como pasarlos
-            a una caja caracter por caracter (letra a letra)... entonces lo vamos haciendo hasta que llenamos la caja con las letras ordenas de la palbra "Toyota"
-            por ejemplo. 
-            */
-
-            fixed (char* m = Marca) // bueno fixed ya explicamos q es, y pues tenemos char* que es el arreglo de caracteres o caja jajaj segun la explication
-            {
-                for (int i = 0; i < marca.Length && i < 50; i++) // aqui entramos a un for, eso es una validacion para que se copia hasta q se acaben las letras o caracteres o bien se pase y pues no lo deje.
-                    m[i] = marca[i];
-            }
-
-            fixed (char* mo = Modelo)
-            {
-                for (int i = 0; i < modelo.Length && i < 50; i++) // el int i = 0 pues es que vamos a iniciar a contar desde 0, ese i tiene q ser menor que la longitude la palabra q ingresamos y asimismo menor a 50 en este caso.
-                    mo[i] = modelo[i];
-            }
-
-            fixed (char* p = Placa)
-            {
-                for (int i = 0; i < placa.Length && i < 20; i++) // ademas tenemos el i++ que quiere decir que esto lo vamos a hacer en un intervalo de 1 osea contar 0,1,2,3....
-                    p[i] = placa[i]; // y pues si esto se valida, retornamos eso
-            }
-        }
-
-        public override string ToString()
-        {
-            fixed (char* m = Marca, mo = Modelo, p = Placa)
-            {
-                return $"ID: {Id}, ID_Usuario: {ID_Usuario}, Marca: {new string(m)}, Modelo: {new string(mo)}, Placa: {new string(p)}";
-            }
+            Vehiculo = vehiculo;
+            Siguiente = null;
+            Anterior = null;
         }
     }
 
     // Lista Doblemente Enlazada
-    public unsafe class ListaVehiculos
+    public class ListaVehiculos
     {
-        private NodoVehiculo* head; // definimos la cabeza
-        private NodoVehiculo* tail; // y la cola
+        private NodoVehiculo cabeza;
+        private NodoVehiculo cola;
+        private ListaUsuarios listaUsuarios; // Referencia a la lista de usuarios para validación
 
+        public ListaVehiculos(ListaUsuarios listaUsuarios)
+        {
+            cabeza = null;
+            cola = null;
+            this.listaUsuarios = listaUsuarios;
+        }
+
+        // Sobrecarga del constructor para usar sin lista de usuarios (para compatibilidad)
         public ListaVehiculos()
         {
-            head = null; //los definimos como nulos para el inicio del desmadre!
-            tail = null;
+            cabeza = null;
+            cola = null;
+            this.listaUsuarios = null;
         }
 
-        public void Insertar(int id, int idUsuario, string marca, string modelo, string placa) // bueno esta funcion es para insertar lo que le pasemos entre ()
+        // Método para verificar si existe un ID de vehículo
+        public bool ExisteID(int id)
         {
-            NodoVehiculo* nuevoNodo = (NodoVehiculo*)NativeMemory.Alloc((nuint)sizeof(NodoVehiculo)); // bueno aqui hay algo interesante. TEnemos el NativeMemory.Alloc((nuint) que esto lo puso el aux pero pues tiene su ciencia para manejar bien los unsafe            
-            //con unsafe se asigna memoria de forma manual, NativeMemory.Alloc reserva memoria del tamaño de un NodoVehiculo. El resultado se convierte a un puntero de tipo NodoVehiculo
-
-            *nuevoNodo = new NodoVehiculo(id, idUsuario, marca, modelo, placa); // cramos nuea instancia de NodoVehiculo en nuevoNodo y el "*" quiere decir q le asiganamos ese valor al espacio de memoria al que apunta nuevoNodo
-
-            if (head == null)
-            {
-                head = tail = nuevoNodo; // si (la cabeza esta nula) no hay nada entonces el nuevoNodo va a ser cabeza y cola... osea el primer dato
-            }
-            else // si esta llena entonces: 
-            {
-                tail->Next = nuevoNodo; // el apuntador Next del ultimo nodo (tail en este momento) va a apuntar al nuevoNodo
-                nuevoNodo->Prev = tail; // el apuntador Previo del nuevoNodo apuntará al ultimo nodo (tail en este momento)
-                tail = nuevoNodo; // y el nuevoNodo se convertira en tail porque ahora es el ultimo nodo
-
-                /*
-                osea un poco de demostracion 
-                lista normal: nodo1 -><- nodo2 -><- nodo3 -><- nodo 4
-
-                lista: nodo1 -><- nodo2 -><- nodo3 -><- nodo 4 (ultimo nodo "tail")                     en este momento queremos meter a "nuevoNodo"
-                lista: nodo1 -><- nodo2 -><- nodo3 -><- nodo 4 (ultimo nodo "tail") ->                  el next de tail empieza a apuntar a nuevoNodo
-                lista: nodo1 -><- nodo2 -><- nodo3 -><- nodo 4 (ultimo nodo "tail") -> <-               el prev de nuevoNodo empieza a apuntar a tail
-                lista: nodo1 -><- nodo2 -><- nodo3 -><- nodo 4  -> <- nuevoNodo (ultimo nodo "tail")    ahora nuevoNodo se convierte en tail
-                */
-
-            }
-        }
-
-        public void Eliminar(int id)
-        {
-            NodoVehiculo* actual = head;
+            NodoVehiculo actual = cabeza;
             while (actual != null)
             {
-                if (actual->Id == id)
+                if (actual.Vehiculo.ID == id)
+                    return true;
+                actual = actual.Siguiente;
+            }
+            return false;
+        }
+
+        // Método para insertar con validaciones
+        public bool Insertar(Vehiculo vehiculo)
+        {
+            // Validar que el ID del vehículo sea único
+            if (ExisteID(vehiculo.ID))
+            {
+                Console.WriteLine($"Error: Ya existe un vehículo con el ID {vehiculo.ID}.");
+                return false;
+            }
+
+            // Validar que el usuario exista
+            if (listaUsuarios != null)
+            {
+                Usuario usuario = listaUsuarios.Buscar(vehiculo.ID_Usuario);
+                if (usuario == null)
                 {
-                    if (actual->Prev != null)
-                        actual->Prev->Next = actual->Next;
-                    else
-                        head = actual->Next;
-
-                    if (actual->Next != null)
-                        actual->Next->Prev = actual->Prev;
-                    else
-                        tail = actual->Prev;
-
-                    NativeMemory.Free(actual);
-                    return;
+                    Console.WriteLine($"Error: El usuario con ID {vehiculo.ID_Usuario} no existe en el sistema.");
+                    return false;
                 }
-                actual = actual->Next;
             }
+
+            // Crear el nuevo nodo
+            NodoVehiculo nuevoNodo = new NodoVehiculo(vehiculo);
+
+            // Si la lista está vacía
+            if (cabeza == null)
+            {
+                cabeza = nuevoNodo;
+                cola = nuevoNodo;
+            }
+            else
+            {
+                // Añadir al final de la lista
+                cola.Siguiente = nuevoNodo;
+                nuevoNodo.Anterior = cola;
+                cola = nuevoNodo;
+            }
+            return true;
         }
 
-        public void Mostrar()
+        // Sobrecarga para compatibilidad con el código anterior
+        public bool Insertar(int id, int idUsuario, string marca, string modelo, string placa)
         {
-            NodoVehiculo* actual = head;
-            while (actual != null)
-            {
-                Console.WriteLine(actual->ToString());
-                actual = actual->Next;
-            }
+            Vehiculo vehiculo = new Vehiculo(id, idUsuario, marca, modelo, placa);
+            return Insertar(vehiculo);
         }
 
-        public Vehiculo? Buscar(int id)
+        // Buscar un vehículo por ID
+        public Vehiculo Buscar(int id)
         {
-            NodoVehiculo* actual = head;
+            NodoVehiculo actual = cabeza;
             while (actual != null)
             {
-                if (actual->Id == id)
-                {
-                    return new Vehiculo(
-                        actual->Id,
-                        actual->ID_Usuario,
-                        new string(actual->Marca).TrimEnd('\0'),
-                        new string(actual->Modelo).TrimEnd('\0'),
-                        new string(actual->Placa).TrimEnd('\0')
-                    );
-                }
-                actual = actual->Next;
+                if (actual.Vehiculo.ID == id)
+                    return actual.Vehiculo;
+                actual = actual.Siguiente;
             }
             return null;
         }
 
+        // Buscar vehículos por ID_Usuario
+        public List<Vehiculo> BuscarPorUsuario(int idUsuario)
+        {
+            List<Vehiculo> vehiculosUsuario = new List<Vehiculo>();
+            NodoVehiculo actual = cabeza;
+            
+            while (actual != null)
+            {
+                if (actual.Vehiculo.ID_Usuario == idUsuario)
+                    vehiculosUsuario.Add(actual.Vehiculo);
+                actual = actual.Siguiente;
+            }
+            
+            return vehiculosUsuario;
+        }
 
+        // Editar un vehículo
+        public bool Editar(int id, int idUsuario, string marca, string modelo, string placa)
+        {
+            // Validar que el usuario exista
+            if (listaUsuarios != null)
+            {
+                Usuario usuario = listaUsuarios.Buscar(idUsuario);
+                if (usuario == null)
+                {
+                    Console.WriteLine($"Error: El usuario con ID {idUsuario} no existe en el sistema.");
+                    return false;
+                }
+            }
+
+            NodoVehiculo actual = cabeza;
+            while (actual != null)
+            {
+                if (actual.Vehiculo.ID == id)
+                {
+                    actual.Vehiculo.ID_Usuario = idUsuario;
+                    actual.Vehiculo.Marca = marca;
+                    actual.Vehiculo.Modelo = modelo;
+                    actual.Vehiculo.Placa = placa;
+                    return true;
+                }
+                actual = actual.Siguiente;
+            }
+            return false;
+        }
+
+        // Eliminar un vehículo por ID
+        public bool Eliminar(int id)
+        {
+            if (cabeza == null)
+                return false;
+
+            // Si es el primer nodo
+            if (cabeza.Vehiculo.ID == id)
+            {
+                NodoVehiculo temp = cabeza;
+                cabeza = cabeza.Siguiente;
+                
+                if (cabeza != null)
+                    cabeza.Anterior = null;
+                else
+                    cola = null; // Si era el único nodo, la cola también es null
+                
+                return true;
+            }
+
+            // Si es el último nodo
+            if (cola.Vehiculo.ID == id)
+            {
+                cola = cola.Anterior;
+                cola.Siguiente = null;
+                return true;
+            }
+
+            // Si es un nodo intermedio
+            NodoVehiculo actual = cabeza;
+            while (actual != null && actual.Vehiculo.ID != id)
+            {
+                actual = actual.Siguiente;
+            }
+
+            if (actual == null)
+                return false; // No se encontró el vehículo
+
+            // Reconectar los nodos adyacentes
+            actual.Anterior.Siguiente = actual.Siguiente;
+            actual.Siguiente.Anterior = actual.Anterior;
+            
+            return true;
+        }
+
+        // Mostrar todos los vehículos
+        public void Mostrar()
+        {
+            NodoVehiculo actual = cabeza;
+            while (actual != null)
+            {
+                Console.WriteLine(actual.Vehiculo);
+                actual = actual.Siguiente;
+            }
+        }
+
+        // Mostrar vehículos en orden inverso
         public void MostrarReversa()
         {
-            NodoVehiculo* actual = tail;
+            NodoVehiculo actual = cola;
             while (actual != null)
             {
-                Console.WriteLine(actual->ToString());
-                actual = actual->Prev;
+                Console.WriteLine(actual.Vehiculo);
+                actual = actual.Anterior;
             }
         }
 
-        ~ListaVehiculos()
+        // Generar representación gráfica con Graphviz
+        public string GenerarGraphviz()
         {
-            NodoVehiculo* actual = head;
-            while (actual != null)
-            {
-                NodoVehiculo* temp = actual;
-                actual = actual->Next;
-                NativeMemory.Free(temp);
-            }
-        }
-
-
-        public unsafe string GenerarGraphviz()
-        {
-            if (head == null)
+            if (cabeza == null)
             {
                 return "digraph G {\n    node [shape=record];\n    NULL [label = \"{NULL}\"];\n}\n";
             }
@@ -224,40 +268,30 @@ namespace AutoGestPro.Core
             dot.AppendLine("        color=lightgrey;");
 
             // Crear los nodos
-            NodoVehiculo* actual = head;
+            NodoVehiculo actual = cabeza;
             while (actual != null)
             {
-                dot.AppendLine($"        node{actual->Id} [label=\"{{" +
-                    $"ID: {actual->Id} | " +
-                    $"ID Usuario: {actual->ID_Usuario} | " +
-                    $"Marca: {new string(actual->Marca).TrimEnd('\0')} | " +
-                    $"Modelo: {new string(actual->Modelo).TrimEnd('\0')} | " +
-                    $"Placa: {new string(actual->Placa).TrimEnd('\0')}" +
+                dot.AppendLine($"        node{actual.Vehiculo.ID} [label=\"{{" +
+                    $"ID: {actual.Vehiculo.ID} | " +
+                    $"ID Usuario: {actual.Vehiculo.ID_Usuario} | " +
+                    $"Marca: {actual.Vehiculo.Marca} | " +
+                    $"Modelo: {actual.Vehiculo.Modelo} | " +
+                    $"Placa: {actual.Vehiculo.Placa}" +
                     $"}}\"];");
-                actual = actual->Next;
+                actual = actual.Siguiente;
             }
 
             // Crear las conexiones bidireccionales
-            actual = head;
-            while (actual->Next != null)
+            actual = cabeza;
+            while (actual.Siguiente != null)
             {
-                dot.AppendLine($"        node{actual->Id} -> node{actual->Next->Id} [dir=both, color=\"blue:red\"];");
-                actual = actual->Next;
+                dot.AppendLine($"        node{actual.Vehiculo.ID} -> node{actual.Siguiente.Vehiculo.ID} [dir=both, color=\"blue:red\"];");
+                actual = actual.Siguiente;
             }
 
             dot.AppendLine("    }");
             dot.AppendLine("}");
             return dot.ToString();
         }
-
-
-
-
-
     }
-
-
-
-
-
 }

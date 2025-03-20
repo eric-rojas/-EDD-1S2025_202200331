@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using System.Runtime.InteropServices;
 
 namespace AutoGestPro.Core
@@ -6,9 +6,9 @@ namespace AutoGestPro.Core
     public unsafe class GeneradorServicio
     {
         private readonly ListaVehiculos _vehiculos;
-        private readonly ListaRepuestos _repuestos;
-        private readonly ColaServicios _servicios;
-        private readonly PilaFacturas _facturas;
+        //private readonly ListaRepuestos _repuestos;
+        //private readonly ColaServicios _servicios;
+        //private readonly PilaFacturas _facturas;
         private readonly MatrizBitacora _bitacora;
         private int _contadorIDServicio;
 
@@ -131,6 +131,113 @@ namespace AutoGestPro.Core
             catch (Exception ex)
             {
                 Console.WriteLine($"Error al cancelar la factura: {ex.Message}");
+            }
+        }
+    }
+
+    public class ServicioException : Exception
+    {
+        public ServicioException(string message) : base(message) { }
+    }
+}*/
+
+
+using System;
+
+namespace AutoGestPro.Core
+{
+    public class GeneradorServicio
+    {
+        private readonly ListaVehiculos _vehiculos;
+        private readonly ArbolBinarioServicios _servicios;
+        private readonly ArbolBFacturas _facturas;
+        private readonly ArbolAVLRepuestos _repuestos;
+        private int _contadorIDServicio;
+
+        public GeneradorServicio(
+            ListaVehiculos vehiculos,
+            ArbolBinarioServicios servicios,
+            ArbolAVLRepuestos repuestos,
+            ArbolBFacturas facturas)
+        {
+            _vehiculos = vehiculos;
+            _servicios = servicios;
+            _repuestos = repuestos;
+            _facturas = facturas;
+            _contadorIDServicio = 1;
+        }
+
+        public bool GenerarNuevoServicio(int idVehiculo, int idRepuesto, string detalles, float costoServicio)
+        {
+            try
+            {
+            // 1. Validar existencia del vehículo
+            var vehiculo = _vehiculos.Buscar(idVehiculo);
+            if (vehiculo == null)
+            {
+                throw new ServicioException($"El vehículo con ID {idVehiculo} no existe.");
+            }
+
+            // 2. Validar existencia del repuesto
+            var repuesto = _repuestos.Buscar(idRepuesto);
+            if (repuesto == null)
+            {
+                throw new ServicioException($"El repuesto con ID {idRepuesto} no existe.");
+            }
+
+            // 3. Validar detalles y costo
+            if (string.IsNullOrEmpty(detalles))
+            {
+                throw new ServicioException("Los detalles del servicio son requeridos.");
+            }
+            if (costoServicio <= 0)
+            {
+                throw new ServicioException("El costo del servicio debe ser mayor a 0.");
+            }
+
+            // 4. Calcular costo total (servicio + repuesto)
+            float costoTotal = costoServicio + (float)repuesto.Costo;
+
+            // 5. Crear e insertar el servicio en el árbol binario
+            var nuevoServicio = new Servicio(
+                _contadorIDServicio,     // ID del servicio
+                idRepuesto,              // ID del repuesto
+                idVehiculo,              // ID del vehículo
+                detalles,                // Detalles del servicio
+                (double)costoTotal       // Costo total (servicio + repuesto)
+            );
+            _servicios.Insertar(nuevoServicio);
+
+            // 6. Generar factura
+            GenerarFactura(_contadorIDServicio, costoTotal);
+
+            // 7. Incrementar el contador de servicios
+            _contadorIDServicio++;
+
+            return true;
+            }
+            catch (ServicioException ex)
+            {
+            Console.WriteLine($"Error al generar servicio: {ex.Message}");
+            return false;
+            }
+            catch (Exception ex)
+            {
+            Console.WriteLine($"Error inesperado: {ex.Message}");
+            return false;
+            }
+        }
+
+        private void GenerarFactura(int idServicio, float costoTotal)
+        {
+            try
+            {
+                var nuevaFactura = new Factura(idServicio, idServicio, costoTotal);
+                _facturas.Insertar(nuevaFactura);
+            }
+            catch (Exception ex)
+            {
+                throw new ServicioException($"Error al generar la factura: {ex.Message}");
             }
         }
     }

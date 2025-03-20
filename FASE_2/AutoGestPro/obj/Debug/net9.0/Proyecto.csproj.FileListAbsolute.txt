@@ -121,3 +121,28 @@
 /home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE 1 /AutoGestPro/obj/Debug/net9.0/Proyecto.pdb
 /home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE 1 /AutoGestPro/obj/Debug/net9.0/Proyecto.genruntimeconfig.cache
 /home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE 1 /AutoGestPro/obj/Debug/net9.0/ref/Proyecto.dll
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/bin/Debug/net9.0/Proyecto
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/bin/Debug/net9.0/Proyecto.deps.json
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/bin/Debug/net9.0/Proyecto.runtimeconfig.json
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/bin/Debug/net9.0/Proyecto.dll
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/bin/Debug/net9.0/Proyecto.pdb
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/bin/Debug/net9.0/AtkSharp.dll
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/bin/Debug/net9.0/CairoSharp.dll
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/bin/Debug/net9.0/GdkSharp.dll
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/bin/Debug/net9.0/GioSharp.dll
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/bin/Debug/net9.0/GLibSharp.dll
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/bin/Debug/net9.0/GtkSharp.dll
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/bin/Debug/net9.0/Newtonsoft.Json.dll
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/bin/Debug/net9.0/PangoSharp.dll
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/obj/Debug/net9.0/Proyecto.csproj.AssemblyReference.cache
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/obj/Debug/net9.0/Proyecto.GeneratedMSBuildEditorConfig.editorconfig
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/obj/Debug/net9.0/Proyecto.AssemblyInfoInputs.cache
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/obj/Debug/net9.0/Proyecto.AssemblyInfo.cs
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/obj/Debug/net9.0/Proyecto.csproj.CoreCompileInputs.cache
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/obj/Debug/net9.0/Proyecto.sourcelink.json
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/obj/Debug/net9.0/Proyecto.csproj.Up2Date
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/obj/Debug/net9.0/Proyecto.dll
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/obj/Debug/net9.0/refint/Proyecto.dll
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/obj/Debug/net9.0/Proyecto.pdb
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/obj/Debug/net9.0/Proyecto.genruntimeconfig.cache
+/home/rojas/Documentos/Universidad/1er_S_2025/EDD/-EDD-1S2025_202200331/FASE_2/AutoGestPro/obj/Debug/net9.0/ref/Proyecto.dll
