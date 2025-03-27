@@ -1,4 +1,12 @@
 digraph ArbolServicios {
 node [shape=record];
-node1 [label="{ID: 1|ID_Rep: 1|ID_Veh: 2|Det: we|Costo: $27.00}"];
+node1 [label="{ID: 1|ID_Rep: 1|ID_Veh: 1|Det: Cambio de aceite|Costo: $200.00}"];
+node1 -> node2 [label="D"];
+node2 [label="{ID: 2|ID_Rep: 1|ID_Veh: 2|Det: Alineación y balanceo|Costo: $300.00}"];
+node2 -> node3 [label="D"];
+node3 [label="{ID: 3|ID_Rep: 1|ID_Veh: 3|Det: Revisión de frenos|Costo: $250.00}"];
+node3 -> node4 [label="D"];
+node4 [label="{ID: 4|ID_Rep: 1|ID_Veh: 4|Det: Diagnóstico general|Costo: $150.00}"];
+node4 -> node5 [label="D"];
+node5 [label="{ID: 5|ID_Rep: 1|ID_Veh: 5|Det: Cambio de filtros|Costo: $180.00}"];
 }

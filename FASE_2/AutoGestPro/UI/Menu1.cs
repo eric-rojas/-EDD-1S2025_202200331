@@ -15,18 +15,20 @@ namespace AutoGestPro
         private readonly ArbolAVLRepuestos _arbolAVLRepuestos;
         private readonly ArbolBFacturas _arbolBFacturas;
         private readonly ArbolBinarioServicios _arbolBinarioServicios;
+        private readonly LogueoUsuarios _logueoUsuarios;
 
         
-
-        public Menu1(ListaUsuarios listaUsuarios, ListaVehiculos listaVehiculos,  GeneradorServicio generadorServicio, ArbolAVLRepuestos arbolAVLRepuestos, ArbolBinarioServicios arbolBinarioServicios, ArbolBFacturas arbolBFacturas) : base("AutoGestPro - Menú Principal")
+        public Menu1(ListaUsuarios listaUsuarios, ListaVehiculos listaVehiculos, GeneradorServicio generadorServicio, ArbolAVLRepuestos arbolAVLRepuestos, ArbolBinarioServicios arbolBinarioServicios, ArbolBFacturas arbolBFacturas, LogueoUsuarios logueoUsuarios) : base("AutoGestPro - Menú Root")
         {
             _listaUsuarios = listaUsuarios;
             _listaVehiculos = listaVehiculos;
             _generadorServicio = generadorServicio;
-            
             _arbolAVLRepuestos = arbolAVLRepuestos;
             _arbolBFacturas = arbolBFacturas;
             _arbolBinarioServicios = arbolBinarioServicios;
+            _logueoUsuarios = logueoUsuarios; // Aquí es donde se debe hacer la corrección
+
+
 
 
             SetDefaultSize(400, 300);
@@ -99,6 +101,14 @@ namespace AutoGestPro
             Console.WriteLine("\n=== Lista de Repuestos ===");
             _arbolAVLRepuestos.Mostrar();
             Console.WriteLine("=======================\n");
+
+            Console.WriteLine("\n=== Lista de Facturas ===");
+            _arbolBFacturas.Mostrar();
+            Console.WriteLine("=======================\n");
+
+            Console.WriteLine("\n=== Lista de Servicios");
+            _arbolBinarioServicios.Mostrar();
+            Console.WriteLine("=======================\n");
         }
 
         private void GoIngresoManual2(object? sender, EventArgs e)
@@ -148,6 +158,11 @@ namespace AutoGestPro
 
         private void GoReportes(object? sender, EventArgs e)
         {
+            // Generar JSON de logueo
+            string rutaReportes = "./AutoGestPro/Reports";
+            //_logueoUsuarios.CargarRegistros();
+            _logueoUsuarios.GenerarJson(rutaReportes);
+
             // Usuarios y Vehículos
             GraphvizExporter.GenerarArchivoDot("usuarios.dot", _listaUsuarios.GenerarGraphviz());
             GraphvizExporter.GenerarArchivoDot("vehiculos.dot", _listaVehiculos.GenerarGraphviz());

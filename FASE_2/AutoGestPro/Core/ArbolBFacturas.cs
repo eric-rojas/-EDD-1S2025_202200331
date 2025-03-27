@@ -2,19 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-
 public class Factura
 {
-    
     public int ID { get; set; }
     public int ID_Servicio { get; set; }
     public double Total { get; set; }
+    public int ID_Usuario { get; set; }  // Campo agregado para asociar la factura a un usuario
 
-    public Factura(int id, int idServicio, double total)
+    public Factura(int id, int idServicio, double total, int idUsuario)
     {
         ID = id;
         ID_Servicio = idServicio;
         Total = total;
+        ID_Usuario = idUsuario;  // Asociar el usuario
     }
 
     public override string ToString()
@@ -26,11 +26,8 @@ public class Factura
 
 public class NodoArbolB
 {
-    
     public List<Factura> Facturas { get; set; } = new List<Factura>();
-    
     public List<NodoArbolB> Hijos { get; set; } = new List<NodoArbolB>();
-    
     public bool EsHoja { get; set; } = true;
 
     public override string ToString()
@@ -39,14 +36,10 @@ public class NodoArbolB
     }
 }
 
-
 public class ArbolBFacturas
 {
-    
     private NodoArbolB raiz;
-    
     private const int ORDEN = 5;
-    
     private int contadorID = 1;
 
     public ArbolBFacturas()
@@ -54,7 +47,6 @@ public class ArbolBFacturas
         raiz = new NodoArbolB { EsHoja = true };
     }
 
-    
     public void Insertar(Factura factura)
     {
         if (ExisteID(factura.ID))
@@ -73,21 +65,18 @@ public class ArbolBFacturas
         InsertarNoLleno(raiz, factura);
     }
 
-    
-    public bool Insertar(int idServicio, double total)
+    public bool Insertar(int idServicio, double total, int idUsuario)
     {
-        Factura factura = new Factura(GenerarNuevoID(), idServicio, total);
+        Factura factura = new Factura(GenerarNuevoID(), idServicio, total, idUsuario);
         Insertar(factura);
         return true;
     }
 
-    
     public int GenerarNuevoID()
     {
         return contadorID++;
     }
 
-    
     private void InsertarNoLleno(NodoArbolB nodo, Factura factura)
     {
         int i = nodo.Facturas.Count - 1;
@@ -116,7 +105,6 @@ public class ArbolBFacturas
         }
     }
 
-    
     private void DividirHijo(NodoArbolB padre, int indice, NodoArbolB hijo)
     {
         NodoArbolB nuevoHijo = new NodoArbolB { EsHoja = hijo.EsHoja };
@@ -135,13 +123,11 @@ public class ArbolBFacturas
         }
     }
 
-    
     public Factura BuscarPorID(int id)
     {
         return BuscarEnNodo(raiz, id);
     }
 
-    
     private Factura BuscarEnNodo(NodoArbolB nodo, int id)
     {
         int i = 0;
@@ -157,19 +143,16 @@ public class ArbolBFacturas
         return BuscarEnNodo(nodo.Hijos[i], id);
     }
 
-   
     public bool ExisteID(int id)
     {
         return BuscarPorID(id) != null;
     }
 
-    
     public void Mostrar()
     {
         MostrarRecursivo(raiz, 0);
     }
 
-   
     private void MostrarRecursivo(NodoArbolB nodo, int nivel)
     {
         if (nodo == null)
@@ -183,7 +166,6 @@ public class ArbolBFacturas
         }
     }
 
-    
     public string GenerarGraphviz()
     {
         using (StringWriter writer = new StringWriter())
@@ -196,7 +178,6 @@ public class ArbolBFacturas
         }
     }
 
-    
     private void GenerarGraphvizRecursivo(NodoArbolB nodo, TextWriter writer)
     {
         if (nodo == null)
@@ -212,7 +193,6 @@ public class ArbolBFacturas
         }
     }
 
-  
     public List<Factura> ObtenerTodas()
     {
         List<Factura> facturas = new List<Factura>();
@@ -224,23 +204,73 @@ public class ArbolBFacturas
     {
         if (nodo == null) return;
 
-        int i;
-        for (i = 0; i < nodo.Facturas.Count; i++)
+        foreach (var factura in nodo.Facturas)
         {
-            if (!nodo.EsHoja)
-            {
-                ObtenerTodasRecursivo(nodo.Hijos[i], facturas);
-            }
-            facturas.Add(nodo.Facturas[i]);
+            facturas.Add(factura);
         }
 
-        if (!nodo.EsHoja && i < nodo.Hijos.Count)
+        if (!nodo.EsHoja)
         {
-            ObtenerTodasRecursivo(nodo.Hijos[i], facturas);
+            foreach (var hijo in nodo.Hijos)
+            {
+                ObtenerTodasRecursivo(hijo, facturas);
+            }
         }
     }
 
-  
+    // Método para eliminar una factura
+    public bool Eliminar(int idFactura)
+    {
+        return EliminarRecursivo(raiz, idFactura);
+    }
+
+    private bool EliminarRecursivo(NodoArbolB nodo, int idFactura)
+    {
+        if (nodo == null)
+            return false;
+
+        int i = 0;
+        while (i < nodo.Facturas.Count && idFactura > nodo.Facturas[i].ID)
+            i++;
+
+        if (i < nodo.Facturas.Count && nodo.Facturas[i].ID == idFactura)
+        {
+            nodo.Facturas.RemoveAt(i);
+            return true;
+        }
+
+        if (!nodo.EsHoja)
+        {
+            return EliminarRecursivo(nodo.Hijos[i], idFactura);
+        }
+
+        return false;
+    }
+
+    /*public bool Eliminar(int id)
+    {
+        bool eliminado = EliminarRecursivo(raiz, id);
+        return eliminado;
+    }
+
+    private bool EliminarRecursivo(NodoArbolB nodo, int id)
+    {
+        int i = 0;
+        while (i < nodo.Facturas.Count && id > nodo.Facturas[i].ID)
+            i++;
+
+        if (i < nodo.Facturas.Count && nodo.Facturas[i].ID == id)
+        {
+            nodo.Facturas.RemoveAt(i);
+            return true;
+        }
+
+        if (nodo.EsHoja)
+            return false;
+
+        return EliminarRecursivo(nodo.Hijos[i], id);
+    }*/
+
     public double CalcularTotalFacturas()
     {
         double total = 0;
@@ -250,4 +280,18 @@ public class ArbolBFacturas
         }
         return total;
     }
+
+    public List<Factura> ObtenerFacturasPorUsuario(int idUsuario)
+    {
+        List<Factura> facturasUsuario = new List<Factura>();
+        foreach (var factura in ObtenerTodas())
+        {
+            if (factura.ID_Usuario == idUsuario)
+            {
+                facturasUsuario.Add(factura);
+            }
+        }
+        return facturasUsuario;
+    }
+
 }

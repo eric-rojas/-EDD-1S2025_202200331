@@ -154,6 +154,8 @@ namespace AutoGestPro.Core
         private readonly ArbolAVLRepuestos _repuestos;
         private int _contadorIDServicio;
 
+        
+
         public GeneradorServicio(
             ListaVehiculos vehiculos,
             ArbolBinarioServicios servicios,
@@ -209,7 +211,8 @@ namespace AutoGestPro.Core
             _servicios.Insertar(nuevoServicio);
 
             // 6. Generar factura
-            GenerarFactura(_contadorIDServicio, costoTotal);
+            int idUsuario = 1; // You should pass the actual user ID here
+            GenerarFactura(_contadorIDServicio, costoTotal, idUsuario);
 
             // 7. Incrementar el contador de servicios
             _contadorIDServicio++;
@@ -228,11 +231,14 @@ namespace AutoGestPro.Core
             }
         }
 
-        private void GenerarFactura(int idServicio, float costoTotal)
+        private void GenerarFactura(int idServicio, float costoTotal, int idUsuario)
         {
             try
             {
-                var nuevaFactura = new Factura(idServicio, idServicio, costoTotal);
+                // Crear la nueva factura, ahora pasando el idUsuario
+                var nuevaFactura = new Factura(idServicio, idServicio, costoTotal, idUsuario);
+                
+                // Insertar la factura en el árbol B
                 _facturas.Insertar(nuevaFactura);
             }
             catch (Exception ex)
@@ -240,6 +246,7 @@ namespace AutoGestPro.Core
                 throw new ServicioException($"Error al generar la factura: {ex.Message}");
             }
         }
+
     }
 
     public class ServicioException : Exception

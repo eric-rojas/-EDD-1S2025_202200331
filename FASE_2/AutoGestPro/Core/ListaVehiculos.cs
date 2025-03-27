@@ -146,12 +146,28 @@ namespace AutoGestPro.Core
             while (actual != null)
             {
                 if (actual.Vehiculo.ID_Usuario == idUsuario)
+                    vehiculosUsuario.Add(actual.Vehiculo);  // Agregamos el objeto Vehiculo, no el ID
+                
+                actual = actual.Siguiente;
+            }
+            
+            return vehiculosUsuario;  // Retornamos una lista de Vehiculo, no de int
+        }
+
+        /*public List<Vehiculo> BuscarPorUsuario(int idUsuario)
+        {
+            List<Vehiculo> vehiculosUsuario = new List<Vehiculo>();
+            NodoVehiculo actual = cabeza;
+            
+            while (actual != null)
+            {
+                if (actual.Vehiculo.ID_Usuario == idUsuario)
                     vehiculosUsuario.Add(actual.Vehiculo);
                 actual = actual.Siguiente;
             }
             
             return vehiculosUsuario;
-        }
+        }*/
 
         // Editar un vehículo
         public bool Editar(int id, int idUsuario, string marca, string modelo, string placa)

@@ -8,65 +8,132 @@ namespace AutoGestPro
 {
     class Program
     {
+        // Variables estáticas para mantener las estructuras de datos
+        private static ListaUsuarios listaUsuarios;
+        private static ListaVehiculos listaVehiculos;
+        private static ArbolAVLRepuestos arbolRepuestos;
+        private static ArbolBinarioServicios arbolServicios;
+        private static ArbolBFacturas arbolFacturas;
+        private static GeneradorServicio generadorServicio;
+
+        private static LogueoUsuarios logueoUsuarios;
+
         [STAThread]
         static void Main()
         {
             Application.Init();
+            
+            
+            // Inicializar estructuras una sola vez
+            InicializarDatos();
+            
+            // Iniciar el flujo de login
+            MostrarLogin();
+            
+            Application.Run();
+        }
 
-            // Inicializa todas las estructuras
-            var listaUsuarios = new ListaUsuarios();
-            var listaVehiculos = new ListaVehiculos();
-            var arbolRepuestos = new ArbolAVLRepuestos();
-            var arbolServicios = new ArbolBinarioServicios();
-            var arbolFacturas = new ArbolBFacturas();
+        static void InicializarDatos()
+        {
+            listaUsuarios = new ListaUsuarios();
+            listaVehiculos = new ListaVehiculos();
+            arbolRepuestos = new ArbolAVLRepuestos();
+            arbolServicios = new ArbolBinarioServicios();
+            arbolFacturas = new ArbolBFacturas();
+            generadorServicio = new GeneradorServicio(listaVehiculos, arbolServicios, arbolRepuestos, arbolFacturas);
+            logueoUsuarios = new LogueoUsuarios();
+        }
 
-            var generadorServicio = new GeneradorServicio(listaVehiculos, arbolServicios, arbolRepuestos, arbolFacturas);
+        static void MostrarLogin()
+        {
+            listaUsuarios.Insertar(new Usuario(1, "admin", "admin", "admin", 7, "admin"));
 
-            Inicio login = new Inicio(listaUsuarios);
-            login.LoginExitoso += (correoUsuario) => 
+            // Insertar servicios predeterminados
+            arbolServicios.Insertar(new Servicio(1, 1, 1, "Cambio de aceite", 200));
+            arbolServicios.Insertar(new Servicio(2, 1, 2, "Alineación y balanceo", 300));
+            arbolServicios.Insertar(new Servicio(3, 1, 3, "Revisión de frenos", 250));
+            arbolServicios.Insertar(new Servicio(4, 1, 4, "Diagnóstico general", 150));
+            arbolServicios.Insertar(new Servicio(5, 1, 5, "Cambio de filtros", 180));
+
+            // Insertar facturas predeterminadas para el usuario admin
+            arbolFacturas.Insertar(new Factura(1, 1, 200, 1));
+            arbolFacturas.Insertar(new Factura(3, 1, 250, 1));
+            arbolFacturas.Insertar(new Factura(4, 1, 150, 1));
+            arbolFacturas.Insertar(new Factura(5, 1, 180, 1));
+
+            /*
+            // Insertar facturas en orden aleatorio
+            arbolFacturas.Insertar(new Factura(15, 3, 7500, 1));
+            arbolFacturas.Insertar(new Factura(7, 2, 3500, 1));
+            arbolFacturas.Insertar(new Factura(23, 1, 11500, 1));
+            arbolFacturas.Insertar(new Factura(4, 4, 2000, 1)); 
+            arbolFacturas.Insertar(new Factura(19, 2, 9500, 1));
+            arbolFacturas.Insertar(new Factura(11, 3, 5500, 1));
+            arbolFacturas.Insertar(new Factura(25, 4, 12500, 1));
+            arbolFacturas.Insertar(new Factura(2, 1, 1000, 1));
+            arbolFacturas.Insertar(new Factura(16, 2, 8000, 1));
+            arbolFacturas.Insertar(new Factura(9, 3, 4500, 1));
+            arbolFacturas.Insertar(new Factura(21, 4, 10500, 1));
+            arbolFacturas.Insertar(new Factura(13, 1, 6500, 1));
+            arbolFacturas.Insertar(new Factura(6, 2, 3000, 1));
+            arbolFacturas.Insertar(new Factura(24, 3, 12000, 1));
+            arbolFacturas.Insertar(new Factura(1, 4, 500, 1));
+            arbolFacturas.Insertar(new Factura(18, 1, 9000, 1));
+            arbolFacturas.Insertar(new Factura(8, 2, 4000, 1));
+            arbolFacturas.Insertar(new Factura(22, 3, 11000, 1));
+            arbolFacturas.Insertar(new Factura(5, 4, 2500, 1));
+            arbolFacturas.Insertar(new Factura(17, 1, 8500, 1));
+
+            string dotFileFacturas = "facturas.dot";
+            string contenidoDotFacturas = arbolFacturas.GenerarGraphviz();
+            GraphvizExporter.GenerarArchivoDot(dotFileFacturas, contenidoDotFacturas);
+            GraphvizExporter.ConvertirDotAPng(dotFileFacturas);*/
+
+            
+            var login = new Inicio(listaUsuarios);
+            login.LoginExitoso += (usuario) => 
             {
-                Console.WriteLine($"Usuario autenticado: {correoUsuario}");
-                
+                // Crear ventana de menú según el tipo de usuario
                 Window menuWindow;
-                if (correoUsuario == "root")
+                if (usuario.Correo == "admin@usac.com")
                 {
-                    Console.WriteLine("Acceso concedido como root.");
                     menuWindow = new Menu1(
                         listaUsuarios,
                         listaVehiculos,
                         generadorServicio,
                         arbolRepuestos,
                         arbolServicios,
-                        arbolFacturas
+                        arbolFacturas,
+                        logueoUsuarios
                     );
                 }
                 else
                 {
                     menuWindow = new Menu2(
-                        listaUsuarios,
+                        usuario, 
                         listaVehiculos,
-                        generadorServicio,
+                        listaUsuarios,
                         arbolRepuestos,
-                        arbolServicios,
-                        arbolFacturas
+                        arbolFacturas,
+                        arbolServicios
                     );
                 }
-
-                menuWindow.ShowAll();
-                login.Hide();
-
-                menuWindow.DeleteEvent += (o, args) =>
+                
+                // Al cerrar el menú, volver al login
+                menuWindow.DeleteEvent += (sender, e) => 
                 {
-                    menuWindow.Destroy();
-                    login.Show();
+                    MostrarLogin(); // Recursividad aquí
                 };
+                
+                login.Destroy(); // Destruir ventana de login actual
+                menuWindow.Show();
             };
-
+            
             login.ShowAll();
-            Application.Run();  // Esta línea es crucial
-        } 
+        }
     }
 }
+
 
 
 

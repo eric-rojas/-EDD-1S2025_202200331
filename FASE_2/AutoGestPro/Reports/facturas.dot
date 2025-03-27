@@ -1,4 +1,4 @@
 digraph BTree {
 node [shape=record];
-21224086 [label="ID: 1, ID_Servicio: 1, Total: $27.00"];
+58328727 [label="ID: 1, ID_Servicio: 1, Total: $200.00 | ID: 3, ID_Servicio: 1, Total: $250.00 | ID: 4, ID_Servicio: 1, Total: $150.00 | ID: 5, ID_Servicio: 1, Total: $180.00"];
 }

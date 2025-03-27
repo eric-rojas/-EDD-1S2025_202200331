@@ -352,6 +352,58 @@ namespace AutoGestPro.Core
             }
         }
 
+        // Recorrido PreOrden
+        public List<Servicio> RecorridoPreOrden()
+        {
+            List<Servicio> resultado = new List<Servicio>();
+            PreOrdenRecursivo(raiz, resultado);
+            return resultado;
+        }
+
+        private void PreOrdenRecursivo(NodoServicio nodo, List<Servicio> resultado)
+        {
+            if (nodo != null)
+            {
+                resultado.Add(nodo.Servicio);
+                PreOrdenRecursivo(nodo.Izquierda, resultado);
+                PreOrdenRecursivo(nodo.Derecha, resultado);
+            }
+        }
+
+        // Recorrido PostOrden
+        public List<Servicio> RecorridoPostOrden()
+        {
+            List<Servicio> resultado = new List<Servicio>();
+            PostOrdenRecursivo(raiz, resultado);
+            return resultado;
+        }
+
+        private void PostOrdenRecursivo(NodoServicio nodo, List<Servicio> resultado)
+        {
+            if (nodo != null)
+            {
+                PostOrdenRecursivo(nodo.Izquierda, resultado);
+                PostOrdenRecursivo(nodo.Derecha, resultado);
+                resultado.Add(nodo.Servicio);
+            }
+        }
+
+        // Obtener servicios de un usuario
+        public List<Servicio> ObtenerServiciosPorUsuario(int idUsuario, ListaVehiculos vehiculos)
+        {
+            List<Vehiculo> vehiculosUsuario = vehiculos.BuscarPorUsuario(idUsuario);  // Obtener la lista de Vehiculo
+            List<Servicio> resultado = new List<Servicio>();
+
+            foreach (Vehiculo vehiculo in vehiculosUsuario)  // Iterar sobre la lista de objetos Vehiculo
+            {
+                resultado.AddRange(BuscarPorVehiculo(vehiculo.ID));  // Usar vehiculo.ID en lugar de un entero directo
+            }
+
+            return resultado;
+        }
+
+
+
         private void GenerarGraphvizRecursivo(NodoServicio nodo, TextWriter writer)
         {
             if (nodo == null)

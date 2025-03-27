@@ -20,6 +20,8 @@ namespace AutoGestPro.UI
         private ArbolBFacturas _facturas;
         private GeneradorServicio _generadorServicio;
 
+        
+
         public ServiciosView(
             ArbolAVLRepuestos repuestos,
             ListaVehiculos vehiculos,
