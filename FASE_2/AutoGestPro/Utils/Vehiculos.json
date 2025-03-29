@@ -1,212 +1,142 @@
 [
   {
-  "ID": 1,
-  "ID_Usuario": 1,
-  "Marca": "Honda Civic",
-  "Modelo": 2005,
-  "Placa": "XZJ7H9K"
+      "ID": 1,
+      "ID_Usuario": 1,
+      "Marca": "Mercedes-Benz CLA 250",
+      "Modelo": 2018,
+      "Placa": "ABC1D2E"
   },
   {
-  "ID": 2,
-  "ID_Usuario": 2,
-  "Marca": "Toyota Corolla",
-  "Modelo": 2010,
-  "Placa": "JKS8T5A"
+      "ID": 2,
+      "ID_Usuario": 1,
+      "Marca": "Mercedes-Benz CLA 200",
+      "Modelo": 2020,
+      "Placa": "FGH3I4J"
   },
   {
-    "ID": 3,
-    "ID_Usuario": 15,
-    "Marca": "Ford Mustang",
-    "Modelo": 2018,
-    "Placa": "MST4N6"
+      "ID": 3,
+      "ID_Usuario": 2,
+      "Marca": "Mercedes-Benz CLA 180",
+      "Modelo": 2017,
+      "Placa": "KLM5N6O"
   },
   {
-    "ID": 4,
-    "ID_Usuario": 7,
-    "Marca": "Chevrolet Camaro",
-    "Modelo": 2015,
-    "Placa": "CMR0Z8"
+      "ID": 4,
+      "ID_Usuario": 2,
+      "Marca": "Mercedes-Benz CLA 250",
+      "Modelo": 2019,
+      "Placa": "PQR7S8T"
   },
   {
-    "ID": 5,
-    "ID_Usuario": 22,
-    "Marca": "Nissan Sentra",
-    "Modelo": 2019,
-    "Placa": "NSS3T9"
+      "ID": 5,
+      "ID_Usuario": 3,
+      "Marca": "Mercedes-Benz CLA 200",
+      "Modelo": 2016,
+      "Placa": "UVW9X0Y"
   },
   {
-    "ID": 6,
-    "ID_Usuario": 10,
-    "Marca": "Hyundai Elantra",
-    "Modelo": 2020,
-    "Placa": "HYN7L2"
+      "ID": 6,
+      "ID_Usuario": 3,
+      "Marca": "Mercedes-Benz CLA 300",
+      "Modelo": 2021,
+      "Placa": "ZAB1C2D"
   },
   {
-    "ID": 7,
-    "ID_Usuario": 3,
-    "Marca": "Volkswagen Jetta",
-    "Modelo": 2017,
-    "Placa": "VWJ4K5"
+      "ID": 7,
+      "ID_Usuario": 4,
+      "Marca": "Mercedes-Benz CLA 180",
+      "Modelo": 2015,
+      "Placa": "EFG3H4I"
   },
   {
-    "ID": 8,
-    "ID_Usuario": 28,
-    "Marca": "Kia Sportage",
-    "Modelo": 2021,
-    "Placa": "KIA9P1"
+      "ID": 8,
+      "ID_Usuario": 4,
+      "Marca": "Mercedes-Benz CLA 250",
+      "Modelo": 2022,
+      "Placa": "JKL5M6N"
   },
   {
-    "ID": 9,
-    "ID_Usuario": 12,
-    "Marca": "Mazda CX-5",
-    "Modelo": 2016,
-    "Placa": "MAZ2R4"
+      "ID": 9,
+      "ID_Usuario": 5,
+      "Marca": "Mercedes-Benz CLA 200",
+      "Modelo": 2019,
+      "Placa": "OPQ7R8S"
   },
   {
-    "ID": 10,
-    "ID_Usuario": 19,
-    "Marca": "Subaru Outback",
-    "Modelo": 2014,
-    "Placa": "SUB8W3"
+      "ID": 10,
+      "ID_Usuario": 5,
+      "Marca": "Mercedes-Benz CLA 300",
+      "Modelo": 2020,
+      "Placa": "TUV9W0X"
   },
   {
-    "ID": 11,
-    "ID_Usuario": 5,
-    "Marca": "Jeep Wrangler",
-    "Modelo": 2013,
-    "Placa": "JWP6Y7"
+      "ID": 11,
+      "ID_Usuario": 6,
+      "Marca": "Mercedes-Benz CLA 250",
+      "Modelo": 2018,
+      "Placa": "YZA1B2C"
   },
   {
-    "ID": 12,
-    "ID_Usuario": 25,
-    "Marca": "Audi A4",
-    "Modelo": 2022,
-    "Placa": "AUD1Q9"
+      "ID": 12,
+      "ID_Usuario": 6,
+      "Marca": "Mercedes-Benz CLA 200",
+      "Modelo": 2021,
+      "Placa": "DEF3G4H"
   },
   {
-    "ID": 13,
-    "ID_Usuario": 8,
-    "Marca": "BMW X5",
-    "Modelo": 2019,
-    "Placa": "BMW3T8"
+      "ID": 13,
+      "ID_Usuario": 7,
+      "Marca": "Mercedes-Benz CLA 180",
+      "Modelo": 2017,
+      "Placa": "IJK5L6M"
   },
   {
-    "ID": 14,
-    "ID_Usuario": 14,
-    "Marca": "Mercedes-Benz C-Class",
-    "Modelo": 2020,
-    "Placa": "MBZ7U2"
+      "ID": 14,
+      "ID_Usuario": 7,
+      "Marca": "Mercedes-Benz CLA 300",
+      "Modelo": 2023,
+      "Placa": "NOP7Q8R"
   },
   {
-    "ID": 15,
-    "ID_Usuario": 30,
-    "Marca": "Tesla Model 3",
-    "Modelo": 2021,
-    "Placa": "TSL5V4"
+      "ID": 15,
+      "ID_Usuario": 8,
+      "Marca": "Mercedes-Benz CLA 200",
+      "Modelo": 2016,
+      "Placa": "STU9V0W"
   },
   {
-    "ID": 16,
-    "ID_Usuario": 2,
-    "Marca": "Lexus RX",
-    "Modelo": 2018,
-    "Placa": "LEX9M6"
+      "ID": 16,
+      "ID_Usuario": 8,
+      "Marca": "Mercedes-Benz CLA 250",
+      "Modelo": 2019,
+      "Placa": "XYZ1A2B"
   },
   {
-    "ID": 17,
-    "ID_Usuario": 17,
-    "Marca": "Volvo XC60",
-    "Modelo": 2017,
-    "Placa": "VOL2N8"
+      "ID": 17,
+      "ID_Usuario": 9,
+      "Marca": "Mercedes-Benz CLA 300",
+      "Modelo": 2020,
+      "Placa": "CDE3F4G"
   },
   {
-    "ID": 18,
-    "ID_Usuario": 9,
-    "Marca": "Porsche 911",
-    "Modelo": 2016,
-    "Placa": "POR4J1"
+      "ID": 18,
+      "ID_Usuario": 9,
+      "Marca": "Mercedes-Benz CLA 200",
+      "Modelo": 2022,
+      "Placa": "HIJ5K6L"
   },
   {
-    "ID": 19,
-    "ID_Usuario": 20,
-    "Marca": "Land Rover Range Rover",
-    "Modelo": 2015,
-    "Placa": "LRR6K3"
+      "ID": 19,
+      "ID_Usuario": 10,
+      "Marca": "Mercedes-Benz CLA 250",
+      "Modelo": 2018,
+      "Placa": "MNO7P8Q"
   },
   {
-    "ID": 20,
-    "ID_Usuario": 4,
-    "Marca": "Fiat 500",
-    "Modelo": 2014,
-    "Placa": "FIA8L7"
-  },
-  {
-    "ID": 21,
-    "ID_Usuario": 27,
-    "Marca": "Mini Cooper",
-    "Modelo": 2013,
-    "Placa": "MIN9P5"
-  },
-  {
-    "ID": 22,
-    "ID_Usuario": 11,
-    "Marca": "Jaguar F-Type",
-    "Modelo": 2022,
-    "Placa": "JAG2Q6"
-  },
-  {
-    "ID": 23,
-    "ID_Usuario": 23,
-    "Marca": "Infiniti Q50",
-    "Modelo": 2021,
-    "Placa": "INF7R9"
-  },
-  {
-    "ID": 24,
-    "ID_Usuario": 6,
-    "Marca": "Acura MDX",
-    "Modelo": 2020,
-    "Placa": "ACU3S8"
-  },
-  {
-    "ID": 25,
-    "ID_Usuario": 18,
-    "Marca": "Cadillac Escalade",
-    "Modelo": 2019,
-    "Placa": "CAD5T2"
-  },
-  {
-    "ID": 26,
-    "ID_Usuario": 13,
-    "Marca": "Chrysler 300",
-    "Modelo": 2018,
-    "Placa": "CHR8U4"
-  },
-  {
-    "ID": 27,
-    "ID_Usuario": 26,
-    "Marca": "Dodge Charger",
-    "Modelo": 2017,
-    "Placa": "DOD1V7"
-  },
-  {
-    "ID": 28,
-    "ID_Usuario": 1,
-    "Marca": "Ram 1500",
-    "Modelo": 2016,
-    "Placa": "RAM4W3"
-  },
-  {
-    "ID": 29,
-    "ID_Usuario": 24,
-    "Marca": "GMC Sierra",
-    "Modelo": 2015,
-    "Placa": "GMC6Y9"
-  },
-  {
-    "ID": 30,
-    "ID_Usuario": 16,
-    "Marca": "Buick Enclave",
-    "Modelo": 2014,
-    "Placa": "BUI9Z2"
+      "ID": 20,
+      "ID_Usuario": 10,
+      "Marca": "Mercedes-Benz CLA 180",
+      "Modelo": 2021,
+      "Placa": "RST9U0V"
   }
 ]

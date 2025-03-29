@@ -1,4 +1,40 @@
-digraph G {
-    node [shape=record];
-    NULL [label = "{NULL}"];
+digraph ArbolAVL {
+    node [shape=rectangle];
+    "10" [label="ID: 10\nRepuesto: Radiador\nDetalles: Enfría el líquido refrigerante del motor.\nCosto: $150.00\nAltura: 5"];
+    "6" [label="ID: 6\nRepuesto: Correa de distribución\nDetalles: Sincroniza el movimiento del cigüeñal y el árbol de levas.\nCosto: $60.00\nAltura: 4"];
+    "4" [label="ID: 4\nRepuesto: Amortiguadores\nDetalles: Absorben impactos y mantienen estabilidad en el vehículo.\nCosto: $120.00\nAltura: 3"];
+    "2" [label="ID: 2\nRepuesto: Bujías\nDetalles: Se usa para laa mezcla de aire y combustible.\nCosto: $15.00\nAltura: 2"];
+    "1" [label="ID: 1\nRepuesto: Filtro de aceite\nDetalles: Filtra impurezas del aceite del motor.\nCosto: $25.00\nAltura: 1"];
+    "3" [label="ID: 3\nRepuesto: Pastillas de freno\nDetalles: Se usan para frenar el vehículo al presionar el pedal.\nCosto: $45.50\nAltura: 1"];
+    "5" [label="ID: 5\nRepuesto: Batería\nDetalles: Proporciona energía eléctrica al vehículo.\nCosto: $90.00\nAltura: 1"];
+    "8" [label="ID: 8\nRepuesto: Filtro de aire\nDetalles: Filtra impurezas del aire que entra al motor.\nCosto: $20.00\nAltura: 2"];
+    "7" [label="ID: 7\nRepuesto: Aceite de motor\nDetalles: Lubrica y protege las piezas del motor.\nCosto: $35.00\nAltura: 1"];
+    "9" [label="ID: 9\nRepuesto: Líquido de frenos\nDetalles: Transmite la fuerza de frenado a las ruedas.\nCosto: $12.00\nAltura: 1"];
+    "14" [label="ID: 14\nRepuesto: Suspensión delantera\nDetalles: Mantiene la estabilidad y confort al conducir.\nCosto: $250.00\nAltura: 4"];
+    "12" [label="ID: 12\nRepuesto: Bomba de agua\nDetalles: Circula el líquido refrigerante en el motor.\nCosto: $80.00\nAltura: 2"];
+    "11" [label="ID: 11\nRepuesto: Termostato\nDetalles: Regula la temperatura del motor.\nCosto: $30.00\nAltura: 1"];
+    "13" [label="ID: 13\nRepuesto: Alternador\nDetalles: Genera electricidad para cargar la batería.\nCosto: $200.00\nAltura: 1"];
+    "16" [label="ID: 16\nRepuesto: Parabrisas\nDetalles: Protege al conductor del viento y objetos externos.\nCosto: $300.00\nAltura: 3"];
+    "15" [label="ID: 15\nRepuesto: Faro delantero\nDetalles: Proporciona iluminación durante la noche.\nCosto: $75.00\nAltura: 1"];
+    "18" [label="ID: 18\nRepuesto: Sensor de oxígeno\nDetalles: Mide el nivel de oxígeno en los gases de escape.\nCosto: $65.00\nAltura: 2"];
+    "17" [label="ID: 17\nRepuesto: Embrague\nDetalles: Transmite la potencia del motor a la caja de cambios.\nCosto: $180.00\nAltura: 1"];
+    "19" [label="ID: 19\nRepuesto: Cable de bujía\nDetalles: Transmite corriente eléctrica a las bujías.\nCosto: $40.00\nAltura: 1"];
+    "10" -> "6" [color=blue, label="I"];
+    "10" -> "14" [color=red, label="D"];
+    "6" -> "4" [color=blue, label="I"];
+    "6" -> "8" [color=red, label="D"];
+    "4" -> "2" [color=blue, label="I"];
+    "4" -> "5" [color=red, label="D"];
+    "2" -> "1" [color=blue, label="I"];
+    "2" -> "3" [color=red, label="D"];
+    "8" -> "7" [color=blue, label="I"];
+    "8" -> "9" [color=red, label="D"];
+    "14" -> "12" [color=blue, label="I"];
+    "14" -> "16" [color=red, label="D"];
+    "12" -> "11" [color=blue, label="I"];
+    "12" -> "13" [color=red, label="D"];
+    "16" -> "15" [color=blue, label="I"];
+    "16" -> "18" [color=red, label="D"];
+    "18" -> "17" [color=blue, label="I"];
+    "18" -> "19" [color=red, label="D"];
 }

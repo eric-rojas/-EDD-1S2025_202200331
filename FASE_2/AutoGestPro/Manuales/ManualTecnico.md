@@ -5,31 +5,31 @@ Este documento describe la arquitectura, implementación y funcionamiento intern
 
 ## Arquitectura del Proyecto
 ```
-📂 AutoGestPro
-├── 📂 Core (Lógica del negocio)
-│   ├── ListaUsuarios.cs (Lista simplemente enlazada)
-│   ├── ListaVehiculos.cs (Lista doblemente enlazada)
-│   ├── GeneradorServicio.cs 
-│   ├── ListaRepuestos.cs (Lista circular)
-│   ├── ColaServicios.cs (Cola para servicios)
-│   ├── PilaFacturas.cs (Pila para facturas)
-│   ├── MatrizBitacora.cs (Matriz dispersa)
-│   ├── CargaMasiva.cs (Manejo de JSON)
-├── 📂 UI (Interfaz gráfica con GTK)
-│   ├── Inicio.cs (Ventana principal o login)
-│   ├── Menu1.cs (Menú principal)
-│   ├── Ingreso.cs (ingreso Manual)
-│   ├── UsuariosView.cs (Gestión de usuarios)
-│   ├── ServiciosView.cs (Generar servicio y facturas)
-│   ├── ReportesView.cs (Visualización con Graphviz)
-│   ├── CancelarFActuraView.cs 
-├── 📂 Utils (Utilidades generales)
-│   ├── GraphvizExporter.cs (Generación de reportes visuales)
-│   ├── Usuarios.json
-│   ├── Vehiculos.json
-│   ├── Repuestos.json
-├── 📂 Reports (Reportes Generados)
-├── Program.cs (Punto de entrada del sistema)
+
+--|Core
+----|ArbolAVLRepuestos.cs
+----|ArbolBFacturas.cs
+----|ArbolBinarioServicios.cs
+----|CargaMasiva.cs
+----|GeneradorServicio.cs
+----|ListaUsuarios.cs
+----|ListaVehiculos.cs
+--|UI
+----|Inicio.cs (aqui es el logueo, entra al menu1 o menu2 dependiendo del usuario root o usuario normal)
+----|Menu1.cs (entran usuarios root)
+----|Ingreso.cs (se abre en Menu1.cs)
+----|Ingreso2.cs (se abre en Menu1.cs)
+----|RepuestosView.cs (se abre en Menu1.cs)
+----|ServiciosView.cs (se abre en Menu1.cs)
+----|EdicionView.cs (se abre en Menu1.cs)
+----|Menu2.cs (este menu es el que quiero empezar, es para los usuarios normales)
+----|Menu2InsertarVehiculo.cs 
+----|Menu2ServiciosView.cs 
+----|Menu2FacturasView.cs 
+----|Menu2CancelarFacturas.cs 
+--|Utils
+Program.cs
+
 ```
 
 ## Implementación de Estructuras de Datos
@@ -135,82 +135,96 @@ public string GenerarGraphviz()
 
 ### Creación de Servicio
 ```csharp
-public bool GenerarNuevoServicio(int idVehiculo, int idRepuesto, string detalles, float costoServicio)
+public class ArbolBinarioServicios
+    {
+        private NodoServicio raiz;
+        private ArbolAVLRepuestos repuestos; // Referencia al árbol de repuestos
+        private ListaVehiculos vehiculos;   // Referencia a la lista de vehículos
+
+        public ArbolBinarioServicios(ArbolAVLRepuestos repuestos, ListaVehiculos vehiculos)
         {
-            try
+            raiz = null;
+            this.repuestos = repuestos;
+            this.vehiculos = vehiculos;
+        }
+
+        public ArbolBinarioServicios()
+        {
+            raiz = null;
+            this.repuestos = null;
+            this.vehiculos = null;
+        }
+
+        public bool ExisteID(int id)
+        {
+            return BuscarPorID(id) != null;
+        }
+
+        // Insertar un servicio con validaciones
+        public bool Insertar(Servicio servicio)
+        {
+            // Validar que el ID sea único
+            if (ExisteID(servicio.ID))
             {
-                
-                var vehiculo = _vehiculos.Buscar(idVehiculo);
-                if (vehiculo == null)
-                {
-                    throw new ServicioException($"El vehículo con ID {idVehiculo} no existe.");
-                }
-
-                var repuesto = _repuestos.Buscar(idRepuesto);
-                if (repuesto == null)
-                {
-                    throw new ServicioException($"El repuesto con ID {idRepuesto} no existe.");
-                }
-
-                
-                if (string.IsNullOrEmpty(detalles))
-                {
-                    throw new ServicioException("Los detalles del servicio son requeridos.");
-                }
-
-                if (costoServicio <= 0)
-                {
-                    throw new ServicioException("El costo del servicio debe ser mayor a 0.");
-                }
-
-                
-                float costoTotal = (float)(costoServicio + (float)repuesto.Costo);
-
-               
-                _servicios.Encolar(
-                    _contadorIDServicio,
-                    idRepuesto,
-                    idVehiculo,
-                    detalles,
-                    costoServicio
-                );
-
-                
-                GenerarFactura(_contadorIDServicio, costoTotal);
-
-                
-                ActualizarBitacora(idRepuesto, idVehiculo, detalles);
-
-                
-                _contadorIDServicio++;
-
-                return true;
-            }
-            catch (ServicioException ex)
-            {
-                Console.WriteLine($"Error al generar servicio: {ex.Message}");
+                Console.WriteLine($"Error: Ya existe un servicio con el ID {servicio.ID}.");
                 return false;
             }
-            catch (Exception ex)
+
+            // Validar que el repuesto exista
+            if (repuestos != null && !repuestos.ExisteID(servicio.ID_Repuesto))
             {
-                Console.WriteLine($"Error inesperado: {ex.Message}");
+                Console.WriteLine($"Error: El repuesto con ID {servicio.ID_Repuesto} no existe en el sistema.");
                 return false;
             }
+
+            // Validar que el vehículo exista
+            if (vehiculos != null && !vehiculos.ExisteID(servicio.ID_Vehiculo))
+            {
+                Console.WriteLine($"Error: El vehículo con ID {servicio.ID_Vehiculo} no existe en el sistema.");
+                return false;
+            }
+
+            // Si pasa todas las validaciones, insertar el servicio
+            raiz = InsertarRecursivo(raiz, servicio);
+            return true;
         }
 ```
 
 ### Generación de Factura
 ```csharp
-private void GenerarFactura(int idServicio, float costoTotal)
+public ArbolBFacturas()
+    {
+        raiz = new NodoArbolB { EsHoja = true };
+    }
+
+    public void Insertar(Factura factura)
+    {
+        if (ExisteID(factura.ID))
         {
-            try
-            {
-                _facturas.Apilar(idServicio, costoTotal);
-            }
-            catch (Exception ex)
-            {
-                throw new ServicioException($"Error al generar la factura: {ex.Message}");
-            }
+            Console.WriteLine($"Error: Ya existe una factura con el ID {factura.ID}.");
+            return;
         }
+
+        if (raiz.Facturas.Count == (2 * ORDEN) - 1)
+        {
+            NodoArbolB nuevoNodo = new NodoArbolB { EsHoja = false };
+            nuevoNodo.Hijos.Add(raiz);
+            DividirHijo(nuevoNodo, 0, raiz);
+            raiz = nuevoNodo;
+        }
+        InsertarNoLleno(raiz, factura);
+    }
+
+    public bool Insertar(int idServicio, double total, int idUsuario)
+    {
+        Factura factura = new Factura(GenerarNuevoID(), idServicio, total, idUsuario);
+        Insertar(factura);
+        return true;
+    }
+
+    public int GenerarNuevoID()
+    {
+        return contadorID++;
+    }
 ```
 

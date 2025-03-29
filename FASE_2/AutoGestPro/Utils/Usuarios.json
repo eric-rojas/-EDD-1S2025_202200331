@@ -1,245 +1,82 @@
-
 [
-{
-"ID": 1,
-"Nombres": "Carlos Alberto",
-"Apellidos": "Gomez Martinez",
-"Correo": "carlos.alberto@usac.com",
-"Edad": 20 ,
-"Contrasenia": "CarlosMartinez"
-},
-{
-"ID": 2,
-"Nombres": "Ana Lucia",
-"Apellidos": "Martinez Lopez",
-"Correo": "ana.lucia@usac.com",
-"Edad": 20 ,
-"Contrasenia": "AnaLopez"
-},
-
-{
-  "ID": 3,
-  "Nombres": "Luis Fernando",
-  "Apellidos": "Perez Ramirez",
-  "Correo": "luis.fernando@usac.com",
-  "Edad": 22,
-  "Contrasenia": "LuisPerez22"
-},
-{
-  "ID": 4,
-  "Nombres": "Maria Jose",
-  "Apellidos": "Garcia Hernandez",
-  "Correo": "maria.jose@usac.com",
-  "Edad": 21,
-  "Contrasenia": "MariaGarcia21"
-},
-{
-  "ID": 5,
-  "Nombres": "Jorge Eduardo",
-  "Apellidos": "Lopez Diaz",
-  "Correo": "jorge.eduardo@usac.com",
-  "Edad": 23,
-  "Contrasenia": "JorgeLopez23"
-},
-{
-  "ID": 6,
-  "Nombres": "Sofia Alejandra",
-  "Apellidos": "Rodriguez Morales",
-  "Correo": "sofia.alejandra@usac.com",
-  "Edad": 20,
-  "Contrasenia": "SofiaRodriguez20"
-},
-{
-  "ID": 7,
-  "Nombres": "Pedro Antonio",
-  "Apellidos": "Gonzalez Castro",
-  "Correo": "pedro.antonio@usac.com",
-  "Edad": 24,
-  "Contrasenia": "PedroGonzalez24"
-},
-{
-  "ID": 8,
-  "Nombres": "Carmen Lucia",
-  "Apellidos": "Fernandez Ruiz",
-  "Correo": "carmen.lucia@usac.com",
-  "Edad": 22,
-  "Contrasenia": "CarmenFernandez22"
-},
-{
-  "ID": 9,
-  "Nombres": "Ricardo Andres",
-  "Apellidos": "Torres Vazquez",
-  "Correo": "ricardo.andres@usac.com",
-  "Edad": 21,
-  "Contrasenia": "RicardoTorres21"
-},
-{
-  "ID": 10,
-  "Nombres": "Patricia Isabel",
-  "Apellidos": "Sanchez Jimenez",
-  "Correo": "patricia.isabel@usac.com",
-  "Edad": 20,
-  "Contrasenia": "PatriciaSanchez20"
-},
-{
-  "ID": 11,
-  "Nombres": "Francisco Javier",
-  "Apellidos": "Dominguez Ortega",
-  "Correo": "francisco.javier@usac.com",
-  "Edad": 23,
-  "Contrasenia": "FranciscoDominguez23"
-},
-{
-  "ID": 12,
-  "Nombres": "Laura Beatriz",
-  "Apellidos": "Vega Mendoza",
-  "Correo": "laura.beatriz@usac.com",
-  "Edad": 22,
-  "Contrasenia": "LauraVega22"
-},
-{
-  "ID": 13,
-  "Nombres": "Oscar Manuel",
-  "Apellidos": "Cruz Navarro",
-  "Correo": "oscar.manuel@usac.com",
-  "Edad": 24,
-  "Contrasenia": "OscarCruz24"
-},
-{
-  "ID": 14,
-  "Nombres": "Gabriela Maria",
-  "Apellidos": "Rios Paredes",
-  "Correo": "gabriela.maria@usac.com",
-  "Edad": 21,
-  "Contrasenia": "GabrielaRios21"
-},
-{
-  "ID": 15,
-  "Nombres": "Daniel Alejandro",
-  "Apellidos": "Mendez Fuentes",
-  "Correo": "daniel.alejandro@usac.com",
-  "Edad": 20,
-  "Contrasenia": "DanielMendez20"
-},
-{
-  "ID": 16,
-  "Nombres": "Ana Patricia",
-  "Apellidos": "Castillo Rojas",
-  "Correo": "ana.patricia@usac.com",
-  "Edad": 22,
-  "Contrasenia": "AnaCastillo22"
-},
-{
-  "ID": 17,
-  "Nombres": "Roberto Carlos",
-  "Apellidos": "Soto Leon",
-  "Correo": "roberto.carlos@usac.com",
-  "Edad": 23,
-  "Contrasenia": "RobertoSoto23"
-},
-{
-  "ID": 18,
-  "Nombres": "Claudia Marcela",
-  "Apellidos": "Guerrero Silva",
-  "Correo": "claudia.marcela@usac.com",
-  "Edad": 21,
-  "Contrasenia": "ClaudiaGuerrero21"
-},
-{
-  "ID": 19,
-  "Nombres": "Miguel Angel",
-  "Apellidos": "Reyes Campos",
-  "Correo": "miguel.angel@usac.com",
-  "Edad": 24,
-  "Contrasenia": "MiguelReyes24"
-},
-{
-  "ID": 20,
-  "Nombres": "Veronica Elizabeth",
-  "Apellidos": "Flores Salazar",
-  "Correo": "veronica.elizabeth@usac.com",
-  "Edad": 20,
-  "Contrasenia": "VeronicaFlores20"
-},
-{
-  "ID": 21,
-  "Nombres": "Juan Pablo",
-  "Apellidos": "Aguilar Rivas",
-  "Correo": "juan.pablo@usac.com",
-  "Edad": 22,
-  "Contrasenia": "JuanAguilar22"
-},
-{
-  "ID": 22,
-  "Nombres": "Monica Andrea",
-  "Apellidos": "Vargas Duarte",
-  "Correo": "monica.andrea@usac.com",
-  "Edad": 23,
-  "Contrasenia": "MonicaVargas23"
-},
-{
-  "ID": 23,
-  "Nombres": "Eduardo Jose",
-  "Apellidos": "Cortes Montes",
-  "Correo": "eduardo.jose@usac.com",
-  "Edad": 21,
-  "Contrasenia": "EduardoCortes21"
-},
-{
-  "ID": 24,
-  "Nombres": "Sara Isabel",
-  "Apellidos": "Molina Ponce",
-  "Correo": "sara.isabel@usac.com",
-  "Edad": 20,
-  "Contrasenia": "SaraMolina20"
-},
-{
-  "ID": 25,
-  "Nombres": "Raul Antonio",
-  "Apellidos": "Herrera Nunez",
-  "Correo": "raul.antonio@usac.com",
-  "Edad": 24,
-  "Contrasenia": "RaulHerrera24"
-},
-{
-  "ID": 26,
-  "Nombres": "Diana Carolina",
-  "Apellidos": "Cordova Paz",
-  "Correo": "diana.carolina@usac.com",
-  "Edad": 22,
-  "Contrasenia": "DianaCordova22"
-},
-{
-  "ID": 27,
-  "Nombres": "Alberto Jose",
-  "Apellidos": "Miranda Soto",
-  "Correo": "alberto.jose@usac.com",
-  "Edad": 23,
-  "Contrasenia": "AlbertoMiranda23"
-},
-{
-  "ID": 28,
-  "Nombres": "Lucia Fernanda",
-  "Apellidos": "Espinoza Rios",
-  "Correo": "lucia.fernanda@usac.com",
-  "Edad": 21,
-  "Contrasenia": "LuciaEspinoza21"
-},
-{
-  "ID": 29,
-  "Nombres": "Javier Antonio",
-  "Apellidos": "Morales Vega",
-  "Correo": "javier.antonio@usac.com",
-  "Edad": 20,
-  "Contrasenia": "JavierMorales20"
-},
-{
-  "ID": 30,
-  "Nombres": "Mariana Gabriela",
-  "Apellidos": "Ortega Mendoza",
-  "Correo": "mariana.gabriela@usac.com",
-  "Edad": 22,
-  "Contrasenia": "MarianaOrtega22"
-}
-
+  {
+      "ID": 1,
+      "Nombres": "Efraín Josué",
+      "Apellidos": "Cuxum Pérez",
+      "Correo": "efrain.josue@usac.com",
+      "Edad": 19,
+      "Contrasenia": "EC123"
+  },
+  {
+      "ID": 2,
+      "Nombres": "Ximena Marisol",
+      "Apellidos": "Quixchán Rojas",
+      "Correo": "ximena.marisol@usac.com",
+      "Edad": 21,
+      "Contrasenia": "XQ123"
+  },
+  {
+      "ID": 3,
+      "Nombres": "Brayan Estuardo",
+      "Apellidos": "Tumax García",
+      "Correo": "brayan.estuardo@usac.com",
+      "Edad": 22,
+      "Contrasenia": "BT123"
+  },
+  {
+      "ID": 4,
+      "Nombres": "Karla Lisseth",
+      "Apellidos": "Chocoy Méndez",
+      "Correo": "karla.lisseth@usac.com",
+      "Edad": 20,
+      "Contrasenia": "KC123"
+  },
+  {
+      "ID": 5,
+      "Nombres": "Steven Facundo",
+      "Apellidos": "Mejia Xolop",
+      "Correo": "steven.mejia@usac.com",
+      "Edad": 23,
+      "Contrasenia": "SM123"
+  },
+  {
+      "ID": 6,
+      "Nombres": "Selvin Orlando",
+      "Apellidos": "Ajpacajá Ruiz",
+      "Correo": "selvin.orlando@usac.com",
+      "Edad": 18,
+      "Contrasenia": "SA123"
+  },
+  {
+      "ID": 7,
+      "Nombres": "Mayra Alejandra",
+      "Apellidos": "Cojulún Díaz",
+      "Correo": "mayra.alejandra@usac.com",
+      "Edad": 21,
+      "Contrasenia": "MC123"
+  },
+  {
+      "ID": 8,
+      "Nombres": "Noé Eliseo",
+      "Apellidos": "Sactic Vásquez",
+      "Correo": "noe.eliseo@usac.com",
+      "Edad": 19,
+      "Contrasenia": "NS123"
+  },
+  {
+      "ID": 9,
+      "Nombres": "Dulce María",
+      "Apellidos": "Xolop Castillo",
+      "Correo": "dulce.maria@usac.com",
+      "Edad": 20,
+      "Contrasenia": "DX123"
+  },
+  {
+      "ID": 10,
+      "Nombres": "Jairo Vinicio",
+      "Apellidos": "Camey Ortiz",
+      "Correo": "jairo.vinicio@usac.com",
+      "Edad": 22,
+      "Contrasenia": "JC123"
+  }
 ]

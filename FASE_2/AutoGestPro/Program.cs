@@ -15,6 +15,215 @@ namespace AutoGestPro
         private static ArbolBinarioServicios arbolServicios;
         private static ArbolBFacturas arbolFacturas;
         private static GeneradorServicio generadorServicio;
+        private static LogueoUsuarios logueoUsuarios;
+
+        [STAThread]
+        static void Main()
+        {
+            // Configurar el manejador de excepciones no controladas
+            GLib.ExceptionManager.UnhandledException += OnUnhandledException;
+            
+            try
+            {
+                Application.Init();
+                
+                // Inicializar estructuras una sola vez
+                InicializarDatos();
+                
+                // Iniciar el flujo de login
+                MostrarLogin();
+                
+                Application.Run();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error crítico en la aplicación: {ex.Message}");
+                ErrorHandler.LogError("Program", "Main", ex);
+            }
+        }
+
+        static void InicializarDatos()
+        {
+            try
+            {
+                listaUsuarios = new ListaUsuarios();
+                listaVehiculos = new ListaVehiculos();
+                arbolRepuestos = new ArbolAVLRepuestos();
+                arbolServicios = new ArbolBinarioServicios();
+                arbolFacturas = new ArbolBFacturas();
+                generadorServicio = new GeneradorServicio(listaVehiculos, arbolServicios, arbolRepuestos, arbolFacturas);
+                logueoUsuarios = new LogueoUsuarios();
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.LogError("Program", "InicializarDatos", ex);
+                throw; // Re-lanzamos para ser manejada en Main
+            }
+        }
+
+        // Variable para mantener la referencia a la ventana de login actual
+        private static Inicio currentLogin;
+        
+        static void MostrarLogin()
+        {
+            try
+            {
+                // Crear nueva instancia de login
+                currentLogin = new Inicio(listaUsuarios);
+                currentLogin.LoginExitoso += OnLoginExitoso;
+                currentLogin.ShowAll();
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.LogError("Program", "MostrarLogin", ex);
+                MessageDialog errorDialog = new MessageDialog(
+                    null,
+                    DialogFlags.Modal,
+                    MessageType.Error,
+                    ButtonsType.Ok,
+                    $"Error al mostrar la ventana de inicio de sesión: {ex.Message}");
+                errorDialog.Run();
+                errorDialog.Destroy();
+            }
+        }
+        
+        static void OnLoginExitoso(Usuario usuario)
+        {
+            try
+            {
+                // Crear ventana de menú según el tipo de usuario
+                Window menuWindow;
+                if (usuario.Correo == "admin@usac.com")
+                {
+                    menuWindow = new Menu1(
+                        listaUsuarios,
+                        listaVehiculos,
+                        generadorServicio,
+                        arbolRepuestos,
+                        arbolServicios,
+                        arbolFacturas,
+                        logueoUsuarios
+                    );
+                }
+                else
+                {
+                    menuWindow = new Menu2(
+                        usuario, 
+                        listaVehiculos,
+                        listaUsuarios,
+                        arbolRepuestos,
+                        arbolFacturas,
+                        arbolServicios
+                    );
+                }
+                
+                // Manejar el cierre de la ventana de menú
+                menuWindow.DeleteEvent += (sender, e) => 
+                {
+                    try 
+                    {
+                        // Prevenir cierre automático
+                        e.RetVal = true;
+                        
+                        // Destruir la ventana manualmente
+                        menuWindow.Destroy();
+                        
+                        // Mostrar una nueva ventana de login
+                        MostrarLogin();
+                    }
+                    catch (Exception ex)
+                    {
+                        ErrorHandler.LogError("Program", "MenuWindowDeleteEvent", ex);
+                    }
+                };
+                
+                // Destruir ventana de login actual
+                if (currentLogin != null)
+                {
+                    currentLogin.Destroy();
+                    currentLogin = null;
+                }
+                
+                // Mostrar la ventana del menú
+                menuWindow.ShowAll();
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.LogError("Program", "OnLoginExitoso", ex);
+                MessageDialog errorDialog = new MessageDialog(
+                    null,
+                    DialogFlags.Modal,
+                    MessageType.Error,
+                    ButtonsType.Ok,
+                    $"Error al abrir el menú: {ex.Message}");
+                errorDialog.Run();
+                errorDialog.Destroy();
+            }
+        }
+        
+        private static void OnUnhandledException(GLib.UnhandledExceptionArgs args)
+        {
+            Exception ex = args.ExceptionObject as Exception;
+            string mensaje = ex != null ? ex.Message : "Error desconocido";
+            
+            Console.WriteLine($"Excepción no controlada: {mensaje}");
+            
+            try
+            {
+                ErrorHandler.LogError("Program", "UnhandledException", ex);
+                
+                // No cerramos la aplicación automáticamente
+                args.ExitApplication = false;
+                
+                // Intentamos mostrar un diálogo informativo
+                Application.Invoke(delegate
+                {
+                    try
+                    {
+                        MessageDialog dialog = new MessageDialog(
+                            null,
+                            DialogFlags.Modal,
+                            MessageType.Error,
+                            ButtonsType.Ok,
+                            "Ha ocurrido un error en la aplicación.\nSe ha registrado para su análisis.");
+                        dialog.Run();
+                        dialog.Destroy();
+                    }
+                    catch
+                    {
+                        // Si falla mostrar el diálogo, no podemos hacer mucho más
+                        Console.WriteLine("No se pudo mostrar el diálogo de error no controlado.");
+                    }
+                });
+            }
+            catch
+            {
+                // Último recurso
+                Console.WriteLine("ERROR CRÍTICO NO MANEJABLE");
+            }
+        }
+    }
+}
+
+
+
+/*using System;
+using Gtk;
+using AutoGestPro.Core;
+using AutoGestPro.UI;
+using AutoGestPro.Utils;
+
+namespace AutoGestPro
+{
+    class Program
+    {
+        // Variables estáticas para mantener las estructuras de datos
+        private static ListaUsuarios listaUsuarios;
+        private static ListaVehiculos listaVehiculos;
+        private static ArbolAVLRepuestos arbolRepuestos;
+        private static ArbolBinarioServicios arbolServicios;
+        private static ArbolBFacturas arbolFacturas;
+        private static GeneradorServicio generadorServicio;
 
         private static LogueoUsuarios logueoUsuarios;
 
@@ -46,6 +255,7 @@ namespace AutoGestPro
 
         static void MostrarLogin()
         {
+            /*
             listaUsuarios.Insertar(new Usuario(1, "admin", "admin", "admin", 7, "admin"));
 
             // Insertar servicios predeterminados
@@ -61,7 +271,6 @@ namespace AutoGestPro
             arbolFacturas.Insertar(new Factura(4, 1, 150, 1));
             arbolFacturas.Insertar(new Factura(5, 1, 180, 1));
 
-            /*
             // Insertar facturas en orden aleatorio
             arbolFacturas.Insertar(new Factura(15, 3, 7500, 1));
             arbolFacturas.Insertar(new Factura(7, 2, 3500, 1));
@@ -87,7 +296,7 @@ namespace AutoGestPro
             string dotFileFacturas = "facturas.dot";
             string contenidoDotFacturas = arbolFacturas.GenerarGraphviz();
             GraphvizExporter.GenerarArchivoDot(dotFileFacturas, contenidoDotFacturas);
-            GraphvizExporter.ConvertirDotAPng(dotFileFacturas);*/
+            GraphvizExporter.ConvertirDotAPng(dotFileFacturas);
 
             
             var login = new Inicio(listaUsuarios);
@@ -132,7 +341,7 @@ namespace AutoGestPro
             login.ShowAll();
         }
     }
-}
+}*/
 
 
 

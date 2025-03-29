@@ -1,182 +1,122 @@
 [
   {
-    "ID": 3,
-    "Repuesto": "Pastillas de freno",
-    "Detalles": "Se usan para frenar el vehículo al presionar el pedal.",
-    "Costo": 45.50
+      "ID": 1,
+      "Repuesto": "Filtro de aceite",
+      "Detalles": "Filtra impurezas del aceite del motor.",
+      "Costo": 25.50
   },
   {
-    "ID": 4,
-    "Repuesto": "Amortiguadores",
-    "Detalles": "Absorben impactos y mantienen estabilidad en el vehículo.",
-    "Costo": 120.00
+      "ID": 2,
+      "Repuesto": "Bujías",
+      "Detalles": "Enciende la mezcla de aire y combustible.",
+      "Costo": 15.75
   },
   {
-    "ID": 5,
-    "Repuesto": "Batería",
-    "Detalles": "Proporciona energía eléctrica al vehículo.",
-    "Costo": 90.00
+      "ID": 3,
+      "Repuesto": "Pastillas de freno",
+      "Detalles": "Frenan las ruedas al presionar el disco.",
+      "Costo": 45.00
   },
   {
-    "ID": 6,
-    "Repuesto": "Correa de distribución",
-    "Detalles": "Sincroniza el movimiento del cigüeñal y el árbol de levas.",
-    "Costo": 60.00
+      "ID": 4,
+      "Repuesto": "Batería",
+      "Detalles": "Provee energía eléctrica al vehículo.",
+      "Costo": 120.00
   },
   {
-    "ID": 7,
-    "Repuesto": "Aceite de motor",
-    "Detalles": "Lubrica y protege las piezas del motor.",
-    "Costo": 35.00
+      "ID": 5,
+      "Repuesto": "Alternador",
+      "Detalles": "Genera electricidad para cargar la batería.",
+      "Costo": 180.50
   },
   {
-    "ID": 8,
-    "Repuesto": "Filtro de aire",
-    "Detalles": "Filtra impurezas del aire que entra al motor.",
-    "Costo": 20.00
+      "ID": 6,
+      "Repuesto": "Radiador",
+      "Detalles": "Enfría el motor con líquido refrigerante.",
+      "Costo": 95.25
   },
   {
-    "ID": 9,
-    "Repuesto": "Líquido de frenos",
-    "Detalles": "Transmite la fuerza de frenado a las ruedas.",
-    "Costo": 12.00
+      "ID": 7,
+      "Repuesto": "Correa de distribución",
+      "Detalles": "Sincroniza el movimiento de las válvulas.",
+      "Costo": 35.80
   },
   {
-    "ID": 10,
-    "Repuesto": "Radiador",
-    "Detalles": "Enfría el líquido refrigerante del motor.",
-    "Costo": 150.00
+      "ID": 8,
+      "Repuesto": "Amortiguadores",
+      "Detalles": "Absorben impactos en la suspensión.",
+      "Costo": 60.00
   },
   {
-    "ID": 11,
-    "Repuesto": "Termostato",
-    "Detalles": "Regula la temperatura del motor.",
-    "Costo": 30.00
+      "ID": 9,
+      "Repuesto": "Filtro de aire",
+      "Detalles": "Limpia el aire que entra al motor.",
+      "Costo": 20.30
   },
   {
-    "ID": 12,
-    "Repuesto": "Bomba de agua",
-    "Detalles": "Circula el líquido refrigerante en el motor.",
-    "Costo": 80.00
+      "ID": 10,
+      "Repuesto": "Bomba de agua",
+      "Detalles": "Circula el refrigerante por el motor.",
+      "Costo": 55.90
   },
   {
-    "ID": 13,
-    "Repuesto": "Alternador",
-    "Detalles": "Genera electricidad para cargar la batería.",
-    "Costo": 200.00
+      "ID": 11,
+      "Repuesto": "Discos de freno",
+      "Detalles": "Superficie para las pastillas de freno.",
+      "Costo": 70.40
   },
   {
-    "ID": 14,
-    "Repuesto": "Suspensión delantera",
-    "Detalles": "Mantiene la estabilidad y confort al conducir.",
-    "Costo": 250.00
+      "ID": 12,
+      "Repuesto": "Aceite de motor",
+      "Detalles": "Lubrica y protege el motor.",
+      "Costo": 40.00
   },
   {
-    "ID": 15,
-    "Repuesto": "Faro delantero",
-    "Detalles": "Proporciona iluminación durante la noche.",
-    "Costo": 75.00
+      "ID": 13,
+      "Repuesto": "Termostato",
+      "Detalles": "Regula la temperatura del motor.",
+      "Costo": 22.15
   },
   {
-    "ID": 16,
-    "Repuesto": "Parabrisas",
-    "Detalles": "Protege al conductor del viento y objetos externos.",
-    "Costo": 300.00
+      "ID": 14,
+      "Repuesto": "Sensor de oxígeno",
+      "Detalles": "Mide niveles de oxígeno en escape.",
+      "Costo": 65.70
   },
   {
-    "ID": 17,
-    "Repuesto": "Embrague",
-    "Detalles": "Transmite la potencia del motor a la caja de cambios.",
-    "Costo": 180.00
+      "ID": 15,
+      "Repuesto": "Llantas",
+      "Detalles": "Proveen tracción y soporte al vehículo.",
+      "Costo": 110.00
   },
   {
-    "ID": 18,
-    "Repuesto": "Sensor de oxígeno",
-    "Detalles": "Mide el nivel de oxígeno en los gases de escape.",
-    "Costo": 65.00
+      "ID": 16,
+      "Repuesto": "Embrague",
+      "Detalles": "Conecta y desconecta el motor de la transmisión.",
+      "Costo": 150.25
   },
   {
-    "ID": 19,
-    "Repuesto": "Cable de bujía",
-    "Detalles": "Transmite corriente eléctrica a las bujías.",
-    "Costo": 40.00
+      "ID": 17,
+      "Repuesto": "Faros delanteros",
+      "Detalles": "Iluminan el camino en la oscuridad.",
+      "Costo": 85.60
   },
   {
-    "ID": 20,
-    "Repuesto": "Junta de culata",
-    "Detalles": "Sella la unión entre el bloque motor y la culata.",
-    "Costo": 100.00
+      "ID": 18,
+      "Repuesto": "Filtro de combustible",
+      "Detalles": "Elimina impurezas del combustible.",
+      "Costo": 18.90
   },
   {
-    "ID": 21,
-    "Repuesto": "Silenciador",
-    "Detalles": "Reduce el ruido del escape del motor.",
-    "Costo": 85.00
+      "ID": 19,
+      "Repuesto": "Bobina de encendido",
+      "Detalles": "Genera voltaje para las bujías.",
+      "Costo": 45.30
   },
   {
-    "ID": 22,
-    "Repuesto": "Rótula de dirección",
-    "Detalles": "Conecta la dirección con las ruedas.",
-    "Costo": 55.00
-  },
-  {
-    "ID": 23,
-    "Repuesto": "Fusibles",
-    "Detalles": "Protegen los circuitos eléctricos del vehículo.",
-    "Costo": 5.00
-  },
-  {
-    "ID": 24,
-    "Repuesto": "Correa del alternador",
-    "Detalles": "Transmite movimiento al alternador.",
-    "Costo": 25.00
-  },
-  {
-    "ID": 25,
-    "Repuesto": "Válvula EGR",
-    "Detalles": "Recircula gases de escape para reducir emisiones.",
-    "Costo": 95.00
-  },
-  {
-    "ID": 26,
-    "Repuesto": "Sensor de temperatura",
-    "Detalles": "Mide la temperatura del refrigerante.",
-    "Costo": 22.00
-  },
-  {
-    "ID": 27,
-    "Repuesto": "Bomba de combustible",
-    "Detalles": "Envía combustible al motor.",
-    "Costo": 130.00
-  },
-  {
-    "ID": 28,
-    "Repuesto": "Caja de cambios",
-    "Detalles": "Transmite la potencia del motor a las ruedas.",
-    "Costo": 500.00
-  },
-  {
-    "ID": 29,
-    "Repuesto": "Intercooler",
-    "Detalles": "Enfría el aire comprimido en motores turbo.",
-    "Costo": 220.00
-  },
-  {
-    "ID": 30,
-    "Repuesto": "Sistema de escape completo",
-    "Detalles": "Expulsa los gases de combustión del motor.",
-    "Costo": 400.00
-  },
-  {
-    "ID": 1,
-    "Repuesto": "Filtro de aceite",
-    "Detalles": "Filtra impurezas del aceite del motor.",
-    "Costo": 25.00
-    },
-    {
-    "ID": 2,
-    "Repuesto": "Bujías",
-    "Detalles": "Se usa para laa mezcla de aire y combustible.",
-    "Costo": 15.00
-    }
+      "ID": 20,
+      "Repuesto": "Escobillas limpiaparabrisas",
+      "Detalles": "Limpian el parabrisas de agua y suciedad.",
+      "Costo": 12.50
+  }
 ]
