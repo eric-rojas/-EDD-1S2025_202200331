@@ -1,0 +1,22 @@
+digraph BST {
+    node [shape=rectangle];
+    "1" [label="ID: 1\nRepuesto: 1\nVehículo: 1\nDetalles: Cambio de aceite\nCosto: $1,000.00"];
+    "2" [label="ID: 2\nRepuesto: 2\nVehículo: 2\nDetalles: Cambio de filtro de aire\nCosto: $2,000.00"];
+    "3" [label="ID: 3\nRepuesto: 3\nVehículo: 3\nDetalles: Cambio de bujias\nCosto: $3,000.00"];
+    "4" [label="ID: 4\nRepuesto: 4\nVehículo: 4\nDetalles: Cambio de frenos\nCosto: $4,000.00"];
+    "5" [label="ID: 5\nRepuesto: 5\nVehículo: 5\nDetalles: Cambio de llantas\nCosto: $5,000.00"];
+    "6" [label="ID: 6\nRepuesto: 6\nVehículo: 6\nDetalles: Cambio de aceite\nCosto: $6,000.00"];
+    "7" [label="ID: 7\nRepuesto: 7\nVehículo: 7\nDetalles: Cambio de filtro de aire\nCosto: $7,000.00"];
+    "8" [label="ID: 8\nRepuesto: 8\nVehículo: 8\nDetalles: Cambio de bujias\nCosto: $8,000.00"];
+    "9" [label="ID: 9\nRepuesto: 9\nVehículo: 9\nDetalles: Cambio de frenos\nCosto: $9,000.00"];
+    "10" [label="ID: 10\nRepuesto: 10\nVehículo: 10\nDetalles: Cambio de llantas\nCosto: $10,000.00"];
+    "1" -> "2" [color=red, label="D"];
+    "2" -> "3" [color=red, label="D"];
+    "3" -> "4" [color=red, label="D"];
+    "4" -> "5" [color=red, label="D"];
+    "5" -> "6" [color=red, label="D"];
+    "6" -> "7" [color=red, label="D"];
+    "7" -> "8" [color=red, label="D"];
+    "8" -> "9" [color=red, label="D"];
+    "9" -> "10" [color=red, label="D"];
+}

@@ -1,0 +1,142 @@
+[
+  {
+      "ID": 1,
+      "ID_Usuario": 1,
+      "Marca": "Mercedes-Benz CLA 250",
+      "Modelo": 2018,
+      "Placa": "ABC1D2E"
+  },
+  {
+      "ID": 2,
+      "ID_Usuario": 1,
+      "Marca": "Mercedes-Benz CLA 200",
+      "Modelo": 2020,
+      "Placa": "FGH3I4J"
+  },
+  {
+      "ID": 3,
+      "ID_Usuario": 2,
+      "Marca": "Mercedes-Benz CLA 180",
+      "Modelo": 2017,
+      "Placa": "KLM5N6O"
+  },
+  {
+      "ID": 4,
+      "ID_Usuario": 2,
+      "Marca": "Mercedes-Benz CLA 250",
+      "Modelo": 2019,
+      "Placa": "PQR7S8T"
+  },
+  {
+      "ID": 5,
+      "ID_Usuario": 3,
+      "Marca": "Mercedes-Benz CLA 200",
+      "Modelo": 2016,
+      "Placa": "UVW9X0Y"
+  },
+  {
+      "ID": 6,
+      "ID_Usuario": 3,
+      "Marca": "Mercedes-Benz CLA 300",
+      "Modelo": 2021,
+      "Placa": "ZAB1C2D"
+  },
+  {
+      "ID": 7,
+      "ID_Usuario": 4,
+      "Marca": "Mercedes-Benz CLA 180",
+      "Modelo": 2015,
+      "Placa": "EFG3H4I"
+  },
+  {
+      "ID": 8,
+      "ID_Usuario": 4,
+      "Marca": "Mercedes-Benz CLA 250",
+      "Modelo": 2022,
+      "Placa": "JKL5M6N"
+  },
+  {
+      "ID": 9,
+      "ID_Usuario": 5,
+      "Marca": "Mercedes-Benz CLA 200",
+      "Modelo": 2019,
+      "Placa": "OPQ7R8S"
+  },
+  {
+      "ID": 10,
+      "ID_Usuario": 5,
+      "Marca": "Mercedes-Benz CLA 300",
+      "Modelo": 2020,
+      "Placa": "TUV9W0X"
+  },
+  {
+      "ID": 11,
+      "ID_Usuario": 6,
+      "Marca": "Mercedes-Benz CLA 250",
+      "Modelo": 2018,
+      "Placa": "YZA1B2C"
+  },
+  {
+      "ID": 12,
+      "ID_Usuario": 6,
+      "Marca": "Mercedes-Benz CLA 200",
+      "Modelo": 2021,
+      "Placa": "DEF3G4H"
+  },
+  {
+      "ID": 13,
+      "ID_Usuario": 7,
+      "Marca": "Mercedes-Benz CLA 180",
+      "Modelo": 2017,
+      "Placa": "IJK5L6M"
+  },
+  {
+      "ID": 14,
+      "ID_Usuario": 7,
+      "Marca": "Mercedes-Benz CLA 300",
+      "Modelo": 2023,
+      "Placa": "NOP7Q8R"
+  },
+  {
+      "ID": 15,
+      "ID_Usuario": 8,
+      "Marca": "Mercedes-Benz CLA 200",
+      "Modelo": 2016,
+      "Placa": "STU9V0W"
+  },
+  {
+      "ID": 16,
+      "ID_Usuario": 8,
+      "Marca": "Mercedes-Benz CLA 250",
+      "Modelo": 2019,
+      "Placa": "XYZ1A2B"
+  },
+  {
+      "ID": 17,
+      "ID_Usuario": 9,
+      "Marca": "Mercedes-Benz CLA 300",
+      "Modelo": 2020,
+      "Placa": "CDE3F4G"
+  },
+  {
+      "ID": 18,
+      "ID_Usuario": 9,
+      "Marca": "Mercedes-Benz CLA 200",
+      "Modelo": 2022,
+      "Placa": "HIJ5K6L"
+  },
+  {
+      "ID": 19,
+      "ID_Usuario": 10,
+      "Marca": "Mercedes-Benz CLA 250",
+      "Modelo": 2018,
+      "Placa": "MNO7P8Q"
+  },
+  {
+      "ID": 20,
+      "ID_Usuario": 10,
+      "Marca": "Mercedes-Benz CLA 180",
+      "Modelo": 2021,
+      "Placa": "RST9U0V"
+  }
+]

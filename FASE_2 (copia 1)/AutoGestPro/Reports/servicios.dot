@@ -1,0 +1,4 @@
+digraph ArbolServicios {
+node [shape=record];
+empty [label="Árbol vacío", shape=plaintext];
+}
